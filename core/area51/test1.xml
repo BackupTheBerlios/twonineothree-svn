@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--<system version="0.4" signature="spacechocolate" />-->
+<news>
+	<item date="3274837283">
+		<caption>Testing...</caption>
+		<content>
+		<![CDATA[
+		dies ist ein test...
+		]]>
+		</content>
+	</item>
+	<item date="3247283732">
+		<caption><i>Testing...</i></caption>
+		<content>
+		<i><![CDATA[
+		dies ist ein zweiter test...
+		]]></i>
+		</content>
+	</item>
+</news>

@@ -1,0 +1,141 @@
+.error_box {
+	background-color: #7392a6;
+	border: 1px dotted silver;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	color: white;
+	width: 520px;
+	margin: 3px;
+	padding: 3px;
+	text-align: center;
+	line-height: 130%;
+}
+
+.error_text {
+	background-color: white;
+	text-align: left;
+	font-family; sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: black;
+	margin: 0px;
+	padding: 5px;
+
+}
+
+.error_text a:link {
+	color: blue;
+	text-decoration: none;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	font-size: 10px;
+
+}
+
+.error_text a:visited {
+	color: blue;
+	text-decoration: none;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	font-size: 10px;
+}	
+
+.error_text a:active {
+	color: blue;
+	text-decoration: none;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	font-size: 10px;
+}		
+
+.error_text a:hover {
+
+	color: blue;
+	text-decoration: underline;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	font-size: 10px;
+}
+
+.eyecandyConsole {
+	font-family: sans-serif, helvetica;
+	font-size: 11px;
+	color: black;
+	text-align: center;
+	width: 400px;
+	border: 1px dotted silver;
+	padding: 4px;
+	line-height: 130%;
+	background-color: #F1F1F1;
+}
+
+.bugform {
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size: 11px;
+	border: 1px solid black;
+	background-color: white;
+	color: black;
+	padding: 5px;	
+}
+
+.bugtable {
+	width: 500px;
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
+	color: black;
+	border: 1px dotted black;
+	background-color: #EEEEEE;
+	height: 500px;	
+	padding: 12px;
+}
+
+.weblogitembox {
+	font-family: sans-serif, arial; 
+	font-size: 14px; 
+	font-weight: bold; 
+	color: #AAAAAA; 
+	background-color: #d2e1bc; 
+	width: 300px; 
+	padding: 3px;
+}
+
+.weblogitemtext {
+	margin: 5px; 
+	margin-top: 6px; 
+	font-family: serif; 
+	font-size: 12px; 
+	font-weight: normal; 
+	padding: 3px; 
+	background-color: white; 
+	color: black;	
+}
+
+.weblogitemtext a:link {
+	color: silver;	
+	text-decoration: none;
+}
+
+.weblogitemtext a:hover {
+	color: silver;	
+	text-decoration: none;
+	border-bottom: 1px dotted silver;
+}
+
+.weblogitemtext a:active {
+	color: silver;	
+	text-decoration: none;
+}
+
+.weblogitemtext a:visited {
+	color: silver;	
+	text-decoration: none;
+}

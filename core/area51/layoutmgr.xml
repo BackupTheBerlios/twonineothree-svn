@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- 29o3 LAYOUT MANAGER EXAMPLE
+IT WILL LOOK THE FOLLOWING WAY (hopefully ;-)):
+
++-----------------------------+
+|            TITLE            |
++-----------------------------+
+|                             |
+|           CONTENT           |
+|                             |
++-----------------------------+
+
+-->
+<kldl version="1.0" checksum="dada">
+	<layout type="gridlayout" params="1,2">
+		<cell position_x="1" position_y="1" style="title">
+			<?29o3_PLACEHOLDER=title?>
+		</cell>
+		<cell position_x="1" position_y="2">
+			<layout type="rowlayout">
+				<?29o3_PLACEHOLDER=var_content?>
+			</layout>
+		</cell>
+	</layout>
+</kldl>

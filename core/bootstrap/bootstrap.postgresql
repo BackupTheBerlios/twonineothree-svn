@@ -1,0 +1,97 @@
+/*
+	29o3 PostgreSQL 7.3+ bootstrap
+
+	(c) 2004 by Ulrik Guenther <kpanic@00t.org>
+
+	Licensed under the terms of the BSD license.
+	
+	These SQL statements generate the data structures needed
+	for 29o3 to operate and fills some of them with initial values.
+
+	Last modification: 2004/09/04
+
+	*** <WARNING> ***
+	NEVER LET ANY DBMS EXECUTE THIS SQL SCRIPT DIRECTLY!
+	IT *REALLY* NEEDS SOME PREPROCESSING DONE BY 29o3!
+	*** </WARNING> ***
+*/
+
+/*
+   These first four statements create the sequences for the unique
+   identification integers in the various tables.
+*/
+CREATE sequence seq_users START 100;
+CREATE sequence seq_groups START 100;
+CREATE sequence seq_pages START 500;
+CREATE sequence seq_boxes START 1000;
+CREATE sequence seq_content START 2000;
+CREATE sequence seq_layout START 100;
+
+/*
+   29o3_pages contains all the pages which can be accessed through
+   29o3. BUT NO CONTENT FOR THESE PAGES!
+*/
+CREATE TABLE broend_pages(
+	id integer DEFAULT nextval('seq_pages')	 NOT NULL UNIQUE PRIMARY KEY,
+	name varchar(128) NOT NULL,
+	cdate bigint NOT NULL,
+	mdate bigint NOT NULL,
+	owner integer,
+	ogroup integer,
+	rights smallint,
+	hidden boolean DEFAULT false,
+	publishdate bigint,
+	title varchar(256),
+	description varchar(256),
+	layout bigint,
+	contributors varchar(512),
+	publisher varchar(128),
+	language varchar(2),
+	coverage varchar(64),
+	copyright varchar(64),
+	stylesheet varchar(128),
+	boxes varchar(512)
+);
+
+CREATE TABLE broend_boxes(
+	id integer DEFAULT nextval('seq_boxes') NOT NULL UNIQUE PRIMARY KEY,
+	name varchar(128) NOT NULL UNIQUE,
+	cdate bigint NOT NULL,
+	mdate bigint NOT NULL,
+	owner integer,
+	ogroup integer,
+	rights smallint,
+	hidden boolean DEFAULT false,
+	stylesheet varchar(256),
+	content text
+);
+
+CREATE TABLE broend_layout(
+	id integer DEFAULT nextval('seq_layout') NOT NULL UNIQUE PRIMARY KEY,
+	name varchar(128) NOT NULL,
+	cdate bigint NOT NULL,
+	mdate bigint NOT NULL,
+	owner integer,
+	ogroup integer,
+	rights smallint,
+	hidden boolean DEFAULT false,
+	content text
+);
+
+CREATE TABLE broend_users(
+	id integer DEFAULT nextval('seq_users') NOT NULL UNIQUE PRIMARY KEY,
+	state smallint DEFAULT 512,
+	realname varchar(128),
+	email varchar(128),
+	additionals text	
+);
+
+CREATE TABLE broend_groups(
+	id integer DEFAULT nextval('seq_groups') NOT NULL UNIQUE PRIMARY KEY,
+	name varchar(128)
+);
+
+CREATE TABLE broend_stylesheets(
+	name varchar(128) NOT NULL UNIQUE PRIMARY KEY,
+	content text
+);

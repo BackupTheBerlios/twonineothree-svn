@@ -1,0 +1,29 @@
+// Layout example for 29o3
+// lines starting with '//' will be skipped during processing
+// anything starting with '::29o3.' will be evaluated as command for the
+// layout processor
+// blocks are in this format [blockname] { [content] }
+// allowed blocks are header and layout
+
+header {
+::29o3.mainStylesheet("GreenStripeLayout");
+}
+
+layout {
+<div class="stripediv">
+	<div class="greenstripe">
+	&nbsp;
+	</div>
+	<div class="textunderstripe">
+	<strong>::29o3.getBox("Title");</strong><br/>
+	::29o3.getBox("Content");
+	<div style="text-align: right; font-style: italic;">::29o3.getProperty("Author");</div>
+	<br/>
+	<div class="menu">::29o3.getStaticBox("Menu001");</div>
+	<div style="font-size: 9px; color: #CCCCCC; text-align: center;">
+	<a href="http://validator.w3.org/check/referer">valid xhtml</a> &middot; 
+	<a href="http://jigsaw.w3.org/css-validator/check/referer">valid css</a>
+	</div>
+	</div>
+</div>
+}
