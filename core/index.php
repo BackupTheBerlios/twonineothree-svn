@@ -205,6 +205,9 @@ function bootstrap() {
 	
 		$connector->closeConnection();
 		DEBUG("DB: Connection closed.");
+		$rusage = getrusage();
+		DEBUG("SYS: Resource usage: " . $rusage["ru_majflt"] . "/" . $rusage["ru_utime.tv_usec"] );
+
 
 		DEBUG("SYS: Exiting normally.");
 
@@ -265,6 +268,8 @@ function bootstrap() {
 		$ao->doBodyJobs();
 
 		DEBUG("DB: " . $connector->getExecutedQueries() . " queries executed.");
+		$rusage = getrusage();
+		DEBUG("SYS: Resource usage: " . $rusage["ru_majflt"] . "/" . $rusage["ru_utime.tv_usec"] );
 	
 		$connector->closeConnection();
 		DEBUG("DB: Connection closed.");

@@ -42,7 +42,7 @@ class AdminOverview {
 
 		$this->pdo->insertBodyDiv("Running Sites", "adminFuncTitle");
 
-		$this->db->executeQuery("SELECT * FROM " . mktablename("sites"));
+		$this->db->executeQuery("SELECT * FROM " . mktablename("sites") . " ORDER BY name ASC");
 		$this->pdo->insertIntoBodyBuffer('<table>');
 		$this->pdo->insertIntoBodyBuffer("<tr id=\"header\"><td>Name</td><td>Desc.</td><td>Owner</td><td>Status</td></tr>");
 		$subdb = clone $this->db;
