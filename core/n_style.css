@@ -70,11 +70,11 @@
 	font-family: sans-serif, helvetica;
 	font-size: 10px;
 	color: black;
-	border-bottom: 1px solid black;
+	border-top: 1px solid black;
 	line-height: 130%;
 	background-color: #CC6060;
 	position: fixed;
-	top: 0px;
+	bottom: 0px;
 	left: 0px; 
 	right: 0px;
 	height: 14px;

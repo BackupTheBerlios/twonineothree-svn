@@ -20,6 +20,7 @@ class PageRequest {
 	private $requestedPage;
 	private $requestedSite;
 	private $wantAdmin;
+	private $wantedAdminFunc;
 	private $timestamp;
 	private $userAgent;
 	private $requestType;
@@ -42,12 +43,20 @@ class PageRequest {
 		
 		$requestString = explode(";", getenv("QUERY_STRING"));
 		if($requestString[0] == "2mc") {
-			$this->wantAdmin = true;
-			$CONFIG["Developer_Debug"] = false;
+			$this->wantAdmin = 1;
+			// this is needed due to the stylesheets
+			// and as we think the admin is "clean" to the users, the console p.e. is not needed
+//			$CONFIG["Developer_Debug"] = false;
 			// removes the key containing "2mc" from the array
 			// so that it can me used furthermore.
 			DEBUG("PR: Admin wanted.");
 			$tmpString = @$requestString[2];
+			if(@$requestString[1] == ("Overview" || "PageWizard" ||"GeneralSetup" || "Help")) {
+				$this->wantAdmin++;
+				$this->wantedAdminFunc = $requestString[1];
+				DEBUG("PR: Admin non-db page requested: " . $requestString[1]);
+				return;
+			}
 		} else {
 			$tmpString = $requestString[0];
 		}
@@ -134,6 +143,10 @@ class PageRequest {
 
 	function getWantAdmin() {
 		return $this->wantAdmin;
+	}
+
+	function getWantedAdminFunc() {
+		return $this->wantedAdminFunc;
 	}
 
 }

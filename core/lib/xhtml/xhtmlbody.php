@@ -25,6 +25,10 @@ class XHTMLBody {
 		echo $this->buffer;
 	}
 
+	function printPartialBuffer() {
+		echo $this->buffer;
+	}
+
 	function eyecandyConsole($consoleObject) {
 		if(method_exists($consoleObject, "getBuffer")) {
 			$consoleObject->getBuffer();

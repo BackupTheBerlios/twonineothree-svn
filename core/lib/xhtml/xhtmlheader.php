@@ -133,7 +133,7 @@ class XHTMLHeader {
 	}
 
 	function setTitle($title) {
-		if(!$this->titleSet) {
+		if($title != "") {
 			$this->buffer .= "\t<title>" . $title . "</title>\n";
 			$this->titleSet = true;
 		}

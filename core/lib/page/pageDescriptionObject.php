@@ -48,6 +48,8 @@ class pageDescriptionObject {
 
 	private $boxParser;
 
+	private $notFromDb;
+
 	// this array contains the database column names
 	// which are the same as our private vars above
 	// we use this array to speed up the process
@@ -91,7 +93,7 @@ class pageDescriptionObject {
 	private $doBrand = true;
 	private $wantAdmin = false;
 
-	function __construct(XHTMLHeader &$xhtmlHeaderObject, XHTMLBody &$xhtmlBodyObject, DatabaseConnector &$connector, $wantAdmin = false) {
+	function __construct(XHTMLHeader &$xhtmlHeaderObject, XHTMLBody &$xhtmlBodyObject, DatabaseConnector &$connector, $wantAdmin = 0) {
 
 		// initialize references to XHTML* Objects
 		$this->headerObject =& $xhtmlHeaderObject;

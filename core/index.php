@@ -11,7 +11,7 @@
  
 */
 
-// check if the configuration file exists
+// check if the configuration file exists, if yes, exit
 if(!file_exists('./config.php')) {
 	echo "The file config.php, of essential meaning for the correct function of 29o3, does not exist<br/>";
 	echo "If you just extracted your 29o3 archive, edit the file blankconfig.php then rename it to config.php<br/>";
@@ -171,68 +171,137 @@ function bootstrap() {
 	$pdo->scheduleInsertion_ExternalStylesheet("n_style.css");
 
 	// now, get the page's stylesheet; it might be empty, but we'll add it if not :)
-	$connector->executeQuery("SELECT * FROM " . mktablename("stylesheets") . " WHERE " . mktablename("stylesheets") . ".name='" . $request->getRequestedPage() . "'" );
-	if($connector->getNumRows() != 0) {
-		$localStylesheets = $connector->fetchArray();
-		$pdo->scheduleInsertion_Stylesheet($localStylesheets['content']);
+	if($request->getWantAdmin() <= 1) {
+		$connector->executeQuery("SELECT * FROM " . mktablename("stylesheets") . " WHERE " . mktablename("stylesheets") . ".name='" . $request->getRequestedPage() . "'" );
+		if($connector->getNumRows() != 0) {
+			$localStylesheets = $connector->fetchArray();
+			$pdo->scheduleInsertion_Stylesheet($localStylesheets['content']);
+		}
+		
+		$layoutManager = new LayoutManager($pdo);
+
+		$pdo->getAvailableBoxes();
+
+		$connector->executeQuery("SELECT * FROM " . mktablename("layout") . " WHERE name='" . $pageInfo['layout'] . "'");
+		if($connector->getNumRows() != 0) {
+			$currentLayout = $connector->fetchArray();
+			$layoutManager->setLayout($currentLayout['content']);
+			$layoutManager->parseLayout();
+		} else {
+			throw new GeneralException("No layout found. 29o3 cannot continue.");
+		}
+
+		if($request->getWantAdmin()) {
+			require_once($CONFIG['LibDir'] . 'admin/adminFuncs.php');
+
+			$af = new adminFuncs($pdo, $request);
+		
+			$pdo->scheduleInsertion_Stylesheet($af->getAdminStylesheet());
+			$pdo->insertBodyDiv("<img src=\"lib/images/adminlogotop.png\" style=\"vertical-align: top; text-align: left; border: 0; padding: 0; margin: 0;\" /><span class=\"adminMenu\" style=\"width: 100%;\">" . $af->getAdminMenu() . "</span>", "adminStripe", "2mc_menu", "29o3 management console");	
+		}
+
+
+		DEBUG("DB: " . $connector->getExecutedQueries() . " queries executed.");
+	
+		$connector->closeConnection();
+		DEBUG("DB: Connection closed.");
+
+		DEBUG("SYS: Exiting normally.");
+
+		if($CONFIG['Developer_Debug'] == true ) {
+			if($body) {
+				$body->eyecandyConsole($console);
+			} else {
+				$console->printBuffer();
+
+			}
+		}
+
+		if($pdo->getBrandingState() == true) {
+			$pdo->insertBodyDiv("Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "poweredBy", "poweredBy_Banner", "Powered by 29o3");
+		}
+
+		// print the buffer of the header since we're done with it :)
+		$pdo->doInsertions();
+		$pdo->printHeaderBuffer();
+
+		$header_started = true;
+	
+		// destruct the header object
+		$pdo->destroyHeaderObject();
+
+		$body_started = true;
+
+		// print out the body buffer 
+		$pdo->printBodyBuffer();
+
+		printf('</html>');
+	
+		// exit normally.
+		exit(0);
 	}
-
-	$pdo->getAvailableBoxes();
-
-	// TODO: add admin authetication
-	if($request->getWantAdmin()) {
+	else {
 		require_once($CONFIG['LibDir'] . 'admin/adminFuncs.php');
 
 		$af = new adminFuncs($pdo, $request);
 		
 		$pdo->scheduleInsertion_Stylesheet($af->getAdminStylesheet());
 		$pdo->insertBodyDiv("<img src=\"lib/images/adminlogotop.png\" style=\"vertical-align: top; text-align: left; border: 0; padding: 0; margin: 0;\" /><span class=\"adminMenu\" style=\"width: 100%;\">" . $af->getAdminMenu() . "</span>", "adminStripe", "2mc_menu", "29o3 management console");	
-	}
 
-	$layoutManager = new LayoutManager($pdo);
-
-	$connector->executeQuery("SELECT * FROM " . mktablename("layout") . " WHERE name='" . $pageInfo['layout'] . "'");
-	if($connector->getNumRows() != 0) {
-		$currentLayout = $connector->fetchArray();
-		$layoutManager->setLayout($currentLayout['content']);
-		$layoutManager->parseLayout();
-		// TODO: Throw exception if no layout found
-	}
-
-	DEBUG("DB: " . $connector->getExecutedQueries() . " queries executed.");
-	
-	$connector->closeConnection();
-	DEBUG("DB: Connection closed.");
-
-	DEBUG("SYS: Exiting normally.");
-
-	if($CONFIG['Developer_Debug'] == true ) {
-		if($body) {
-			$body->eyecandyConsole($console);
-		} else {
-			$console->printBuffer();
-		}
-	}
 		
-	if($pdo->getBrandingState() == true) {
+		// this part is for the admin scripts which require
+		// are not fetched from database	
+		DEBUG("SYS: Skipping normal layout and box fetching procedures");
+		$header->setTitle("29o3 management console");
+
+		$ao = NULL;
+		
+		$func = $request->getWantedAdminFunc();
+		require_once($CONFIG["LibDir"] . 'admin/admin' . $func . '.php');
+		$name = "Admin" . $func;
+		$ao = new $name($connector, $pdo);
+
+		$ao->doPreBodyJobs();		
+		$ao->doBodyJobs();
+
+		DEBUG("DB: " . $connector->getExecutedQueries() . " queries executed.");
+	
+		$connector->closeConnection();
+		DEBUG("DB: Connection closed.");
+
+		DEBUG("SYS: Exiting normally.");
+
+		if($CONFIG['Developer_Debug'] == true ) {
+			if($body) {
+				$body->eyecandyConsole($console);
+			} else {
+				$console->printBuffer();
+			}
+		}
+		
 		$pdo->insertBodyDiv("Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "poweredBy", "poweredBy_Banner", "Powered by 29o3");
+
+		// print the buffer of the header since we're done with it :)
+		$pdo->doInsertions();
+		$pdo->printHeaderBuffer();
+
+		$header_started = true;
+	
+		// destruct the header object
+		$pdo->destroyHeaderObject();
+
+		$body_started = true;
+
+		// print out the body buffer 
+		$pdo->printBodyBuffer();
+
+		printf('</html>');
+		
+		// exit normally
+		exit(0);
 	}
 
-	// print the buffer of the header since we're done with it :)
-	$pdo->doInsertions();
-	$pdo->printHeaderBuffer();
-
-	$header_started = true;
-	
-	// destruct the header object
-	$pdo->destroyHeaderObject();
-
-	$body_started = true;
-
-	// print out the body buffer 
-	$pdo->printBodyBuffer();
-
-	printf('</html>');
+	// never reached
 
 }
 // END bootstrap()

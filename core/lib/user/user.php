@@ -23,7 +23,7 @@ class User {
 	private $passwordHash;
 	private $emailAddress;
 
-	function __construct(DatabaseConnector &$db, $username = "", $uid = "") {
+	function __construct(DatabaseConnector $db, $username = "", $uid = "") {
 		if($username != ""){
 			$db->executeQuery("SELECT * FROM " . mktablename("users") . " WHERE username=" . $username);
 		} else {
@@ -44,9 +44,7 @@ class User {
 			$this->emailAddress = $usersArray["email"];
 			$this->realName = $usersArray["realname"];
 
-			return 0; // ok
 		}
-		return 1; // not found
 	}
 
 	function getNickName() {

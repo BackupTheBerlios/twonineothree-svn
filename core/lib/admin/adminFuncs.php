@@ -29,7 +29,7 @@ class adminFuncs {
 		$this->pdo =& $pdo;
 		$this->pageRequest =& $pageRequest;
 
-		$this->adminStylesheet = implode("\n", file($CONFIG['LibDir'] . 'admin/adminStylesheet.css'));
+		$this->adminStylesheet = file_get_contents($CONFIG['LibDir'] . 'admin/adminStylesheet.css');
 
 	}
 
@@ -38,9 +38,9 @@ class adminFuncs {
 	}
 
 	function getAdminMenu() {
-		$adminMenu =  "<a href=\"?2mc;overview\">overview</a> &middot; <a href=\"?2mc;generalSetup\">general setup</a> &middot; <a href=\"?2mc;pageWizard\">page wizard</a> &middot; ";
-		$adminMenu .= "<a href=\"?2mc;editPages\">edit pages</a> &middot; <a href=\"?2mc;editLayouts\">edit layouts</a> &middot; <a href=\"?2mc;editBoxes\">edit boxes</a> &middot; ";
-		$adminMenu .= "<a href=\"?2mc;help\">help</a>";
+		$adminMenu =  "<a href=\"?2mc;Overview;\">overview</a> &middot; <a href=\"?2mc;GeneralSetup;\">general setup</a> &middot; <a href=\"?2mc;PageWizard;\">page wizard</a> &middot; ";
+		$adminMenu .= "<a href=\"?2mc;EditPages;\">edit pages</a> &middot; <a href=\"?2mc;EditLayouts;\">edit layouts</a> &middot; <a href=\"?2mc;EditBoxes;\">edit boxes</a> &middot; ";
+		$adminMenu .= "<a href=\"?2mc;help\">Help</a>";
 
 		return $adminMenu;
 	}
