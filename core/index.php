@@ -11,9 +11,6 @@
  
 */
 
-// TODO: This does not exist on Windows, find replacement!
-
-
 // check if the configuration file exists, if yes, exit
 if(!file_exists('./config.php')) {
 	echo "The file config.php, of essential meaning for the correct function of 29o3, does not exist<br/>";
@@ -62,6 +59,8 @@ require_once($CONFIG['LibDir'] . 'page/pageDescriptionObject.php');
 require_once($CONFIG['LibDir'] . 'exception/ExceptionHandler.php');
 // include general exception class
 require_once($CONFIG['LibDir'] . 'exception/GeneralException.php');
+// include session management class
+require_once($CONFIG['LibDir'] . 'user/sessionManager.php');
 
 $profiler = new Profiler();
 $profiler->addBreakpoint();
@@ -101,12 +100,6 @@ function bootstrap() {
 	
 	$request = new PageRequest($connector);
 	$request->parseRequest();
-
-	printf('<?xml version="1.0" encoding="UTF-8"?>');
-	printf('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">%s', "\n");
-	printf('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">%s', "\n");
-
-	$output_started = true;
 
 	// instanciate new cache object
 	$co = new cacheObject($connector, $request->getRequestedSite(), $request->getRequestedPage());
@@ -251,7 +244,10 @@ function bootstrap() {
 				$pdo->insertBodyDiv("Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "poweredBy", "poweredBy_Banner", "Powered by 29o3");
 			}
 
-		
+			printf('<?xml version="1.0" encoding="UTF-8"?>');
+			printf('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">%s', "\n");
+			printf('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">%s', "\n");
+	
 			$pdo->printHeaderBuffer();
 
 			$header_started = true;
@@ -271,6 +267,7 @@ function bootstrap() {
 		}
 		else {
 			$co->setScheduleCaching(false);
+			$pdo->setOmitBranding(true);
 			DEBUG("CACHE: Admin wanted, caching deactivated.");
 			
 			require_once($CONFIG['LibDir'] . 'admin/adminFuncs.php');
@@ -291,9 +288,21 @@ function bootstrap() {
 			$ao = NULL;
 			
 			$func = $request->getWantedAdminFunc();
+			if($func == "" || ($func != "Overview" || $func != "UserManagement")) {
+				$func = "Overview";
+			}
+			// administration needs admin logged in
+			$sm = new sessionManager($connector);
+
+			if($sm->checkSession() == false) {
+				DEBUG("MGMT: Admin not logged in.");
+
+				$func = "Login";
+			}
 			require_once($CONFIG["LibDir"] . 'admin/admin' . $func . '.php');
+
 			$name = "Admin" . $func;
-			$ao = new $name($connector, $pdo);
+			$ao = new $name($connector, $pdo, $sm);
 
 			$ao->doPreBodyJobs();		
 			$ao->doBodyJobs();
@@ -316,9 +325,15 @@ function bootstrap() {
 				}
 			}
 		
-			$pdo->insertBodyDiv("Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "poweredBy", "poweredBy_Banner", "Powered by 29o3");
+//			$pdo->insertBodyDiv("Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "poweredBy", "poweredBy_Banner", "Powered by 29o3");
 
 			// print the buffer of the header since we're done with it :)
+		
+			printf('<?xml version="1.0" encoding="UTF-8"?>');
+			printf('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">%s', "\n");
+			printf('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">%s', "\n");
+
+			
 			$pdo->doInsertions();
 			$pdo->printHeaderBuffer();
 

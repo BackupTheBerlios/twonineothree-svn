@@ -38,10 +38,11 @@ class adminFuncs {
 	}
 
 	function getAdminMenu() {
-		$adminMenu =  "<a href=\"?2mc;Overview;\">overview</a> &middot; <a href=\"?2mc;GeneralSetup;\">general setup</a> &middot; <a href=\"?2mc;PageWizard;\">page wizard</a> &middot; ";
+/*		$adminMenu =  "<a href=\"?2mc;Overview;\">overview</a> &middot; <a href=\"?2mc;GeneralSetup;\">general setup</a> &middot; <a href=\"?2mc;PageWizard;\">page wizard</a> &middot; ";
 		$adminMenu .= "<a href=\"?2mc;EditPages;\">edit pages</a> &middot; <a href=\"?2mc;EditLayouts;\">edit layouts</a> &middot; <a href=\"?2mc;EditBoxes;\">edit boxes</a> &middot; ";
 		$adminMenu .= "<a href=\"?2mc;help\">Help</a>";
-
+*/
+		$adminMenu = "";
 		return $adminMenu;
 	}
 }

@@ -37,46 +37,51 @@ class cacheObject {
 
 	function getLatestChange() {
 
-		$this->db->executeQuery("SELECT MAX(mdate) FROM " . mktablename("boxes") . " WHERE name LIKE '" . $this->pageName ."_%'");
+		if($this->scheduleCaching) {
+			$this->db->executeQuery("SELECT MAX(mdate) FROM " . mktablename("boxes") . " WHERE name LIKE '" . $this->pageName ."_%'");
 
-		$tmp = $this->db->fetchArray();
+			$tmp = $this->db->fetchArray();
 
-		$this->latestChange = $tmp[0];
+			$this->latestChange = $tmp[0];
 
-		DEBUG("CACHE: Latest change on page occured on: " . strftime("%Y-%m-%d, %H:%M:%S %z", $this->latestChange));
+			DEBUG("CACHE: Latest change on page occured on: " . strftime("%Y-%m-%d, %H:%M:%S %z", $this->latestChange));
+		}
 	}
 
 	function getCached() {
 		
 		global $CONFIG;
 		
-		$filename = $this->siteName . "_" . $this->pageName . "_" . sha1($this->siteName . "_" . $this->pageName . "_" . $this->latestChange);
+		if($this->scheduleCaching) {
+			$filename = $this->siteName . "_" . $this->pageName . "_" . sha1($this->siteName . "_" . $this->pageName . "_" . $this->latestChange);
 		
-		$this->pFileName = $filename;
+			$this->pFileName = $filename;
 
-		// cancel here for testing new layout thinx
+			// cancel here for testing new layout thinx
 		
-		if(!file_exists($CONFIG["CacheDir"] . $filename)) {
-			// cached file does not exists _OR_ is outdated, so delete any file with matching site and page name.
-			$delete_pattern = $CONFIG["CacheDir"] . $this->siteName . "_" . $this->pageName . "_*";
-			DEBUG("CACHE: Delete pattern is: $delete_pattern");
-			$files = glob($delete_pattern);
-			if($files !== false) {
-				foreach($files as $oldfile) {
-					unlink($oldfile);
-					DEBUG("CACHE: I unlinked outdated/invalid cache file $oldfile");
+			if(!file_exists($CONFIG["CacheDir"] . $filename)) {
+				// cached file does not exists _OR_ is outdated, so delete any file with matching site and page name.
+				$delete_pattern = $CONFIG["CacheDir"] . $this->siteName . "_" . $this->pageName . "_*";
+				DEBUG("CACHE: Delete pattern is: $delete_pattern");
+				$files = glob($delete_pattern);
+				if($files !== false) {
+					foreach($files as $oldfile) {
+						unlink($oldfile);
+						DEBUG("CACHE: I unlinked outdated/invalid cache file $oldfile");
+					}
+				} else {
+					DEBUG("CACHE: No files to delete.");
 				}
-			} else {
-				DEBUG("CACHE: No files to delete.");
-			}
 
-			$this->setScheduleCaching(true);
-			return false;
+				$this->setScheduleCaching(true);
+				return false;
+			} else {
+				DEBUG("CACHE: Found cached file at " . $CONFIG["CacheDir"] . $filename);
+				return true;
+			}
 		} else {
-			DEBUG("CACHE: Found cached file at " . $CONFIG["CacheDir"] . $filename);
-			return true;
+			return false;
 		}
-		
 	}
 
 	function setScheduleCaching($to_be_or_not_to_be) {

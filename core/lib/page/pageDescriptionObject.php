@@ -226,14 +226,18 @@ class pageDescriptionObject {
 		$this->bodyObject->rawInsert($string);
 	}
 
-	function insertBodyDiv($content, $styleClass = "", $id = "", $title = "", $additionals = "") {
-		$this->bodyObject->insertTag("div", $content, $styleClass, $id, $title, $additionals);
+	function insertBodyDiv($content, $styleClass = "", $id = "", $title = "", $additionals = "", $close = true) {
+		$this->bodyObject->insertTag("div", $content, $styleClass, $id, $title, $additionals, $close);
 	}
 
-	function insertBodySpan($content, $styleClass = "", $id = "",  $title = "", $additionals = "") {
+	function insertBodySpan($content, $styleClass = "", $id = "",  $title = "", $additionals = "", $close = true) {
 
-		$this->bodyObject->insertTag("span", $content, $styleClass, $id, $title, $additionals);
+		$this->bodyObject->insertTag("span", $content, $styleClass, $id, $title, $additionals, $close);
 
+	}
+
+	function insertBodyCloseDiv() {
+		$this->bodyObject->insertCloseTag("div");
 	}
 
 	function insertBodyParagraph($content, $styleClass = "", $id = "", $title = "", $additionals = "") {
@@ -241,8 +245,9 @@ class pageDescriptionObject {
 	}
 
 	function setOmitBranding($choose) {
-		if($choose) {
+		if($choose == true) {
 			$this->doBrand = false;
+			DEBUG("PDO: Branding deactivated.");
 			return;
 		}
 		$this->doBrand = true;

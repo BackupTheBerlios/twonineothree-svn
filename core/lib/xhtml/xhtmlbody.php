@@ -55,7 +55,7 @@ class XHTMLBody {
 
 	}
 
-	function insertTag($tagName, $elemContent, $elemStyleClass, $elemId, $elemTitle = "", $elemAdditionals = "") {
+	function insertTag($tagName, $elemContent, $elemStyleClass, $elemId, $elemTitle = "", $elemAdditionals = "", $close = true) {
 
 		$tagBuf = "";
 
@@ -77,14 +77,22 @@ class XHTMLBody {
 			$tagBuf .= " $elemAdditionals";
 		}
 
-		if($elemContent != "") {
-			$tagBuf .= ">$elemContent</$tagName>\n";
+		if($close) {
+			if($elemContent != "") {
+				$tagBuf .= ">$elemContent</$tagName>\n";
+			} else {
+				$tagBuf .= "></$tagName>\n";
+			}
 		} else {
-			$tagBuf .= "></$tagName>\n";
+			$tagBuf .= ">\n";
 		}
 
 		$this->buffer .= $tagBuf;
 
+	}
+
+	function insertCloseTag($tag) {
+		$this->buffer .= "</$tag>\n";
 	}
 
 	function rawInsert($string) {

@@ -35,7 +35,7 @@ class AdminOverview {
 		$this->pdo->insertBodyDiv("System Overview", "adminFuncTitle");
 
 		$this->pdo->insertBodyDiv(
-			"<strong>Server software:</strong> " . $_SERVER["SERVER_SOFTWARE"] . "<br/>\n" .
+			"<strong>Server software:</strong> " . $_SERVER["SERVER_SOFTWARE"] . " with PHP " . phpversion() . " running on " . PHP_OS . "<br/>\n" .
 			"<strong>Server time:</strong> " . strftime("%Y-%m-%d, %T", time()) . "<br/>\n" .
 			"<strong>Server uptime/load:</strong> " . `uptime` . "<br/>\n"
 			, "adminPreformatted");

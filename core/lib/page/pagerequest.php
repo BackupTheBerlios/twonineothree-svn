@@ -43,7 +43,7 @@ class PageRequest {
 		$this->timestamp = 0;
 		
 		$requestString = explode(";", getenv("QUERY_STRING"));
-		if($requestString[0] == "2mc") {
+		if($requestString[0] == "mgmt") {
 			$this->wantAdmin = 1;
 			// this is needed due to the stylesheets
 			// and as we think the admin is "clean" to the users, the console p.e. is not needed
@@ -52,12 +52,12 @@ class PageRequest {
 			// so that it can me used furthermore.
 			DEBUG("PR: Admin wanted.");
 			$tmpString = @$requestString[2];
-			if(@$requestString[1] == ("Overview" || "PageWizard" ||"GeneralSetup" || "Help")) {
+			//if(@$requestString[1] == ("Overview" || "PageWizard" ||"GeneralSetup" || "Help")) {
 				$this->wantAdmin++;
 				$this->wantedAdminFunc = $requestString[1];
 				DEBUG("PR: Admin non-db page requested: " . $requestString[1]);
 				return;
-			}
+			//}
 		} else {
 			$tmpString = $requestString[0];
 		}
