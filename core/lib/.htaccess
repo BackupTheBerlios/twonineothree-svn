@@ -1,0 +1,2 @@
+# lib directory is taboo for every user from outside
+Options -Indexes

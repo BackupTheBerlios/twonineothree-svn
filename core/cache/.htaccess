@@ -1,3 +1,4 @@
 # caching directory is taboo for every user from outside
-Order deny,allow
-Deny from all
+#Order deny,allow
+#Deny from all
+DirectoryIndex ../getmehome.php
