@@ -9,7 +9,7 @@
 	These SQL statements generate the data structures needed
 	for 29o3 to operate and fills some of them with initial values.
 
-	Last modification: 2004/10/27
+	Last modification: 2004/10/30
 
 	*** <WARNING> ***
 	NEVER LET ANY DBMS EXECUTE THIS SQL SCRIPT DIRECTLY!
@@ -86,6 +86,136 @@ CREATE TABLE broend_groups(
 );
 
 CREATE TABLE broend_stylesheets(
-	name varchar(128) NOT NULL UNIQUE PRIMARY KEY,
+	name varchar(128) NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
 	content text
 );
+
+CREATE TABLE broend_sites(
+	id bigint NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+	name varchar(255) NOT NULL,
+	title varchar(255),
+	members text,
+	owner bigint DEFAULT 100 NOT NULL,
+	ogroup bigint DEFAULT 100 NOT NULL,
+	rights smallint,
+	defaultlayout varchar(255)	
+);
+
+/* create the things which are the same like pgsql's sequences: AUTO_INCREMENTS! */
+ALTER TABLE broend_users AUTO_INCREMENT=100;
+ALTER TABLE broend_groups AUTO_INCREMENT=100;
+ALTER TABLE broend_pages AUTO_INCREMENT=500;
+ALTER TABLE broend_boxes AUTO_INCREMENT=1000;
+ALTER TABLE broend_layout AUTO_INCREMENT=100;
+ALTER TABLE broend_sites AUTO_INCREMENT=500;
+
+/* initialise pages */
+INSERT INTO broend_pages VALUES (503, '404NotFound', 0, 0, 100, 100, 771, 0, 0, '404: Not Found', '', '', '', '', '', '', '', '', '29o3default');
+INSERT INTO broend_pages VALUES (504, '401Forbidden', 0, 0, 100, 100, 771, 0, 0, '401: Forbidden', '', '', '', '', '', '', '', '', '29o3default');
+INSERT INTO broend_pages VALUES (502, 'InstallationSuccessful', 0, 0, 100, 100, 771, 0, 0, 'Welcome to 29o3', 'This page is the welcome notice of a successful installation of 29o3', '', '', '', '', '', '', '', '29o3default');
+
+/* initialise boxes */
+INSERT INTO broend_boxes VALUES (1015, '401Forbidden_Content', 0, 0, 100, 100, 771, 0, '', '<div style="font-size: 14px;"><strong>401 Forbidden</strong></div><br/>
+You are not allowed to access this page.<br/><br/>
+::29o3.makeLink("otherSite", "Go to home page", "default", "home");', '401Forbidden');
+INSERT INTO broend_boxes VALUES (1014, '404NotFound_Content', 0, 0, 100, 100, 771, 0, '', '<div style="font-size: 14px;"><strong>404 Not Found</strong></div><br/>
+The page you requested does not exist in the current site.<br/><br/>
+<a href="?default/home">Go to home page</a>', '404NotFound');
+INSERT INTO broend_boxes VALUES (1013, 'InstallationSuccessful_Content', 0, 0, 100, 100, 771, 0, '', '<span style="font-size: 14px; line-height: 200%;"><strong>Welcome to 29o3</strong></span><br/>
+	If you can see this page, it means that the <a href="http://twonineothree.berlios.de">29o3 Content Management System</a>
+	has been installed successfully on this site, but no content has been added yet.<br /><br />
+	<span style="font-size: 14px; line-height: 200%;"><strong>Where to go from here?</strong></span><br/>
+	Now that 29o3 is installed, you can proceed to the <a href="admin.php">administration console</a> to add
+	some life to your site. It is also possible to browse the online manual you have received with this
+	distribution. If you have questions about the license and conditions under which 29o3 is distributed, please
+	see the <a href="LICENSE">LICENSE</a> file in 29o3''s root directory. For general questions about the usage
+	of 29o3, never hesitate to ask them in the <a href="http://developer.berlios.de/forum/?group_id=1891">help forums</a>
+	on the website of 29o3.
+	<br/><br/>
+	Now, have fun with 29o3!
+	<div style="text-align: right; font-style: italic;">-- Ulrik G&uuml;nther, 29o3 Lead Developer</div><br />
+	<span style="font-size: 10px;"><em>If this is not the page you expected, please contact the person responsible for this site.</em></span>
+', 'InstallationSuccessful');
+
+/* initialise groups */
+INSERT INTO broend_groups VALUES (100, 'wheel');
+
+/* initialise users */
+INSERT INTO broend_users VALUES (100, 'root', 'root@localhost', '', 100, 'INVALID_HASH', 'Site Administrator');
+
+/* initialise sites */
+INSERT INTO broend_sites VALUES (500, 'default', '29o3 default site', 'InstallationSuccessful;401Forbidden;404NotFound', 100, 100, 771, '29o3default');
+
+/* initialise layouts */
+INSERT INTO broend_layout VALUES (102, '29o3default', 0, 0, 100, 100, 771, 0, 'header {
+	::29o3.mainStylesheet("29o3default", "internal");
+}
+
+design {
+::29o3.setOmitBranding();
+<div class="stripediv">
+	<div class="bluestripe">
+	<img src="lib/images/logo.png" />
+	</div>
+	<div class="textunderstripe">
+::29o3.getBoxContent("Content");
+	</div>
+</div>
+}');
+
+/* initialise stylesheets */
+INSERT INTO broend_stylesheets VALUES ('29o3default', 'body {
+	background-color: white;
+	font-family: sans-serif, arial, helvetica;
+	font-size: 11px;
+	color: black;
+	margin: 0px;
+	padding: 0px;
+}
+
+.stripediv {
+	position: absolute;
+	top: 10%;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	font-family: sans-serif, arial, helvetica;
+	line-height: 130%;
+	text-align: center;
+}
+
+.bluestripe {
+	text-align: center;
+	width: 100%;
+	height: 97px;
+	background-color: #7392a6;
+}
+
+.textunderstripe {
+	text-align: left;
+	background-color: white;
+	color: #666666;
+	position: relative;
+	top: 25px;
+	left: 30%;
+	width: 40%;
+	line-height: 150%;
+	font-family: sans-serif, arial, helvetica;
+	font-size: 12px;
+}
+
+.textunderstripe a:link, .textunderstripe a:active, .textunderstripe a:visited {
+	color: #666666;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.textunderstripe a:hover {
+	text-decoration: none;
+	font-weight: bold;
+	border-bottom: 1px dotted #666666;
+}
+');
+
+/* done */
+
