@@ -324,7 +324,6 @@ $cfgFile = generateConfig();
 
 $filename = "./config.php";
 
-if(is_writable($filename)) {
 
    if (!$handle = fopen($filename, 'a')) {
 	setState(true);
@@ -339,12 +338,6 @@ if(is_writable($filename)) {
        exitConsole();
        exit;
    }
-} else {
-	setState(true);
-	echo "<strong>ERROR: config.php not writable.</strong>";
-	exitConsole();
-	exit();
-}
 
 exitConsole();
 
