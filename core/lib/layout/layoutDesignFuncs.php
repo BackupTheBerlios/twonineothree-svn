@@ -53,12 +53,6 @@ class LayoutDesignFuncs {
 		$name = $this->pdo->getContent("name") . "_" . $params[0];
 		$retval =  $boxArray[$name]["content"];
 		return $retval;
-/*//		$boxArray = $this->pdo->boxes;
-		$name = $this->pdo->getContent("name") . "_" . $params[0];
-		$retval = $this->pdo->getBox($name, "content");
-//		echo "|||" . $retval . "|||";
-		echo $retval;
-		return $retval;*/
 	}
 
 	private function getStaticBox($params) {

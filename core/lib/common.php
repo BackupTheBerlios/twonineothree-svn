@@ -13,6 +13,8 @@
 
 */
 
+require_once($CONFIG['LibDir'] . 'sys/console.php');
+require_once($CONFIG['LibDir'] . 'exception/GeneralException.php');
 
 $nachars_search = array ("'<script[^>]*?>.*?</script>'si",
                 "'<[\/\!]*?[^<>]*?>'si",
@@ -101,6 +103,20 @@ function killScriptKiddies($string) {
 
 	return $string;
 
+}
+
+function DEBUG($message, $level = 0) {
+
+	global $CONFIG;
+	global $console;
+
+	if($CONFIG['Developer_Debug'] && $level <= $CONFIG['DebugLevel']) {
+		if(method_exists($console, "write")) {
+				$console->write($message);
+		} else {
+			throw new GeneralException("SystemConsole Object not available. This means something went *really* wrong!");
+		}
+	}
 }
 
 ?>

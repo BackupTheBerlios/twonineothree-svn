@@ -15,6 +15,8 @@
 require_once($CONFIG['LibDir'] . 'common.php');
 require_once($CONFIG['LibDir'] . 'page/pageDescriptionObject.php');
 require_once($CONFIG['LibDir'] . 'db/' . $CONFIG['DatabaseType'] . '.php');
+require_once($CONFIG['LibDir'] . 'exception/GeneralException.php');
+require_once($CONFIG['LibDir'] . 'exception/CodingException.php');
 
 /*
 	IMPORTANT ABOUT HEADER FUNCTIONS
@@ -48,7 +50,8 @@ class LayoutHeaderFuncs {
 		if(array_search($name, $this->allowedFunctions) !== false) {
 			$retval = $this->{$name}($parameterArray);
 
-			//return $retval;
+			// *NEVER* add a return $value here, since *all* return values (except 0)
+			// are considered error messages when in header functions.
 		}
 	}
 	
@@ -62,16 +65,15 @@ class LayoutHeaderFuncs {
 				$this->pdo->scheduleInsertion_Stylesheet($stylesheetArray['content']);
 				return 0; // no error
 			} else {
+				throw new GeneralException("Stylesheet for this page was not found: " . $params[0]);
 				return 16; // not found
-				// TODO: Add exception, e.g. NotFoundException
 			}
 		}
 		if($params[1] == "external") {
 			$this->pdo->scheduleInsertion_ExternalStylesheet($params[0]);
 		}
 		else {
-			// not internal, not external
-			// TODO: throw exception
+			throw new CodingException("Wrong parameter count, possible missing parameter 2.", __FUNCTION__, "header");
 		}
 	}
 
@@ -83,8 +85,8 @@ class LayoutHeaderFuncs {
 			$this->pdo->scheduleInsertion_Stylesheet($stylesheetArray['content']);
 			return 0; // no error
 		} else {
+			throw new GeneralException("Stylesheet for this page was not found: " . $params[0]);
 			return 16; // not found
-			// TODO: Add exception, e.g. NotFoundException
 		}
 
 	}

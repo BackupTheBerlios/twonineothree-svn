@@ -43,6 +43,7 @@ class PageRequest {
 			$this->wantAdmin = true;
 			// removes the key containing "2mc" from the array
 			// so that it can me used furthermore.
+			DEBUG("PR: Admin wanted.");
 			$tmpString = @$requestString[2];
 		} else {
 			$tmpString = $requestString[0];
@@ -64,11 +65,11 @@ class PageRequest {
 			$siteArr = $this->connector->fetchArray();
 			if($siteArr !== false) {
 				$existingPages = explode(";", $siteArr['members']);
-				// TODO: add code for check if page is accessible
 
 				if(array_search($this->requestedPage, $existingPages) === false) {
 					header("HTTP/1.1 404 Not Found");
 					$this->requestedPage = "404NotFound";
+					DEBUG("PR: Given page not found in database.");
 				}
 				
 				$this->connector->executeQuery("SELECT * FROM " . mktablename("pages") . " WHERE name='" . $this->requestedPage . "'");
@@ -77,6 +78,7 @@ class PageRequest {
 				if($rm->hasUserViewingRights() == false) {
 					header("HTTP/1.1 401 Forbidden");
 					$this->requestedPage = "401Forbidden";
+					DEBUG("PR: Current user has insufficient rights to view this page.");
 				}
 			}
 		} else {
@@ -89,9 +91,11 @@ class PageRequest {
 			if($homeFound) {
 				$this->requestedPage = "home";
 				$this->requestedSite = "default";
+				DEBUG("PR: Falling back to default target.");
 			} else {
 				$this->requestedPage = "InstallationSuccessful";
 				$this->requestedSite = "default";
+				DEBUG("*** fresh 29o3 installation, defaulting to default/InstallationSuccessful ***");
 			}
 		}
 	}

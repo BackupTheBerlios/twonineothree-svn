@@ -70,12 +70,32 @@
 	font-family: sans-serif, helvetica;
 	font-size: 11px;
 	color: black;
-	text-align: center;
-	width: 400px;
-	border: 1px dotted silver;
+	border-top: 1px dotted silver;
 	padding: 4px;
 	line-height: 130%;
 	background-color: #F1F1F1;
+	position: fixed;
+	bottom: 0px;
+	left: 0px; 
+	right: 0px;
+	height: 25px;
+	overflow: scroll;
+	text-align: left;
+	padding-left: 10px;
+	z-index: 100;
+}
+
+.eyecandyConsole:before {
+	content: "29o3 system console > ";
+	font-weight: bold;
+}
+
+.eyecandyConsole:hover {
+	height: 250px;
+}
+
+.eyecandyConsole:focus {
+	height: 0px;
 }
 
 .poweredBy {

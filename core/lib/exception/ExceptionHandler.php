@@ -19,7 +19,6 @@ function ExceptionHandler($exception) {
 	global $output_started;
 	global $header_started;
 	global $body_started;
-	global $nachars_search, $nachars_replace;
 	
 	if(!$output_started) {
 		printf("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n<head>\n<title>29o3</title>\n<link rel=\"stylesheet\" href=\"n_style.css\" />\n</head>\n<body>");
@@ -33,7 +32,7 @@ function ExceptionHandler($exception) {
 	$header_started = true;
 	$body_started = true;
 	$output_started = true;
-	echo '<div class="error_box">29o3: Exception occured<div class="error_text">' . str_replace($nachars_search, $nachars_replace, $exception->__toString()) . '<br/><br/>';
+	echo '<div class="error_box">29o3: Exception occured<div class="error_text">' . /*stripSpecialChars(*/$exception->__toString()/*)*/ . '<br/><br/>';
 	if($CONFIG['Developer_Debug']) {
 		echo '<strong>Traceback:</strong><br/><textarea name="traceback" style="width: 90%; height: 100px; border: 1px solid #666666; font-family: courier; font-size: 11px;" readonly="readonly">';
 		echo $exception->getTraceAsString();
@@ -55,7 +54,7 @@ set_exception_handler("ExceptionHandler");
 
 function ErrorToExceptionWrapper($errno, $errstr, $errfile, $errline) {
 	global $CONFIG;
-	if($errno == (E_NOTICE || E_USER_NOTICE) && $CONFIG['Developer_Debug']) {
+	if(($errno == (E_NOTICE || E_USER_NOTICE) && $CONFIG['Developer_Debug']) || $errno == (E_ERROR || E_WARNING || E_PARSE)) {
 		// since the error handler cannot throw new exceptions properly, we need to
 		// use the dirty, dirty hack of calling the exception handler directly.
 		ExceptionHandler(new GeneralException($errstr . " in file " . $errfile . " on line " . $errline));

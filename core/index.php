@@ -31,6 +31,7 @@ if(version_compare(phpversion(), $SYSTEM_INFO['MinPhpVersion']) < 0) {
 $output_started = false;
 $header_started = false;
 $body_started = false;
+$console = nUlL;
 
 
 global $CONFIG;
@@ -65,27 +66,6 @@ checkConfigWritability("./config.php", $CONFIG['Developer_Debug']);
 bootstrap();
 
 /*
-	function:	DEBUG()
-	purpose:	Does debug output if debugging is enabled
-	---
-	input:		$console - Handle to SystemConsole object
-			$message - not to be explained I think...
-	output:		(none)
-*/
-function DEBUG($console, $message) {
-
-	global $CONFIG;
-
-	if(method_exists($console, "write")) {
-		if($CONFIG['Developer_Debug'])
-			$console->write($message);
-	} else {
-		err("SystemConsole object not available", "SystemConsole object not available.<br>I think this means something went *REALLY* wrong!", 10);
-	}
-}
-// END debugOutput()
-
-/*
 	function:	bootstrap()
 	purpose:	Does the first things to do in setting up output
 	---
@@ -94,18 +74,18 @@ function DEBUG($console, $message) {
 */
 function bootstrap() {
 
-	global $CONFIG, $SYSTEM_INFO, $output_started, $body_started;
+	global $CONFIG, $SYSTEM_INFO, $output_started, $body_started, $console;
 
 	header("Content-type: application/xhtml+xml\r");
 
 	$console = new SystemConsole();
 	
-	DEBUG($console, "Bootstrapping started...");
+	DEBUG("SYS: Bootstrapping started...");
 	
 	$connector = new DatabaseConnector();
 	$connector->setupConnection($CONFIG['DatabaseHost'], $CONFIG['DatabaseUser'], $CONFIG['DatabasePassword'], $CONFIG['DatabaseName'], $CONFIG['DatabasePort']);
 
-	DEBUG($console, "Connected to database.");
+	DEBUG("DB: Connected to database.");
 
 	
 	$request = new PageRequest($connector);
@@ -210,7 +190,7 @@ function bootstrap() {
 		// TODO: Throw exception if no layout found
 	}
 
-	DEBUG($console, $connector->getExecutedQueries() . " queries executed.");
+	DEBUG("DB: " . $connector->getExecutedQueries() . " queries executed.");
 
 	if($CONFIG['Developer_Debug'] == true ) {
 		if($body) {

@@ -101,6 +101,7 @@ class pageDescriptionObject {
 		$this->boxParser = new BoxParser($this);
 
 		$this->wantAdmin = $wantAdmin;
+		DEBUG("PDO: Constructed");
 
 	}
 
@@ -114,6 +115,7 @@ class pageDescriptionObject {
 		}
 
 		$this->site = $siteName;
+		DEBUG("PDO: Page description set.");
 	}
 
 	function getNameDescriptor() {
@@ -177,10 +179,13 @@ class pageDescriptionObject {
 		for($i = 0; $i != $this->scheduledExternalScript_Count; $i++) {
 			$this->headerObject->addScriptExternal($this->scheduledExternalScriptContent[$i], $this->scheduledExternalScriptTypes[$i]);
 		}
+		DEBUG("PDO: Done stylesheet insertions.");
 
 	}
 
 	function getAvailableBoxes() {
+		$boxCount = 0;
+		$availBoxCount = 0;
 		$this->databaseConnector->executeQuery("SELECT * FROM " . mktablename("boxes") . " WHERE owning_page='" . $this->name . "'");
 		if($this->databaseConnector->getNumRows() != 0) {
 			while(($arr = $this->databaseConnector->fetchArray())) {
@@ -189,13 +194,16 @@ class pageDescriptionObject {
 					$arr["content"] = "<em>You do not have access to this box.</em>";
 				} else {
 					$arr["content"] = $this->boxParser->parseBox($arr["content"]);
+					$availBoxCount++;
 				}
 				
 				
 				$tempArray = array($arr["name"] => $arr);
 				$this->boxes = array_merge($tempArray, $this->boxes);
+				$boxCount++;
 			}
 		}
+		DEBUG("PDO: Got $boxCount boxes with $availBoxCount available to current user.");
 	}
 
 	function printHeaderBuffer() {
