@@ -1,38 +1,10 @@
-/*
-	29o3 PostgreSQL 7.3+ bootstrap
-
-	(c) 2004 by Ulrik Guenther <kpanic@00t.org>
-
-	This software subjects to the terms of the file LICENSE
-	you should have received with this distribution.
-	
-	These SQL statements generate the data structures needed
-	for 29o3 to operate and fills some of them with initial values.
-
-	Last modification: 2004/10/30
-
-	*** <WARNING> ***
-	NEVER LET ANY DBMS EXECUTE THIS SQL SCRIPT DIRECTLY!
-	IT *REALLY* NEEDS SOME PREPROCESSING DONE BY 29o3!
-	*** </WARNING> ***
-*/
-
-/*
-   These first four statements create the sequences for the unique
-   identification integers in the various tables.
-*/
 CREATE sequence seq_users START 100 INCREMENT BY 1;
 CREATE sequence seq_groups START 100 INCREMENT BY 1;
 CREATE sequence seq_pages START 500 INCREMENT BY 1;
 CREATE sequence seq_boxes START 1000 INCREMENT BY 1;
-/* CREATE sequence seq_content START 2000 INCREMENT BY 1;  deprecated*/
 CREATE sequence seq_layout START 100 INCREMENT BY 1;
 CREATE sequence seq_sites START 500 INCREMENT BY 1;
 
-/*
-   29o3_pages contains all the pages which can be accessed through
-   29o3. BUT NO CONTENT FOR THESE PAGES!
-*/
 CREATE TABLE broend_pages(
 	id integer DEFAULT nextval('seq_pages')	 NOT NULL UNIQUE PRIMARY KEY,
 	name varchar(128) NOT NULL,
@@ -83,13 +55,13 @@ CREATE TABLE broend_layout(
 
 CREATE TABLE broend_users(
 	uid integer DEFAULT nextval('seq_users') NOT NULL UNIQUE PRIMARY KEY,
-	state smallint DEFAULT 512,
 	username varchar(128),
 	email varchar(128),
 	additionals text,
 	gid integer,
 	password varchar(32),
-	realname varchar(255)
+	realname varchar(255),
+	state smallint DEFAULT 512
 );
 
 CREATE TABLE broend_groups(
@@ -113,7 +85,6 @@ CREATE TABLE broend_sites(
 	defaultlayout varchar(255)	
 );
 
-/* initialise pages */
 INSERT INTO broend_pages VALUES (503, '404NotFound', 0, 0, 100, 100, 771, false, 0, '404: Not Found', '', '', '', '', '', '', '', '', '29o3default');
 INSERT INTO broend_pages VALUES (504, '401Forbidden', 0, 0, 100, 100, 771, false, 0, '401: Forbidden', '', '', '', '', '', '', '', '', '29o3default');
 INSERT INTO broend_pages VALUES (502, 'InstallationSuccessful', 0, 0, 100, 100, 771, false, 0, 'Welcome to 29o3', 'This page is the welcome notice of a successful installation of 29o3', '', '', '', '', '', '', '', '29o3default');
@@ -141,16 +112,12 @@ INSERT INTO broend_boxes VALUES (1013, 'InstallationSuccessful_Content', 0, 0, 1
 	<span style="font-size: 10px;"><em>If this is not the page you expected, please contact the person responsible for this site.</em></span>
 ', 'InstallationSuccessful');
 
-/* initialise groups */
 INSERT INTO broend_groups VALUES (100, 'wheel');
 
-/* initialise users */
 INSERT INTO broend_users VALUES (100, 'root', 'root@localhost', '', 100, 'INVALID_HASH', 'Site Administrator');
 
-/* initialise sites */
 INSERT INTO broend_sites VALUES (500, 'default', '29o3 default site', 'InstallationSuccessful;401Forbidden;404NotFound', 100, 100, 771, '29o3default');
 
-/* initialise layouts */
 INSERT INTO broend_layout VALUES (102, '29o3default', 0, 0, 100, 100, 770, false, 'header {
 	::29o3.mainStylesheet("29o3default", "internal");
 }
@@ -221,4 +188,3 @@ INSERT INTO broend_stylesheets VALUES ('29o3default', 'body {
 }
 ');
 
-/* done */

@@ -33,9 +33,6 @@ class PageRequest {
 
 	function parseRequest() {
 
-		$this->requestedSite = "default";
-		$this->requestedPage = "home";
-
 		$this->userAgent = $_SERVER['HTTP_USER_AGENT'];
 
 		$this->requestType = $_SERVER['REQUEST_TYPE'];
@@ -85,7 +82,20 @@ class PageRequest {
 					$this->requestedPage = "401Forbidden";
 				}
 			}
-			return;
+		} else {
+			$this->connector->executeQuery("SELECT name FROM " . mktablename("pages"));
+			while($arr = $this->connector->fetchArray()) {
+				if($arr["name"] == "home") {
+					$homeFound = true;
+				}
+			}
+			if($homeFound) {
+				$this->requestedPage = "home";
+				$this->requestedSite = "default";
+			} else {
+				$this->requestedPage = "InstallationSuccessful";
+				$this->requestedSite = "default";
+			}
 		}
 	}
 

@@ -71,13 +71,13 @@ CREATE TABLE broend_layout(
 
 CREATE TABLE broend_users(
 	uid integer NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
-	state smallint DEFAULT 512,
 	username varchar(128),
 	email varchar(128),
 	additionals text,
 	gid integer,
 	password varchar(32),
-	realname varchar(255)
+	realname varchar(255),
+	state smallint DEFAULT 512
 );
 
 CREATE TABLE broend_groups(
