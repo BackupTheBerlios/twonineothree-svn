@@ -138,10 +138,12 @@ function mktablename($name) {
 // simple countermeasures for prevention
 // of sql injection attacks
 function killScriptKiddies($string) {
+	
+	$string = rawurldecode($string);
 
-	$string = preg_replace("/\\\\/", "", $string);
-	$string = ereg_replace("\'", "", $string);
-	$string = ereg_replace("\"", "", $string);
+	$string = str_replace("\\", "", $string);
+	$string = str_replace("'", "", $string);
+	$string = str_replace("\"", "", $string);
 //	$string = ereg_replace("\\", "", $string);
 	$string = str_replace("../", "", $string);
 

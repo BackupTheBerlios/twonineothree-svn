@@ -19,6 +19,7 @@ class PageRequest {
 
 	private $requestedPage;
 	private $requestedSite;
+	private $wantAdmin;
 	private $timestamp;
 	private $userAgent;
 	private $requestType;
@@ -42,7 +43,14 @@ class PageRequest {
 		$this->timestamp = 0;
 		
 		$requestString = explode(";", getenv("QUERY_STRING"));
-		$tmpString = $requestString[0];
+		if($requestString[0] == "2mc") {
+			$this->wantAdmin = true;
+			// removes the key containing "2mc" from the array
+			// so that it cn me used furthermore.
+			$tmpString = $requestString[1];
+		} else {
+			$tmpString = $requestString[0];
+		}
 		if($tmpString != "") {
 			$tmpString = killScriptKiddies($tmpString);
 			$tmpString = explode("/", $tmpString);
@@ -63,6 +71,7 @@ class PageRequest {
 			if($siteArr !== false) {
 				$existingPages = explode(";", $siteArr['members']);
 				// TODO: add code for check if page is accessible
+
 				if(array_search($this->requestedPage, $existingPages) === false) {
 					header("HTTP/1.1 404 Not Found");
 					$this->requestedPage = "404NotFound";
@@ -98,6 +107,10 @@ class PageRequest {
 
 	function getRequestedSite() {
 		return $this->requestedSite;
+	}
+
+	function getWantAdmin() {
+		return $this->wantAdmin;
 	}
 
 }

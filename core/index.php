@@ -95,6 +95,7 @@ function bootstrap() {
 	$request = new PageRequest($connector);
 	$request->parseRequest();
 
+	printf('<?xml version="1.0" encoding="UTF-8"?>');
 	printf('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">%s', "\n");
 	printf('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">%s', "\n");
 
@@ -173,6 +174,15 @@ function bootstrap() {
 
 	$pdo->getAvailableBoxes();
 
+	// TODO: add admin authetication
+	if($request->getWantAdmin()) {
+		require_once($CONFIG['LibDir'] . 'admin/adminFuncs.php');
+
+		$af = new adminFuncs($pdo, $request);
+		
+		$pdo->scheduleInsertion_Stylesheet($af->getAdminStylesheet());
+		$pdo->insertBodyDiv("<img src=\"lib/images/adminlogotop.png\" style=\"vertical-align: top; text-align: left; border: 0; padding: 0; margin: 0;\" /><span class=\"adminMenu\" style=\"width: 100%;\">" . $af->getAdminMenu() . "</span>", "adminStripe", "2mc_menu", "29o3 management console");	
+	}
 
 	$layoutManager = new LayoutManager($pdo);
 
