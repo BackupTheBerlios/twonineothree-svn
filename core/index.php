@@ -11,6 +11,9 @@
  
 */
 
+// TODO: This does not exist on Windows, find replacement!
+
+
 // check if the configuration file exists, if yes, exit
 if(!file_exists('./config.php')) {
 	echo "The file config.php, of essential meaning for the correct function of 29o3, does not exist<br/>";
@@ -41,6 +44,8 @@ global $SYSTEM_INFO;
 require_once($CONFIG['LibDir'] . 'sys/console.php');
 //include the database library (defined by the vars above, i know it looks cryptic...)
 require_once($CONFIG['LibDir'] . 'db/' . $CONFIG['DatabaseType'] . '.php');
+// include performances measurement (profiler) class
+require_once($CONFIG["LibDir"] . 'sys/profiler.php');
 // include caching class
 require_once($CONFIG["LibDir"] . 'cache/cacheObject.php');
 // include the xhtml header class
@@ -57,6 +62,9 @@ require_once($CONFIG['LibDir'] . 'page/pageDescriptionObject.php');
 require_once($CONFIG['LibDir'] . 'exception/ExceptionHandler.php');
 // include general exception class
 require_once($CONFIG['LibDir'] . 'exception/GeneralException.php');
+
+$profiler = new Profiler();
+$profiler->addBreakpoint();
 
 set_exception_handler("ExceptionHandler");
 set_error_handler("ErrorToExceptionWrapper");
@@ -76,7 +84,7 @@ bootstrap();
 */
 function bootstrap() {
 
-	global $CONFIG, $SYSTEM_INFO, $output_started, $body_started, $console;
+	global $CONFIG, $SYSTEM_INFO, $output_started, $body_started, $console, $profiler;
 
 	header("Content-type: application/xhtml+xml\r");
 
@@ -218,8 +226,9 @@ function bootstrap() {
 
 			$connector->closeConnection();
 			DEBUG("DB: Connection closed.");
-			$rusage = getrusage();
-			DEBUG("SYS: Resource usage: " . $rusage["ru_majflt"] . "/" . $rusage["ru_utime.tv_usec"] );
+
+			$profiler->addBreakpoint();
+			DEBUG("SYS: Resource usage,  sys:" . $profiler->getBreakpointGrandSysDifference() . "&micro;s usr:" .  $profiler->getBreakpointGrandUserDifference() . "&micro;s" );
 
 
 			DEBUG("SYS: Exiting normally.");
@@ -291,8 +300,9 @@ function bootstrap() {
 			$ao->doBodyJobs();
 
 			DEBUG("DB: " . $connector->getExecutedQueries() . " queries executed.");
-			$rusage = getrusage();
-			DEBUG("SYS: Resource usage: " . $rusage["ru_majflt"] . "/" . $rusage["ru_utime.tv_usec"] );
+			$profiler->addBreakpoint();
+			
+			DEBUG("SYS: Resource usage,  sys:" . $profiler->getBreakpointGrandSysDifference() . "&micro;s usr:" .  $profiler->getBreakpointGrandUserDifference() . "&micro;s" );
 	
 			$connector->closeConnection();
 			DEBUG("DB: Connection closed.");
@@ -332,9 +342,11 @@ function bootstrap() {
 		echo $co->getCacheContent();
 
 		DEBUG("DB: " . $connector->getExecutedQueries() . " queries executed.");
-		$rusage = getrusage();
-		DEBUG("SYS: Resource usage: " . $rusage["ru_majflt"] . "/" . $rusage["ru_utime.tv_usec"] );
-	
+		
+		$profiler->addBreakpoint();
+		DEBUG("SYS: Resource usage,  sys:" . $profiler->getBreakpointGrandSysDifference() . "&micro;s usr:" .  $profiler->getBreakpointGrandUserDifference() . "&micro;s" );
+
+
 		$connector->closeConnection();
 		DEBUG("DB: Connection closed.");
 

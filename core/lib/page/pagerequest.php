@@ -69,7 +69,11 @@ class PageRequest {
 				$this->requestedPage = $tmpString[0];
 			}
 			if(count($tmpString) >= 2) {
-				$this->requestedPage = $tmpString[1];
+				if(strlen($tmpString[1]) == 0) {
+					$this->requestedPage = "home";
+				} else {
+					$this->requestedPage = $tmpString[1];
+				}
 				$this->requestedSite = $tmpString[0];
 			}
 			$this->connector->executeQuery("SELECT * FROM " . mktablename("sites") . " WHERE name='" . $this->requestedSite . "';");
@@ -79,8 +83,9 @@ class PageRequest {
 
 				if(array_search($this->requestedPage, $existingPages) === false) {
 					header("HTTP/1.1 404 Not Found");
+					$orig_page = $this->requestedPage;
 					$this->requestedPage = "404NotFound";
-					DEBUG("PR: Given page not found in database.");
+					DEBUG("PR: Given page not found in database (" . $this->requestedSite . "/" . $orig_page . ")");
 					return;
 				}
 				

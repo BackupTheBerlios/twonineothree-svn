@@ -35,9 +35,11 @@ class BoxParser {
 
 	// BoxParser::parseLayout
 	// this function parses the boxes which are saved in the [PREFIX]_boxes
-	// table. It goes through them line after line, and ignores lines beginning 
+	// table. It goes through them line after line, and does NOT ignore lines beginning 
 	// with '//' and processes ::29o3.someFunction() commands.
 	function parseBox($boxBuffer) {
+
+		$this->boxBuffer = "";
 
 		$buffer = "";
 		$buffer = explode("\n", $boxBuffer);
@@ -55,10 +57,10 @@ class BoxParser {
 				$line = str_replace($function["fullname"], $output, $line);
 
 			}
-			$this->boxBuffer .= "|" . $line;
+			$this->boxBuffer .= $line;
 			
 		}
-		return $boxBuffer; //this->boxBuffer;
+		return $this->boxBuffer;
 	}
 
 	/*	parseFunction produces the following array:
@@ -101,7 +103,7 @@ class BoxParser {
 			preg_match_all("/\"[A-Za-z0-9_\\s]+\"/", $functionArguments, $results);
 
 			$i = 0;
-			while($results[0][$i] != "") {	
+			while(isset($results[0][$i])) {	
 				
 				$results[0][$i] = str_replace("\"", "", $results[0][$i]);
 				$resultsArray[$i+1] = $results[0][$i];

@@ -70,13 +70,14 @@
 	font-family: sans-serif, helvetica;
 	font-size: 10px;
 	color: black;
-	border-top: 1px solid black;
+	border: 1px solid black;
+	border-bottom: 0px;
 	line-height: 130%;
-	background-color: #CC6060;
+	background-image: url(lib/images/consbg.png);
 	position: fixed;
 	bottom: 0px;
-	left: 0px; 
-	right: 0px;
+	left: 100px; 
+	right: 100px;
 	height: 14px;
 	text-align: left;
 	padding-left: 10px;
@@ -85,14 +86,14 @@
 }
 
 .eyecandyConsole:before {
-	content: "29o3 console (hover over to enlarge)";
+	content: " 29o3 system console";
 	font-weight: bold;
 }
 
 .eyecandyConsole:hover {
 	height: 170px;
 	overflow: scroll;
-	background-color: #F1F1F1;
+	background-image: url(lib/images/consbg_hover.png);
 }
 
 .poweredBy {
