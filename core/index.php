@@ -1,7 +1,7 @@
 <?php
 /*
   29o3 content management system
-  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  (c) 2003-2005 by Ulrik Guenther <kpanic@00t.org>
   This software subjects to the license described in the
   file LICENSE you should have received with this distribution.
  
@@ -11,11 +11,22 @@
  
 */
 
+$ALLOWED_MGMT_FUNCS = array(
+
+	"Overview",
+	"Appearance",
+	"Files",
+	"Media",
+	"Structure",
+	"Pages"
+
+);
+
 // check if the configuration file exists, if yes, exit
 if(!file_exists('./config.php')) {
 	echo "The file config.php, of essential meaning for the correct function of 29o3, does not exist<br/>";
 	echo "If you just extracted your 29o3 archive, edit the file blankconfig.php then rename it to config.php<br/>";
-	echo "If 29o3's coder was not too lazy, you can also use the included installer by simply calling<br/><a href=\"installer.php\">install.php</a> with a web browser.";
+	echo "If 29o3's coder was not too lazy, you can also use the included installer by simply calling<br/><a href=\"install.php\">install.php</a> with a web browser.";
 	exit;
 }
 
@@ -83,7 +94,7 @@ bootstrap();
 */
 function bootstrap() {
 
-	global $CONFIG, $SYSTEM_INFO, $output_started, $body_started, $console, $profiler;
+	global $CONFIG, $SYSTEM_INFO, $output_started, $body_started, $console, $profiler, $ALLOWED_MGMT_FUNCS;
 
 	header("Content-type: application/xhtml+xml\r");
 
@@ -111,7 +122,7 @@ function bootstrap() {
 		$header = new XHTMLHeader();
 		$body = new XHTMLBody();
 
-		$pdo = new pageDescriptionObject($header, $body, $connector, $request->getWantAdmin());
+		$pdo = new pageDescriptionObject($header, $body, $connector, $request->getWantAdmin(), $request->getAdminFuncParam());
 
 		$connector->executeQuery("SELECT * FROM " . mktablename("pages") . " WHERE name='" . $request->getRequestedPage() . "'");
 
@@ -195,7 +206,7 @@ function bootstrap() {
 	
 			$pdo->getAvailableBoxes();
 	
-			$connector->executeQuery("SELECT * FROM " . mktablename("layouts") . " WHERE name='" . $pageInfo['layout'] . "'");
+			$connector->executeQuery("SELECT * FROM " . mktablename("layouts") . " WHERE lname='" . $pageInfo['layout'] . "'");
 			if($connector->getNumRows() != 0) {
 				$currentLayout = $connector->fetchArray();
 				$layoutManager->setLayoutFile($currentLayout['file']);
@@ -288,7 +299,7 @@ function bootstrap() {
 			$ao = NULL;
 			
 			$func = $request->getWantedAdminFunc();
-			if($func == "" || ($func != "Overview" || $func != "UserManagement")) {
+			if(!array_search($func, $ALLOWED_MGMT_FUNCS)) {
 				$func = "Overview";
 			}
 			// administration needs admin logged in

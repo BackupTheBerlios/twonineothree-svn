@@ -1,7 +1,7 @@
 <?php
 /*
   29o3 content management system
-  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  (c) 2003-2005 by Ulrik Guenther <kpanic@00t.org>
   This software subjects to the license described in the
   file LICENSE you should have received with this distribution.
  

@@ -1,7 +1,7 @@
 <?php
 /*
   29o3 content management system
-  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  (c) 2003-2005 by Ulrik Guenther <kpanic@00t.org>
   This software subjects to the license described in the
   file LICENSE you should have received with this distribution.
  
@@ -93,8 +93,9 @@ class pageDescriptionObject {
 
 	private $doBrand = true;
 	private $wantAdmin = false;
+	private $adminFuncParam = "";
 
-	function __construct(XHTMLHeader &$xhtmlHeaderObject, XHTMLBody &$xhtmlBodyObject, DatabaseConnector &$connector, $wantAdmin = 0) {
+	function __construct(XHTMLHeader &$xhtmlHeaderObject, XHTMLBody &$xhtmlBodyObject, DatabaseConnector &$connector, $wantAdmin = 0, $adminFuncParam = "") {
 
 		// initialize references to XHTML* Objects
 		$this->headerObject =& $xhtmlHeaderObject;
@@ -104,6 +105,7 @@ class pageDescriptionObject {
 		$this->boxParser = new BoxParser($this);
 
 		$this->wantAdmin = $wantAdmin;
+		$this->adminFuncParam = $adminFuncParam;
 		DEBUG("PDO: Constructed");
 
 	}
@@ -259,6 +261,10 @@ class pageDescriptionObject {
 
 	function getWantAdmin() {
 		return $this->wantAdmin;
+	}
+
+	function getAdminFuncParam() {
+		return $this->adminFuncParam;
 	}
 
 	function getBuffers() {

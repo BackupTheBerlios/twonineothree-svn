@@ -1,0 +1,46 @@
+/*
+  29o3 content management system
+  (c) 2003-2005 by Ulrik Guenther <kpanic@00t.org>
+  This software subjects to the license described in the
+  file LICENSE you should have received with this distribution.
+ 
+  CSS for appearance part of management console
+*/
+
+.layout_table {
+	display: table;
+	width: 530px;
+	display: block;
+}
+
+.layout_tr {
+	display: table-row;
+	height: 25px;
+	line-height: 25px;
+	width: 530px;
+}
+
+.layout_td {
+	display: table-cell;
+	border-bottom: 1px dotted silver;
+	padding: 1px;
+	padding-left: 3px;
+}
+
+.editorframe {
+	height: 300px;
+	width: 550px;
+	overflow: scroll;
+	margin: 7px;
+	border: 0px;
+	margin-left: 15px;
+
+}
+
+#td_lname {
+	width: 200px;
+}
+
+#td_pname {
+	width: 150px;
+}

@@ -1,7 +1,7 @@
 <?php
 /*
   29o3 content management system
-  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  (c) 2003-2005 by Ulrik Guenther <kpanic@00t.org>
   This software subjects to the license described in the
   file LICENSE you should have received with this distribution.
  
@@ -44,6 +44,31 @@ class adminFuncs {
 */
 		$adminMenu = "";
 		return $adminMenu;
+	}
+
+	static function getAdminDesignStart($name) {
+		$string = '<br/><br/><br/>';
+		$string .= '<div align="center">';
+		$string .= '<div class="enclosure" align="center">';
+		if ($name != "") {
+			$name = " &middot; " . $name;
+		}
+		$string .= '<div class="headline">29o3 management console' . $name . '</div>';
+		$string .= '<div style="text-align: left; width: 600px; font-size: 12px;">';
+		$string .= ':: <a href="' . mksyslink("?mgmt;Overview;") .  '">Home</a> :: <a href="' . mksyslink("?mgmt;Help;") . '">Help</a> :: <a href="' . mksyslink("?mgmt;About;") . '">About</a> ::';
+		$string .= '</div><br/>';
+
+		return $string;
+
+	}
+
+	static function getAdminDesignEnd() {
+		$string = '<br/><br/>';
+		$string .= '</div>';
+		$string .= '</div>';
+
+		return $string;
+
 	}
 }
 

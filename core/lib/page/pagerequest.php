@@ -1,7 +1,7 @@
 <?php
 /*
   29o3 content management system
-  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  (c) 2003-2005 by Ulrik Guenther <kpanic@00t.org>
   This software subjects to the license described in the
   file LICENSE you should have received with this distribution.
  
@@ -21,6 +21,7 @@ class PageRequest {
 	private $requestedSite;
 	private $wantAdmin;
 	private $wantedAdminFunc;
+	private $wantedAdminFuncParam;
 	private $timestamp;
 	private $userAgent;
 	private $requestType;
@@ -49,7 +50,7 @@ class PageRequest {
 			// and as we think the admin is "clean" to the users, the console p.e. is not needed
 //			$CONFIG["Developer_Debug"] = false;
 			// removes the key containing "2mc" from the array
-			// so that it can me used furthermore.
+			// so that it can be used furthermore.
 			DEBUG("PR: Admin wanted.");
 			if(isset($requestString[2])) {
 				$tmpString = @$requestString[2];
@@ -59,6 +60,7 @@ class PageRequest {
 			//if(@$requestString[1] == ("Overview" || "PageWizard" ||"GeneralSetup" || "Help")) {
 				$this->wantAdmin++;
 				$this->wantedAdminFunc = $requestString[1];
+				$this->wantedAdminFuncParam = $requestString[2];
 				DEBUG("PR: Admin non-db page requested: " . $requestString[1]);
 				return;
 			//}
@@ -161,6 +163,10 @@ class PageRequest {
 
 	function getWantedAdminFunc() {
 		return $this->wantedAdminFunc;
+	}
+
+	function getAdminFuncParam() {
+		return $this->wantedAdminFuncParam;
 	}
 
 	function getError() {
