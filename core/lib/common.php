@@ -198,4 +198,9 @@ function getMsgFromNo($num) {
 
 }
 
+function importPackage($class, $package) {
+	global $CONFIG;
+	require_once($CONFIG['LibDir'] . $class . '/' . $package . '.php');
+}
+
 ?>

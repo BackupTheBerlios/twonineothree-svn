@@ -13,15 +13,13 @@
 	!
 	! ALTERING THE FOLLOWING LINES MIGHT CAUSE 29o3 TO BEHAVE
 	! UNEXPECTEDLY. PLEASE LEAVE THEM AS THEY ARE UNLESS YOU
-	! HAVE A GOOD REASON TO CHANGE THEM.
+	! HAVE A GOOD REASON TO CHANGE THEM. EXPECT APOCALYPSE
+	! IF YOU CHANGE THEM, IF CURIOUS, GO TO AN ATOMIC SHELTER.
 */
 
 $SYSTEM_INFO = array(
-	"SystemVersion"		=>	"0.1 beta",
+	"SystemVersion"		=>	"0.5-svn",
 	"SystemCodename"	=>	"Broend",
-//	will be removed from future version
-//	not needed anymore
-//	"SystemFeatures"	=>	"postgres",
 	"MinPhpVersion"		=>	"5.0.0"
 );
 

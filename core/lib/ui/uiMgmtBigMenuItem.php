@@ -48,8 +48,7 @@ class uiMgmtBigMenuItem extends uiElement {
 
 	function __toString() {
 	 	static $count = 1;	
-//		$this->htmlContent .= '<div class="' . $this->styleClass . '"><a id="link' . $count . '" onMouseOver="onLink(\'' . $count . '\')" href="' . $this->link .'"><strong>' . $this->title . "</strong></a>\n" . $this->content . '</div>';
-		$this->htmlContent .= '<a id="link' . $count . '" onMouseOver="onLink(\'' . $count . '\')" href="' . $this->link .'"><strong>' . $this->title . '</strong></a>';
+		$this->htmlContent .= '<a id="link' . $count . '" title="' . $this->content . '" href="' . $this->link . '"><strong>' . $this->title . '</strong></a>';
 
 		// we do not iterate through menu items here since a menuitem 
 		// cannot have subitems.

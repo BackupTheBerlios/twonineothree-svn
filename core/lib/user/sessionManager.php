@@ -167,6 +167,10 @@ class sessionManager {
 		
 	}
 
+	function invalidateSession() {
+		$this->db->executeQuery("DELETE FROM " . mktablename("sessions") . " WHERE id='" . $this->cur_uniqueID . "'");
+	}
+
 	function __destruct() {
 
 	}

@@ -18,6 +18,8 @@ define("UI_PLACEHOLDER",0x00000004);
 define("UI_CONTAINER",	0x00000008);
 define("UI_MENUITEM",	0x00000016);
 define("UI_MENU",	0x00000032);
+define("UI_FORM",	0x00000064);
+define("UI_FORMELEMENT",0x00000128);
 
 class uiElement {
 
@@ -41,8 +43,15 @@ class uiElement {
 
 	}
 
-	function attach(uiElement $element) {
-		array_push($this->childElements, &$element);
+	function attach($element) {
+		if(is_array($element)) {
+			foreach($element as $single) {
+				array_push($this->childElements, $single);
+			}
+		} else {
+			array_push($this->childElements, &$element);
+		}
+			
 	}
 
 	function detach($name) {
@@ -75,6 +84,10 @@ class uiElement {
 
 	function getClassName() {
 		return $this->className;
+	}
+
+	function getHtmlContent() {
+		return $this->htmlContent;
 	}
 
 }

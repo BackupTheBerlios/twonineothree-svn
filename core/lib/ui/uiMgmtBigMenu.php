@@ -39,33 +39,14 @@ class uiMgmtBigMenu extends uiElement {
 
 	function __toString() {
 		
-//		$this->htmlContent .= '<script type="text/javascript" src="content/scripts/experimentmenu.js"></script>'. "\n";
 		$this->htmlContent .= '<div class="' . $this->style . '" id="' . $this->name . '">' . "\n";
 		$counter = 0;
 		$openrow = false;
 		$opencell = false;
 		foreach($this->childElements as $key => $childElement) {
-			/*if($counter == 0) {
-				$this->htmlContent .= '<div class="row">' . "\n\t";
-			}
-
-			$this->htmlContent .= '<div class="cell">' . "\n\t";
-			$opencell = true;
-			*/
 			$this->htmlContent .= $childElement->__toString() . "<br/>\n";
-			/*if($opencell) {
-				$this->htmlContent .= '</div>' . "\n";
-			}
-			$counter++;
-			if($counter == $this->maxCellCount) {
-				$counter = 0;
-				$this->htmlContent .= "</div>\n";
-			}*/
 		}
 
-		/*if($counter != 0) {
-			$this->htmlContent .= "</div>\n";
-		}*/
 		$this->htmlContent .= '</div>' . "\n";
 		return $this->htmlContent;
 	}

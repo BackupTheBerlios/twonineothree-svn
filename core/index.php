@@ -14,12 +14,18 @@
 $ALLOWED_MGMT_FUNCS = array(
 
 	"Overview",
+	"Preferences",
 	"Appearance",
 	"Files",
 	"Media",
 	"Structure",
-	"Pages"
-
+	"Accounts",
+	"Advanced",
+	"Logout",
+	"ModifyUser",
+	"DeleteUser",
+	"ModifyGroup",
+	"DeleteGroup"
 );
 
 // check if the configuration file exists, if yes, exit
@@ -310,7 +316,12 @@ function bootstrap() {
 
 				$func = "Login";
 			}
+			if($func == "Logout") {
+				$sm->invalidateSession();
+				header("Location: " . mksyslink("?"));
+			}
 			require_once($CONFIG["LibDir"] . 'admin/admin' . $func . '.php');
+
 
 			$name = "Admin" . $func;
 			$ao = new $name($connector, $pdo, $sm);

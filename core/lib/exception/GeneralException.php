@@ -16,12 +16,11 @@ class GeneralException extends Exception {
 	
 	public function __construct($message, $code = 0, $severity = 0) {
 		$this->severity = $severity;
-		$message = "29o3 General Exception (" . $message . ")";
 		parent::__construct($message, $code);
 	}
 
 	public function __toString() {
-		return $this->message . " occured in " . __CLASS__ . " on line " .  __LINE__ . ".";
+		return $this->message;
 	}
 
 	public function getSeverity() {

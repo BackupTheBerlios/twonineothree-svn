@@ -50,7 +50,7 @@ class AdminLogin {
 	}
 
 	function doBodyJobs() {
-		if($this->stage == 1) {
+		if($this->stage == 1 && $this->loginOK != true) {
 			$this->pdo->setOmitBranding(true);
 			$this->pdo->insertIntoBodyBuffer('<span id="bg" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; text-align: center; vertical-align: middle;">' . "\n");
 			$this->pdo->insertIntoBodyBuffer("<form method=\"post\" name=\"loginform\" id=\"loginform\" action=\"" . $_SERVER['PHP_SELF'] . "?" . $_SERVER["QUERY_STRING"] .  "\">\n");

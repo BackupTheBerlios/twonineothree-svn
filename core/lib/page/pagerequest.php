@@ -48,22 +48,19 @@ class PageRequest {
 			$this->wantAdmin = 1;
 			// this is needed due to the stylesheets
 			// and as we think the admin is "clean" to the users, the console p.e. is not needed
-//			$CONFIG["Developer_Debug"] = false;
 			// removes the key containing "2mc" from the array
 			// so that it can be used furthermore.
 			DEBUG("PR: Admin wanted.");
 			if(isset($requestString[2])) {
-				$tmpString = @$requestString[2];
+				$tmpString = $requestString[2];
+				$this->wantedAdminFuncParam = $requestString[2];
+				$this->wantedAdminFunc = $requestString[1];
 			} else {
 				$tmpString = "";
 			}
-			//if(@$requestString[1] == ("Overview" || "PageWizard" ||"GeneralSetup" || "Help")) {
-				$this->wantAdmin++;
-				$this->wantedAdminFunc = $requestString[1];
-				$this->wantedAdminFuncParam = $requestString[2];
-				DEBUG("PR: Admin non-db page requested: " . $requestString[1]);
-				return;
-			//}
+			$this->wantAdmin++;
+			DEBUG("PR: Admin non-db page requested: " . $requestString[1]);
+			return;
 		} else {
 			$tmpString = $requestString[0];
 		}
