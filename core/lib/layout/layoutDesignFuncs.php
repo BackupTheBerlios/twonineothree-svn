@@ -28,6 +28,7 @@ class LayoutDesignFuncs {
 	private $allowedFunctions = array(
 		"getBoxContent",
 		"getStaticBox",
+		"getConsecutiveBoxes",
 		"getProperty",
 		"setOmitBranding",
 		"getSysSignature"
@@ -53,6 +54,22 @@ class LayoutDesignFuncs {
 		$name = $this->pdo->getContent("name") . "_" . $params[0];
 		$retval =  $boxArray[$name]["content"];
 		return $retval;
+	}
+
+	/*
+	getConsecutiveBoxes()
+	especially useful for creating newspages and/or weblogs
+	params[0] is the sublayout to apply
+
+	Consecutive Boxes need to be numbered from 0 to 65535 per page.
+	Their name in the boxes table must be
+	PAGENAME_Consecutive_[0-65535]
+	*/
+	private function getConsecutiveBoxes($params) {
+		$boxArray = $this->pdo->boxes;
+		for($i = 0; $i <= 65536; $i++) {
+			$name = $this->pdo->getContent("name") . "_Consecutive_" . $i;
+		}
 	}
 
 	private function getStaticBox($params) {

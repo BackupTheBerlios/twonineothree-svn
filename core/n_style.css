@@ -68,34 +68,31 @@
 
 .eyecandyConsole {
 	font-family: sans-serif, helvetica;
-	font-size: 11px;
+	font-size: 10px;
 	color: black;
-	border-top: 1px dotted silver;
-	padding: 4px;
+	border-bottom: 1px solid black;
 	line-height: 130%;
-	background-color: #F1F1F1;
+	background-color: #CC6060;
 	position: fixed;
-	bottom: 0px;
+	top: 0px;
 	left: 0px; 
 	right: 0px;
-	height: 25px;
-	overflow: scroll;
+	height: 14px;
 	text-align: left;
 	padding-left: 10px;
 	z-index: 100;
+	overflow: hidden;
 }
 
 .eyecandyConsole:before {
-	content: "29o3 system console > ";
+	content: "29o3 console (hover over to enlarge)";
 	font-weight: bold;
 }
 
 .eyecandyConsole:hover {
-	height: 200px;
-}
-
-.eyecandyConsole:focus {
-	height: 0px;
+	height: 170px;
+	overflow: scroll;
+	background-color: #F1F1F1;
 }
 
 .poweredBy {

@@ -192,6 +192,11 @@ function bootstrap() {
 	}
 
 	DEBUG("DB: " . $connector->getExecutedQueries() . " queries executed.");
+	
+	$connector->closeConnection();
+	DEBUG("DB: Connection closed.");
+
+	DEBUG("SYS: Exiting normally.");
 
 	if($CONFIG['Developer_Debug'] == true ) {
 		if($body) {
@@ -221,8 +226,6 @@ function bootstrap() {
 
 	printf('</html>');
 
-	// close db connection
-	$connector->closeConnection();
 }
 // END bootstrap()
 

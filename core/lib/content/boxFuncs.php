@@ -28,6 +28,7 @@ class BoxFuncs {
 	private $allowedFunctions = array(
 		"makeLink",
 		"getStaticBox",
+		"getConsecutiveBoxes",
 		"getProperty",
 		"setOmitBranding",
 		"getSysSignature"
@@ -77,6 +78,20 @@ class BoxFuncs {
 
 	private function getStaticBox($params) {
 		
+	}
+
+	private function getConsecutiveBoxes($params) {
+		$boxArray = $this->pdo->boxes;
+		$buf = "";
+		for($i = 0; $i <= 65536; $i++) {
+			$name = $this->pdo->getContent("name") . "_Consecutive_" . $i;
+			if(isset($boxArray[$name]["content"])) {
+				$buf .= $boxArray[$name]["content"];
+			} else {
+				return $buf;
+			}
+		}
+		return $buf;
 	}
 
 	private function getProperty($params) {
