@@ -85,8 +85,10 @@
 	width: 100%;
 	text-align: center;
 	line-height: 230%;
-	position: absolute;
-	bottom: 5px;
+	position: fixed;
+	background-color: white;
+	border: 1px dotted silver;
+	bottom: -1px;
 }
 
 .poweredBy a:link,

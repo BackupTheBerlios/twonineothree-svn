@@ -27,7 +27,11 @@ class PageRequest {
 
 		$this->requestType = $_SERVER['REQUEST_TYPE'];
 
-		$this->timestamp = 0; 
+		$this->timestamp = 0;
+
+		if($_GET['page'] != "") {
+			$this->requestedPage = $_GET['page'];
+		}
 	}
 
 	function getRequestUserAgent() {
