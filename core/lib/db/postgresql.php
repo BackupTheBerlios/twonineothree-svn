@@ -5,7 +5,7 @@
   This software subjects to the license described in the
   file LICENSE you should have received with this distribution.
  
- 
+
   PostgreSQL Database Connector for 29o3
  
   CHANGELOG:

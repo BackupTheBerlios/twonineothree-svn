@@ -14,6 +14,7 @@
 
 require_once('./config.php');
 require_once($CONFIG['LibDir'] . 'common.php');
+require_once($CONFIG['LibDir'] . 'sys/param.php');
 
 $output_started = false;
 
@@ -194,11 +195,13 @@ function bootstrap() {
 	$pdo->destroyHeaderObject();
 
 	DEBUG($console, $connector->getExecutedQueries() . " queries executed.");
-	
-	if($body) {
-		$body->eyecandyConsole($console);
-	} else {
-		$console->printBuffer();
+
+	if($CONFIG['DeveloperDebug'] == true ) {
+		if($body) {
+			$body->eyecandyConsole($console);
+		} else {
+			$console->printBuffer();
+		}
 	}
 
 	$body->insertDiv("poweredBy", "Powered by <a href=\"http://twonineothree.berlios.de\" target=\"_blank\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "Powered by 29o3");	

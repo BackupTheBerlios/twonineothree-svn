@@ -15,6 +15,7 @@
 require_once($CONFIG['LibDir'] . 'common.php');
 require_once($CONFIG['LibDir'] . 'page/pageDescriptionObject.php');
 require_once($CONFIG['LibDir'] . 'db/' . $CONFIG['DatabaseType'] . '.php');
+require_once($CONFIG['LibDir'] . 'user/user.php');
 
 class LayoutDesignFuncs {
 
@@ -57,11 +58,20 @@ class LayoutDesignFuncs {
 	}
 
 	private function getStaticBox($params) {
-
+		
 	}
 
 	private function getProperty($params) {
-		return $this->pdo->getContent($params[0]);
+		switch($params[0]) {
+
+		case "author_realname":
+			$user = new User($this->pdo->databaseConnector, "", $this->pdo->getContent("owner"));
+			return $user->getRealName();
+		case "author_nickname":
+			$user = new User($this->pdo->databaseConnector, "", $this->pdo->getContent("owner"));
+			return $user->getNickName();
+		
+		}
 	}
 	
 
