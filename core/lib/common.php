@@ -60,9 +60,9 @@ $nachars_replace = array ("",
 
 function checkConfigWritability($filename = "./config.php", $ifOrIfNot) {
 
-	if(!$ifOrIfNot) {
+	if($ifOrIfNot) {
 		if(is_writable($filename)) {
-			err("Configuration is world-writable", "Your configurationfile (29o3_ROOT/config.php) is still world-writable.\nThis is only required for installation/upgrade purposes and is a strong security risk for 29o3.\nPlease remove writability on config.php if installation/upgrade was accomplished successfully!", 10);
+			throw new GeneralException("29o3's configuration file config.php is world-writable which is potentially a big huge security risk. Please change this, otherwise 29o3 will refuse to work.");
 		}
 	}
 }
@@ -74,32 +74,6 @@ function stripSpecialChars($string) {
 	$string = preg_replace ($nachars_search, $nachars_replace, $string);
 	
 	return $string;
-}
-
-function strfaut($db, $id) {
-	
-	global $_CONFIG;
-	
-	$db->query("SELECT name FROM " . $_CONFIG['DatabasePrefix'] . "users WHERE id=$id LIMIT 1");
-	if(($author = $db->fetchArray($db->result))) {
-		return $author['name'];
-	}
-	else {
-		return "not found";
-	}
-}
-
-function strfmail($db, $id) {
-	
-	global $_CONFIG;
-	
-	$db->query("SELECT email FROM " . $_CONFIG['DatabasePrefix'] . "users WHERE id=$id LIMIT 1");
-	if(($email = $db->fetchArray($db->result))) {
-		return $email['email'];
-	}
-	else {
-		return "not found";
-	}
 }
 
 function mktablename($name) {
@@ -119,7 +93,6 @@ function killScriptKiddies($string) {
 	$string = str_replace("\\", "", $string);
 	$string = str_replace("'", "", $string);
 	$string = str_replace("\"", "", $string);
-//	$string = ereg_replace("\\", "", $string);
 	$string = str_replace("../", "", $string);
 
 	if(strpos("/", $string) === 0) {

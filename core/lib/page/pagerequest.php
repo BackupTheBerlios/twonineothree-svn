@@ -43,7 +43,7 @@ class PageRequest {
 			$this->wantAdmin = true;
 			// removes the key containing "2mc" from the array
 			// so that it can me used furthermore.
-			$tmpString = $requestString[2];
+			$tmpString = @$requestString[2];
 		} else {
 			$tmpString = $requestString[0];
 		}
@@ -52,12 +52,10 @@ class PageRequest {
 			$tmpString = explode("/", $tmpString);
 			
 			if(count($tmpString) == 1) {
-//				echo "one";
 				$this->requestedSite = "default";
 				$this->requestedPage = $tmpString[0];
 			}
 			if(count($tmpString) >= 2) {
-//				echo "two";
 				$this->requestedPage = $tmpString[1];
 				$this->requestedSite = $tmpString[0];
 			}

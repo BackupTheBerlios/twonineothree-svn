@@ -55,6 +55,7 @@ require_once($CONFIG['LibDir'] . 'exception/ExceptionHandler.php');
 // include general exception class
 require_once($CONFIG['LibDir'] . 'exception/GeneralException.php');
 
+set_exception_handler("ExceptionHandler");
 set_error_handler("ErrorToExceptionWrapper");
 
 checkConfigWritability("./config.php", $CONFIG['Developer_Debug']);
