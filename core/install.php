@@ -339,7 +339,7 @@ $filename = "config.php";
        exit;
    }
 
-exitConsole();
+echo "</span></div>";
 
 ?>
 29o3 has been installed successfully. <a href="index.php?InstallationSuccessful">Please click here to go on.</a>
