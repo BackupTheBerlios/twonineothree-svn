@@ -53,6 +53,8 @@ class BoxFuncs {
 	- or -
 	makeLink("otherSite", "Name of the Link", "Name of the site", "Name of the page");
 	- or -
+	makeLink("www", "Name of the link", "Address of the site without http://");
+	- or -
 	makeLink("userDefined", "Name of the Link", "someotherlink");
 
 	The last one is especially useful if you want to create a eMail-Link though
@@ -64,6 +66,9 @@ class BoxFuncs {
 		}
 		if($params[0] == "otherSite") {
 			return "<a href=\"?" . $params[2] . "/" . $params[3] . "\">" . $params[1] . "</a>";
+		}
+		if($params[0] == "www") {
+			return "<a href=\"" . $params[2] . "\">" . $params[1] . "</a>";
 		}
 		if($params[0] == "userDefined") {
 			return "<a href=\"" . $params[2] . "\">" . $params[1] . "</a>";
@@ -87,11 +92,22 @@ class BoxFuncs {
 		}
 	}
 
+	/*
+	This function proves to be very useful when you do not want
+	29o3 to put it's link where it wants. With this function in
+	a box, you are able to deactivate the signature. However,
+	I would appreciate it if you could include it in place
+	of your page where it does not hurt the design. For this,
+	see the next function.
+	*/
 	private function setOmitBranding($params) {
 		$this->pdo->setOmitBranding(true);
-		
 	}
 
+	/*
+	This function simply returns the version information signature of
+	29o3.
+	*/
 	private function getSysSignature($params) {
 		
 		global $SYSTEM_INFO;

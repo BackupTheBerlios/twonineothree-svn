@@ -27,7 +27,7 @@ class SystemConsole {
 		output:	(constructor)
 	*/
 	function __construct() {
-		$this->buffer = "";
+		$this->buffer = "<br/>";
 	}	
 	
 	/*

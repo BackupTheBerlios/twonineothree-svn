@@ -80,6 +80,7 @@ function bootstrap() {
 
 	$console = new SystemConsole();
 	
+	DEBUG("<strong>This is 29o3 " . $SYSTEM_INFO['SystemVersion'] . " Codename " . $SYSTEM_INFO['SystemCodename'] . "</strong>");
 	DEBUG("SYS: Bootstrapping started...");
 	
 	$connector = new DatabaseConnector();
