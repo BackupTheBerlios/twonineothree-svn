@@ -104,6 +104,66 @@ class API {
 		return $this->layoutBuffer;
 	}
 
+	function beginSuccessiveBoxes() {
+		ob_start();
+	}
+
+	function endSuccessiveBoxes() {
+		$layout = ob_get_contents();
+		ob_end_clean();
+
+		$boxes = $this->getBoxes();
+
+		foreach($boxes as $key => $box) {
+			if($box['successive'] != true || $box['successive'] != "t") {
+				continue;
+			}
+
+			$layout_copy = $layout;
+
+			$layout_copy = str_replace("{BOX:TITLE}", $box['title'], $layout_copy);
+			$layout_copy = str_replace("{BOX:AUTHOR}", $box['owner'], $layout_copy);
+			$layout_copy = str_replace("{BOX:CONTENT}", $box['content'], $layout_copy);
+
+			$layout_copy = $layout_copy;
+			echo $layout_copy;
+		}
+	}
+
+	function makeTOC($link, $exclude = "", $cutoff = 0) {
+
+		$link_style = $link;
+
+		$exclude_list = explode(",", $exclude);
+
+		$boxes = $this->getBoxes();
+
+		foreach($boxes as $box) {
+
+			$sboxname = substr($box['name'], strlen($this->pdo->getPageName()) + 1, strlen($box['name']));
+			if(in_array($sboxname, $exclude_list)) {
+				continue;
+			}	
+				
+			if($cutoff > 0 && strlen($box['title']) > $cutoff) {
+				$substr = substr($box['title'], $cutoff, strlen($box['title']) - $cutoff);
+				$nextwspos = strpos($substr, " ");
+				$text = substr($box['title'], 0, $cutoff + $nextwspos);
+				$text .= "...";
+			} else {
+			 	$text = $box['title'];
+			}
+				
+				
+			$link_style = str_replace("{LINK:ANCHOR}", $box['title'], $link_style);
+			$link_style = str_replace("{LINK:TITLE}", $text, $link_style);
+
+			echo $link_style . "\n";
+			$link_style = $link;
+		}
+
+	}
+
 }
 
 ?>

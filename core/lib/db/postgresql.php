@@ -93,6 +93,7 @@ class DatabaseConnector {
 		}
 		
 		$this->res = pg_get_result($this->link);
+		DEBUG("DB: Query was: <em>$sql_commands</em>");
 		$this->executedQueries++;
 
 		return true;
