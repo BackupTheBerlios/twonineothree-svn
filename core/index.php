@@ -173,7 +173,6 @@ function bootstrap() {
 
 	$pdo->getAvailableBoxes();
 
-	$pdo->insertBodyDiv("Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "poweredBy", "poweredBy_Banner", "Powered by 29o3");
 
 	$layoutManager = new LayoutManager($pdo);
 
@@ -185,16 +184,6 @@ function bootstrap() {
 		// TODO: Throw exception if no layout found
 	}
 
-
-	// print the buffer of the header since we're done with it :)
-	$pdo->doInsertions();
-	$pdo->printHeaderBuffer();
-	// destruct the header object, it might not be used from here on.
-	// as php doesn't offer something like C++'s delete [someobject]
-	// we simply set $header to NULL.
-	$pdo->destroyHeaderObject();
-
-	$body_started = true;
 	DEBUG($console, $connector->getExecutedQueries() . " queries executed.");
 
 	if($CONFIG['DeveloperDebug'] == true ) {
@@ -204,8 +193,20 @@ function bootstrap() {
 			$console->printBuffer();
 		}
 	}
+		
+	if($pdo->getBrandingState() == true) {
+		$pdo->insertBodyDiv("Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "poweredBy", "poweredBy_Banner", "Powered by 29o3");
+	}
 
+	// print the buffer of the header since we're done with it :)
+	$pdo->doInsertions();
+	$pdo->printHeaderBuffer();
+	// destruct the header object
+	$pdo->destroyHeaderObject();
 
+	$body_started = true;
+
+	// print out the body buffer 
 	$pdo->printBodyBuffer();
 
 	printf('</html>');

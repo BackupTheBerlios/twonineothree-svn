@@ -28,7 +28,9 @@ class LayoutDesignFuncs {
 	private $allowedFunctions = array(
 		"getBoxContent",
 		"getStaticBox",
-		"getProperty"
+		"getProperty",
+		"setOmitBranding",
+		"getSysSignature"
 	);
 
 	function __construct(pageDescriptionObject &$pdo) {
@@ -72,6 +74,18 @@ class LayoutDesignFuncs {
 			return $user->getNickName();
 		
 		}
+	}
+
+	private function setOmitBranding($params) {
+		$this->pdo->setOmitBranding(true);
+		
+	}
+
+	private function getSysSignature($params) {
+		
+		global $SYSTEM_INFO;
+		return "Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"];
+		
 	}
 	
 

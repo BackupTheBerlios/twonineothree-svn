@@ -169,7 +169,7 @@ class LayoutParser {
 		$functionArguments = substr($line, $openBracketPos+1, $closeBracketPos-$openBracketPos-1);
 
 		$fullname .= "(" . $functionArguments . ");";
-
+		
 		if(strlen($functionArguments) >= 2) {
 			
 			preg_match_all("/\"[A-Za-z0-9_\\s]+\"/", $functionArguments, $results);

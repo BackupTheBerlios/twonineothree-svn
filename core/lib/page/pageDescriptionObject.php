@@ -82,6 +82,8 @@ class pageDescriptionObject {
 
 	public $databaseConnector;
 
+	private $doBrand = true;
+
 	function __construct(XHTMLHeader &$xhtmlHeaderObject, XHTMLBody &$xhtmlBodyObject, DatabaseConnector &$connector) {
 
 		// initialize references to XHTML* Objects
@@ -193,8 +195,20 @@ class pageDescriptionObject {
 
 	}
 
-	function insertParagraph($content, $styleClass = "", $id = "", $title = "", $additionals = "") {
+	function insertBodyParagraph($content, $styleClass = "", $id = "", $title = "", $additionals = "") {
 		$this->bodyObject->insertTag("p", $content, $styleClass, $id, $title, $additionals);
+	}
+
+	function setOmitBranding($choose) {
+		if($choose) {
+			$this->doBrand = false;
+			return;
+		}
+		$this->doBrand = true;
+	}
+
+	function getBrandingState() {
+		return $this->doBrand;
 	}
 }
 
