@@ -346,7 +346,10 @@ if(is_writable($filename)) {
 	exit();
 }
 
+exitConsole();
+
 ?>
+29o3 has been installed successfully. <a href="index.php?InstallationSuccessful">Please click here to go on.</a>
 </span>
 </div>
 <?php
