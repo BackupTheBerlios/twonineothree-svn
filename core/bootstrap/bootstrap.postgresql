@@ -1,3 +1,4 @@
+BEGIN;
 CREATE sequence seq_users START 100 INCREMENT BY 1;
 CREATE sequence seq_groups START 100 INCREMENT BY 1;
 CREATE sequence seq_pages START 500 INCREMENT BY 1;
@@ -188,3 +189,4 @@ INSERT INTO broend_stylesheets VALUES ('29o3default', 'body {
 }
 ');
 
+COMMIT;
