@@ -35,7 +35,6 @@ class PageRequest {
 
 		$this->userAgent = $_SERVER['HTTP_USER_AGENT'];
 
-		$this->requestType = $_SERVER['REQUEST_TYPE'];
 
 		$this->timestamp = 0;
 		

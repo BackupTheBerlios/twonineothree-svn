@@ -15,8 +15,7 @@
  
 */
 
-$DATABASECONNECTOR_TEST_FUNCTION = "pgsql_connect";
-$DATABASECONNECTOR_DRIVER_NAME = "PostgresSQL";
+require_once($CONFIG['LibDir'] . 'exception/DatabaseException.php');
 
 class DatabaseConnector {
 
@@ -77,7 +76,7 @@ class DatabaseConnector {
 		$connString = "host=" . $this->server . " port=" . $this->port . " dbname=" . $this->database . " user=" . $this->user . " password=" . $this->password;
 		$this->link = pg_connect($connString);
 		if($this->link == NULL) {
-			return false;
+			throw new DatabaseException("PostgreSQL database connection failed.", 2);
 		}
 		return true;
 
@@ -90,7 +89,7 @@ class DatabaseConnector {
 	function executeQuery($sql_commands) {
 
 		if(!pg_send_query ($this->link, $sql_commands)) {
-			return false;
+			throw new DatabaseException("PostgreSQL database query failed on following query:\n$sql_commands");
 		}
 		
 		$this->res = pg_get_result($this->link);
@@ -148,7 +147,7 @@ class DatabaseConnector {
 
 	function checkPhpSupport() {
 		if(!function_exists("pg_version")) {
-			die("PHP has to be compiled with PostgreSQL support in order to use PostgreSQL as database. Please recompile PHP with the option --with-pgsql or get adequate modules installed.");
+			throw new DatabaseException("PHP has to be compiled with PostgreSQL support in order to use PostgreSQL as database. Please recompile PHP with the option --with-pgsql or get adequate modules installed.");
 			return false;
 		}
 		return true;

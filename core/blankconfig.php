@@ -20,7 +20,7 @@ $CONFIG = array(
 	
 	/*** 29o3 DIRECTORY CONFIGURATION ***/
 	/* A trailing slash at the end of both of these entries is important */
-	"LibDir"		=>	"/var/www//29o3/lib/",	// path to 29o3 libraries, has to be edited!
+	"LibDir"		=>	"/var/www/29o3/lib/",	// path to 29o3 libraries, has to be edited!
 	"MediaDir"		=>	"/var/www/29o3/media/", // path to 29o3 media (images, etc.), has to be edited!
 	
 	/*** 29o3 COMMON CONFIGURATION ***/

@@ -31,7 +31,9 @@ $nachars_search = array ("'<script[^>]*?>.*?</script>'si",
 		"'(\!)'",
 		"'(\?)'",
 		"'(\")'",
-		"'(\%22)'"
+		"'(\%22)'",
+		"'(\\r)'",
+		"'(\\n)'"
 		);
 
 $nachars_replace = array ("",
@@ -51,41 +53,14 @@ $nachars_replace = array ("",
 		 "",
 		 "",
 		 "",
-		 ""
+		 "",
+		 "<br/>",
+		 "<br/>"
 		 );
-
-function err($title, $text, $fatality) {
-	
-	global $CONFIG;
-	global $SYSTEM_INFO;
-	global $output_started;
-	global $body_started;
-	
-	$text = str_replace("\n", "<br/>", $text);
-	
-	if(!$output_started) {
-		printf("<html>\n<head>\n<title>29o3</title>\n<link rel=\"stylesheet\" href=\"n_style.css\" />\n</head>\n<body>\n");
-	}
-	if(!$body_started && $output_started) {
-		printf('<head><link rel="stylesheet" href="n_style.css" /></head><body>');
-	}
-	echo '<div class="error_box">' . $title . '<div class="error_text">' . $text . '<br/><br/><br/><a href="http://twonineothree.berlios.de/bugreport.php?id=' . $id . '" title="Click here to report a bug. Additional information is needed.">Report a bug</a> | <a href="calladmin.php?id=' . $id . '" title="Click here to contact the administrator of this website.">Contact administrator</a></div></div>' . "\n";
-		
-	// check if error notification mail should be sent.
-	if($CONFIG['CriticalNotify']) {
-		mail($CONFIG['CriticalNotifyAddr'], "29o3 (" . $VERSION['version'] . "/" . $VERSION['codename'] . ") Critical Notify", $text, "Cc: " . $_SETTINGS['CriticalNotifyCC'] . "\r\nFrom: 29o3 <29o3@localhost>\r\n");
-	}
-
-	if($fatality >= $CONFIG['DebugLevel']) {
-		printf("\n</body>\n</html>");
-		die;
-	}
-	
-}
 
 function checkConfigWritability($filename = "./config.php", $ifOrIfNot) {
 
-	if(!ifOrIfNot) {
+	if(!$ifOrIfNot) {
 		if(is_writable($filename)) {
 			err("Configuration is world-writable", "Your configurationfile (29o3_ROOT/config.php) is still world-writable.\nThis is only required for installation/upgrade purposes and is a strong security risk for 29o3.\nPlease remove writability on config.php if installation/upgrade was accomplished successfully!", 10);
 		}

@@ -42,6 +42,9 @@ class LayoutParser {
 
 		$buffer = explode("\n", $layoutBuffer);
 
+		$in_header = false;
+		$in_design = false;
+
 		$multilineComment = false;
 		
 		for($i = 0; $i < count($buffer); $i++) {
@@ -80,17 +83,17 @@ class LayoutParser {
 			
 			// can anyone tell me if this regex is okay for this job?
 			// i hate regex... cause i don't understand them
-			preg_match("/(header|design)(\\r|\\s|\\n)+\{/", $line, $block_matches);
-			if($block_matches[1] == "header") {
-				$in_header = true;
-//				$in_design = false;
-				continue;
-			}
+			$matches = preg_match("/(header|design)(\\r|\\s|\\n)+\{/", $line, $block_matches);
+			if($matches == 1) {
+				if($block_matches[1] == "header") {
+					$in_header = true;
+					continue;
+				}
 
-			if($block_matches[1] == "design") {
-				$in_design = true;
-//				$in_header = false;
-				continue;
+				if($block_matches[1] == "design") {
+					$in_design = true;
+					continue;
+				}
 			}
 
 			if($in_header) {
@@ -193,7 +196,7 @@ class LayoutParser {
 			preg_match_all("/\"[A-Za-z0-9_\\s]+\"/", $functionArguments, $results);
 
 			$i = 0;
-			while($results[0][$i] != "") {	
+			while(isset($results[0][$i])) {	
 				
 				$results[0][$i] = str_replace("\"", "", $results[0][$i]);
 				$resultsArray[$i+1] = $results[0][$i];

@@ -29,6 +29,7 @@ if(version_compare(phpversion(), $SYSTEM_INFO['MinPhpVersion']) < 0) {
 
 
 $output_started = false;
+$header_started = false;
 $body_started = false;
 
 
@@ -49,6 +50,12 @@ require_once($CONFIG['LibDir'] . 'layout/layoutManager.php');
 require_once($CONFIG['LibDir'] . 'page/pagerequest.php');
 // include PageDescriptionObject
 require_once($CONFIG['LibDir'] . 'page/pageDescriptionObject.php');
+// include the Exception handler
+require_once($CONFIG['LibDir'] . 'exception/ExceptionHandler.php');
+// include general exception class
+require_once($CONFIG['LibDir'] . 'exception/GeneralException.php');
+
+set_error_handler("ErrorToExceptionWrapper");
 
 checkConfigWritability("./config.php", $CONFIG['Developer_Debug']);
 
@@ -204,7 +211,7 @@ function bootstrap() {
 
 	DEBUG($console, $connector->getExecutedQueries() . " queries executed.");
 
-	if($CONFIG['DeveloperDebug'] == true ) {
+	if($CONFIG['Developer_Debug'] == true ) {
 		if($body) {
 			$body->eyecandyConsole($console);
 		} else {
@@ -219,6 +226,9 @@ function bootstrap() {
 	// print the buffer of the header since we're done with it :)
 	$pdo->doInsertions();
 	$pdo->printHeaderBuffer();
+
+	$header_started = true;
+	
 	// destruct the header object
 	$pdo->destroyHeaderObject();
 

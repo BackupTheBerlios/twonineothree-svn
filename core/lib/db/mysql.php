@@ -18,7 +18,7 @@
 class DatabaseConnector {
 
 	private $DRIVER_INFO = array(
-		"DatabaseType"			=>	"mysqll",
+		"DatabaseType"			=>	"mysql",
 		"DatabaseConnectorVersion"	=>	"0.0.1",
 		"DatabaseConnectorAuthor"	=>	"Markus Hesse",
 		"DatabaseConnectorAuthorMail"	=>	"digitaldevil@oc-hartware.de",
@@ -63,7 +63,7 @@ class DatabaseConnector {
 
 		$this->link = mysql_connect("$this->server:$this->port", $this->user, $this->password);
 		if($this->link == NULL) {
-			die("Database connection failed! [" . __FILE__ . " line" . __LINE__);
+			throw new DatabaseException("MySQL database connection failed.");
 		}
 
 		mysql_select_db($database);
@@ -80,7 +80,7 @@ class DatabaseConnector {
 			$sql_commands = substr($sql_commands, 0, strlen($sql_commands)-1);
 		}
 		$this->res = mysql_query ($sql_commands, $this->link)
-			or err("Database Panic", "A database panic occured:\n" . mysql_errno() . " (" . mysql_error() . ")");
+			or throw new DatabaseException("MySQL query failed for following query:\n$sql_commands");
 
 	}
 
@@ -131,7 +131,7 @@ class DatabaseConnector {
 
 	function checkPhpSupport() {
 		if(!function_exists("mysql_connect")) {
-			die("PHP has to be compiled with MySQL support in order to use MySQL as database. Please recompile PHP with the option --with-mysql or get adequate modules installed.");
+			throw new DatabaseException("PHP has to be compiled with MySQL support in order to use MySQL as database. Please recompile PHP with the option --with-mysql or get adequate modules installed.");
 			return false;
 		}
 		return true;
