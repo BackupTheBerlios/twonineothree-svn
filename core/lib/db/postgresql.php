@@ -11,6 +11,7 @@
   CHANGELOG:
   somewhen Aug 2004	Initial version
   2004/09/04		Changed pg_query to pg_send_query. Tricky, tricky!
+  2004/10/27		Minor bugfixes
  
 */
 

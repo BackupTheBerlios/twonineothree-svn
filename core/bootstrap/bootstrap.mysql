@@ -1,5 +1,5 @@
 /*
-	29o3 PostgreSQL 7.3+ bootstrap
+	29o3 MySQL 4.0+ 
 
 	(c) 2004 by Ulrik Guenther <kpanic@00t.org>
 
@@ -9,7 +9,7 @@
 	These SQL statements generate the data structures needed
 	for 29o3 to operate and fills some of them with initial values.
 
-	Last modification: 2004/09/04
+	Last modification: 2004/10/27
 
 	*** <WARNING> ***
 	NEVER LET ANY DBMS EXECUTE THIS SQL SCRIPT DIRECTLY!
@@ -18,81 +18,70 @@
 */
 
 /*
-   These first four statements create the sequences for the unique
-   identification integers in the various tables.
-*/
-CREATE sequence seq_users START 100;
-CREATE sequence seq_groups START 100;
-CREATE sequence seq_pages START 500;
-CREATE sequence seq_boxes START 1000;
-CREATE sequence seq_content START 2000;
-CREATE sequence seq_layout START 100;
-
-/*
    29o3_pages contains all the pages which can be accessed through
    29o3. BUT NO CONTENT FOR THESE PAGES!
 */
 CREATE TABLE broend_pages(
-	id integer DEFAULT nextval('seq_pages')	 NOT NULL UNIQUE PRIMARY KEY,
+	id integer NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
 	name varchar(128) NOT NULL,
 	cdate bigint NOT NULL,
 	mdate bigint NOT NULL,
 	owner integer,
 	ogroup integer,
 	rights smallint,
-	hidden boolean DEFAULT false,
+	hidden bool DEFAULT 0,
 	publishdate bigint,
-	title varchar(256),
-	description varchar(256),
-	contributors varchar(512),
+	title varchar(255),
+	description varchar(255),
+	contributors text,
 	publisher varchar(128),
 	language varchar(2),
 	coverage varchar(64),
 	copyright varchar(64),
 	stylesheet varchar(128),
-	boxes varchar(512),
+	boxes text,
 	layout varchar(128)
 );
 
 CREATE TABLE broend_boxes(
-	id integer DEFAULT nextval('seq_boxes') NOT NULL UNIQUE PRIMARY KEY,
+	id integer NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
 	name varchar(128) NOT NULL UNIQUE,
 	cdate bigint NOT NULL,
 	mdate bigint NOT NULL,
 	owner integer,
 	ogroup integer,
 	rights smallint,
-	hidden boolean DEFAULT false,
-	stylesheet varchar(256),
+	hidden bool DEFAULT 0,
+	stylesheet varchar(255),
 	content text,
-	owning_page varchar(256)
+	owning_page varchar(255)
 );
 
 CREATE TABLE broend_layout(
-	id integer DEFAULT nextval('seq_layout') NOT NULL UNIQUE PRIMARY KEY,
+	id integer NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
 	name varchar(128) NOT NULL,
 	cdate bigint NOT NULL,
 	mdate bigint NOT NULL,
 	owner integer,
 	ogroup integer,
 	rights smallint,
-	hidden boolean DEFAULT false,
+	hidden bool DEFAULT 0,
 	content text
 );
 
 CREATE TABLE broend_users(
-	uid integer DEFAULT nextval('seq_users') NOT NULL UNIQUE PRIMARY KEY,
+	uid integer NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
 	state smallint DEFAULT 512,
 	username varchar(128),
 	email varchar(128),
 	additionals text,
 	gid integer,
 	password varchar(32),
-	realnmae varchar(256)
+	realname varchar(255)
 );
 
 CREATE TABLE broend_groups(
-	gid integer DEFAULT nextval('seq_groups') NOT NULL UNIQUE PRIMARY KEY,
+	gid integer NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
 	name varchar(128)
 );
 

@@ -7,13 +7,23 @@
  
  
   MySQL Database Connector for 29o3
+  Written by Markus Hesse <digitaldevil@oc-hartware.de>
  
-  *** THIS DATABASE CONNECTOR IS CURRENTLY NOT USABLE ***
+  CHANGELOG:
+  2004/10/26		Initial version
 */
 
 
 
 class DatabaseDriver {
+
+	private $DRIVER_INFO = array(
+		"DatabaseType"			=>	"mysqll",
+		"DatabaseConnectorVersion"	=>	"0.0.1",
+		"DatabaseConnectorAuthor"	=>	"Markus Hesse",
+		"DatabaseConnectorAuthorMail"	=>	"digitaldevil@oc-hartware.de",
+		"DatabaseConnectorStatus"	=>	"devel"
+	);
 
 	private $server;
 	private $port;
@@ -28,6 +38,13 @@ class DatabaseDriver {
 
 	function __construct() {
 		$this->link = NULL;
+	}
+
+	function __destruct() {
+		$this->link = NULL;
+		$this->res = NULL;
+		$this->user = NULL;
+		$this->password = NULL;
 	}
 
 	function setupConnection($srv, $usr, $pw, $database, $prt) {
@@ -107,6 +124,22 @@ class DatabaseDriver {
 
 	function getLastError() {
 		return $this->lasterr;
+	}
+
+	function checkPhpSupport() {
+		if(!function_exists("mysql_connect")) {
+			die("PHP has to be compiled with MySQL support in order to use MySQL as database. Please recompile PHP with the option --with-mysql or get adequate modules installed.");
+			return false;
+		}
+		return true;
+	}
+
+	function getConnectorInformation() {
+		return ($this->DRIVER_INFO);
+	}
+
+	function getExecutedQueries() {
+		return $this->executedQueries;
 	}
 }
 

@@ -209,6 +209,9 @@ function bootstrap() {
 	$body->printBuffer();
 
 	printf('</html>');
+
+	// close db connection
+	$connector->closeConnection();
 }
 // END bootstrap()
 
