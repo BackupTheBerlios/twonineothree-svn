@@ -80,7 +80,7 @@ class cacheObject {
 	}
 
 	function setScheduleCaching($to_be_or_not_to_be) {
-		$this->scheduleCaching = true;
+		$this->scheduleCaching = $to_be_or_not_to_be;
 	}
 
 	function getScheduleCaching() {

@@ -108,29 +108,38 @@ class API {
 		ob_start();
 	}
 
-	function endSuccessiveBoxes() {
+	function endSuccessiveBoxes($group = "") {
 		$layout = ob_get_contents();
 		ob_end_clean();
 
 		$boxes = $this->getBoxes();
 
+//		mdBoxArraySort(&$boxes, "title", "asc");
+		
 		foreach($boxes as $key => $box) {
 			if($box['successive'] != true || $box['successive'] != "t") {
 				continue;
 			}
 
+			if($group != "") { 
+				if($box['group'] != $group) {
+					continue;
+				}
+			}
+				
 			$layout_copy = $layout;
 
 			$layout_copy = str_replace("{BOX:TITLE}", $box['title'], $layout_copy);
 			$layout_copy = str_replace("{BOX:AUTHOR}", $box['owner'], $layout_copy);
 			$layout_copy = str_replace("{BOX:CONTENT}", $box['content'], $layout_copy);
+			$layout_copy = str_replace("{BOX:ID}", $box['id'], $layout_copy);
 
 			$layout_copy = $layout_copy;
 			echo $layout_copy;
 		}
 	}
 
-	function makeTOC($link, $exclude = "", $cutoff = 0) {
+	function makeTOC($link, $group = "", $exclude = "", $cutoff = 0) {
 
 		$link_style = $link;
 
@@ -138,10 +147,12 @@ class API {
 
 		$boxes = $this->getBoxes();
 
+//		mdBoxArraySort($boxes, "title", "asc");
+
 		foreach($boxes as $box) {
 
 			$sboxname = substr($box['name'], strlen($this->pdo->getPageName()) + 1, strlen($box['name']));
-			if(in_array($sboxname, $exclude_list)) {
+			if(in_array($sboxname, $exclude_list) || $box['group'] != $group) {
 				continue;
 			}	
 				
@@ -157,11 +168,16 @@ class API {
 				
 			$link_style = str_replace("{LINK:ANCHOR}", $box['title'], $link_style);
 			$link_style = str_replace("{LINK:TITLE}", $text, $link_style);
+			$link_style = str_replace("{LINK:ID}", $box['id'], $link_style);
 
 			echo $link_style . "\n";
 			$link_style = $link;
 		}
 
+	}
+
+	function setBoxOrder($sortby, $order) {
+		mdBoxArraySort($this->pdo->boxes, $sortby, $order);
 	}
 
 }

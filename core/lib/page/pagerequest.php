@@ -24,6 +24,7 @@ class PageRequest {
 	private $timestamp;
 	private $userAgent;
 	private $requestType;
+	private $error = 0;
 
 	private $connector;
 
@@ -86,6 +87,7 @@ class PageRequest {
 					$orig_page = $this->requestedPage;
 					$this->requestedPage = "404NotFound";
 					DEBUG("PR: Given page not found in database (" . $this->requestedSite . "/" . $orig_page . ")");
+					$this->error = 404;
 					return;
 				}
 				
@@ -96,6 +98,7 @@ class PageRequest {
 					header("HTTP/1.1 401 Forbidden");
 					$this->requestedPage = "401Forbidden";
 					DEBUG("PR: Current user has insufficient rights to view this page.");
+					$this->error = 401;
 					return;
 				}
 			} else {
@@ -105,9 +108,11 @@ class PageRequest {
 				$this->requestedPage = "404NotFound";
 				$this->requestedSite = "default";
 				DEBUG("PR: Given site does not exist, falling back to " . $this->requestedSite . "/" . $this->requestedPage . ". Requested site/page was: " . $or_site . "/" . $or_page);
+				$this->error = 404;
 				return;
 			}
 		} else {
+			$homeFound = false;
 			$this->connector->executeQuery("SELECT name FROM " . mktablename("pages"));
 			while($arr = $this->connector->fetchArray()) {
 				if($arr["name"] == "home") {
@@ -152,6 +157,10 @@ class PageRequest {
 
 	function getWantedAdminFunc() {
 		return $this->wantedAdminFunc;
+	}
+
+	function getError() {
+		return $this->error;
 	}
 
 }

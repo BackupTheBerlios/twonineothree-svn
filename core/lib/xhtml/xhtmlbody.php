@@ -36,7 +36,7 @@ class XHTMLBody {
 			err("System console object invalid","EyecandyConsole() got an invalid system console object.\nThis is unlikely to happen without *ANY* reason, please contact the administrator!", $CONFIG['DebugLevel']+1);
 		}
 
-		$this->buffer .= '<center><div class="eyecandyConsole">' . $consoleObject->getBuffer() . '</div></center>';
+		$this->buffer .= '<div class="eyecandyConsole">' . $consoleObject->getBuffer() . '</div>';
 	}
 
 	function insertDiv($styleClass, $content, $title = "", $additionals = "") {

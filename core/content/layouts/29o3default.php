@@ -9,7 +9,7 @@ $api->beginLayout();
 ?>
 <div class="stripediv">
 	<div class="bluestripe">
-	<img src="lib/images/logo.png" />
+	<img src="lib/images/logo.png" alt="29o3 logo" />
 	</div>
 	<div class="textunderstripe">
 	<?php $api->getBoxContent("Content"); ?>

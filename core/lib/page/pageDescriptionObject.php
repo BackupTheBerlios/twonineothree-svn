@@ -71,7 +71,8 @@ class pageDescriptionObject {
 		"language",
 		"coverage",
 		"stylesheet",
-		"layout"
+		"layout",
+		"no_cache"
 	);
 
 	private $scheduledStylesheets = array();
@@ -145,6 +146,7 @@ class pageDescriptionObject {
 	function scheduleInsertion_Stylesheet($content) {
 		array_push($this->scheduledStylesheets, $content);
 		$this->scheduledStylesheet_Count++;
+		DEBUG("PDO: Stylesheet count is: " . $this->scheduledStylesheet_Count);
 	}
 
 	function scheduleInsertion_ExternalStylesheet($filename) {
@@ -166,19 +168,19 @@ class pageDescriptionObject {
 
 	function doInsertions() {
 
-		for($i = 0; $i != $this->scheduledStylesheet_Count; $i++) {
+		for($i = 0; $i < $this->scheduledStylesheet_Count; $i++) {
 			$this->headerObject->addStylesheet($this->scheduledStylesheets[$i]);
 		}
 
-		for($i = 0; $i != $this->scheduledExternalStylesheet_Count; $i++) {
+		for($i = 0; $i < $this->scheduledExternalStylesheet_Count; $i++) {
 			$this->headerObject->addStylesheetExternal($this->scheduledExternalStylesheets[$i]);
 		}
 
-		for($i = 0; $i != $this->scheduledScript_Count; $i++) {
+		for($i = 0; $i < $this->scheduledScript_Count; $i++) {
 			$this->headerObject->addScript($this->scheduledScriptContent[$i], $this->scheduledScriptTypes[$i]);
 		}
 		
-		for($i = 0; $i != $this->scheduledExternalScript_Count; $i++) {
+		for($i = 0; $i < $this->scheduledExternalScript_Count; $i++) {
 			$this->headerObject->addScriptExternal($this->scheduledExternalScriptContent[$i], $this->scheduledExternalScriptTypes[$i]);
 		}
 		DEBUG("PDO: Done stylesheet insertions.");

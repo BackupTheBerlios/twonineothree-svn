@@ -105,6 +105,18 @@ function killScriptKiddies($string) {
 
 }
 
+function killScriptKiddiesGently(&$string) {
+
+	$string = rawurldecode($string);
+
+	$string = str_replace("\\", "\\", $string);
+	$string = str_replace("'", "&acute;", $string);
+	$string = str_replace("\"", "&quot;", $string);
+	$string = str_replace("&", "&amp;", $string);
+
+	return $string;
+}
+
 function DEBUG($message, $level = 0) {
 
 	global $CONFIG;
@@ -117,6 +129,60 @@ function DEBUG($message, $level = 0) {
 			throw new GeneralException("SystemConsole Object not available. This means something went *really* wrong!");
 		}
 	}
+}
+
+// mdBoxArraySort works on *REFERENCES* !!!
+function mdBoxArraySort(&$array, $by, $order) {
+
+	$tmpArr = array();
+
+	foreach($array as $key => $value) {
+		
+		$tmp = array($key => $value["$by"]);
+
+		$tmpArr = array_merge($tmp, $tmpArr);
+
+	}
+
+
+	if($order == "desc") {
+		asort($tmpArr);
+		reset($tmpArr);
+	} else {
+		arsort($tmpArr);
+		reset($tmpArr);
+	}
+
+
+	$sortedBoxes = array();
+
+	foreach($tmpArr as $key => $value) {
+		
+		$tempArray = array($array[$key]["name"] => $array[$key]);
+		$sortedBoxes = array_merge($tempArray, $sortedBoxes);
+		
+	}
+
+	$array = $sortedBoxes;
+
+}
+
+function getMsgFromNo($num) {
+
+	$errortable = array(
+	0	=>	"No error. Why did you ask me for a description?!",
+	1	=>	"System level error",
+	401	=>	"Forbidden",
+	404	=>	"Not Found"
+	);
+
+	if(isset($errortable[$num])) {
+		return $errortable[$num];
+	} else {
+		return "Unknown error.";
+	}
+	// never reached
+
 }
 
 ?>

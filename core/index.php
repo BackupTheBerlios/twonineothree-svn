@@ -185,6 +185,11 @@ function bootstrap() {
 
 		// this is the r0x0r1ng stylesheet which controls how system messages (errors, etc.) appear
 		$pdo->scheduleInsertion_ExternalStylesheet("n_style.css");
+
+		if($pdo->getContent('no_cache') == 1) {
+			$co->setScheduleCaching(false);
+			DEBUG("CACHE: Caching deactivated on request.");
+		}
 	
 		// now, get the page's stylesheet; it might be empty, but we'll add it if not :)
 		if($request->getWantAdmin() <= 1) {
@@ -193,12 +198,6 @@ function bootstrap() {
 				DEBUG("CACHE: Admin wanted, caching deactivated.");
 			}
 		
-			$connector->executeQuery("SELECT * FROM " . mktablename("stylesheets") . " WHERE " . mktablename("stylesheets") . ".name='" . $request->getRequestedPage() . "'" );
-			if($connector->getNumRows() != 0) {
-				$localStylesheets = $connector->fetchArray();
-				$pdo->scheduleInsertion_Stylesheet($localStylesheets['content']);
-			}
-			
 			$layoutManager = new LayoutManager($pdo);
 	
 			$pdo->getAvailableBoxes();
