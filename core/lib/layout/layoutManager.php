@@ -15,6 +15,7 @@
 // include the layout parser/lexer
 require_once($CONFIG['LibDir'] . 'layout/layoutParser.php');
 require_once($CONFIG['LibDir'] . 'page/pageDescriptionObject.php');
+require_once($CONFIG['LibDir'] . 'api/api.php');
 
 class LayoutManager {
 
@@ -35,8 +36,6 @@ class LayoutManager {
 		$this->currentLayoutName = "";
 		$this->currentLayoutBuffer = $layoutBuffer;
 
-		$this->layoutParser = new LayoutParser($this->pdo);
-
 		if($this->currentLayoutBuffer = "") {
 			$this->layoutAlreadyParsed = false;
 			$this->layoutReadyForParsing = false;
@@ -47,12 +46,10 @@ class LayoutManager {
 	}
 
 	function __destruct() {
-		$this->layoutParser = NULL;
 	}
 
-	function setLayout($layoutBuffer) {
-		$this->currentLayoutBuffer = $layoutBuffer;
-		$this->layoutReadyForParsing = true;
+	function setLayoutFile($layoutFile) {
+		$this->currentLayoutName = $layoutFile;
 	}
 
 	function getLayoutAlreadyParsed() {
@@ -60,8 +57,17 @@ class LayoutManager {
 	}
 
 	function parseLayout() {
+		
+		global $CONFIG;
+
+		$api = new API(&$this->pdo);
+		
 		if(!$this->layoutAlreadyParsed && $this->layoutReadyForParsing) {
-			$this->layoutParser->parseLayout($this->currentLayoutBuffer);
+			
+			require_once($CONFIG["ContentDir"] . "layouts/" . $this->currentLayoutName . ".php");
+
+			$this->pdo->insertIntoBodyBuffer($api->getBufferContent());
+			
 		}
 	}
 }

@@ -53,6 +53,8 @@ class cacheObject {
 		$filename = $this->siteName . "_" . $this->pageName . "_" . sha1($this->siteName . "_" . $this->pageName . "_" . $this->latestChange);
 		
 		$this->pFileName = $filename;
+
+		// cancel here for testing new layout thinx
 		
 		if(!file_exists($CONFIG["CacheDir"] . $filename)) {
 			// cached file does not exists _OR_ is outdated, so delete any file with matching site and page name.

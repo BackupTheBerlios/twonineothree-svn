@@ -9,6 +9,22 @@ hesitate to search for help in the 29o3 forums.
 
 -----------------------------------------------------------
 
+2004-12-19
+	* 29o3 no longer uses its own file format for layouts.
+	  Instead of, "normal" PHP files represent layouts, which
+	  enables even more flexibility in 29o3.
+	  To get an idea what I mean, have a look at
+	  content/layouts/29o3default.php
+	  
+	  NOTICE: The file ending is subject to change, check
+	  this file soon.
+	  
+	* because 29o3 is not using its own layout format anymore,
+	  the "broend_layout" table has been abandoned. Its
+	  replacement is the table "broend_layouts", which holds
+	  the filenames and internal names of installed layout
+	  files.
+
 2004-10-26:
 	* Version number bumped to 0.1beta
 	* table layout change massively

@@ -9,6 +9,12 @@
   LayoutDesignFuncs class: this class holds the functions which
   are callable in the design block of layout definitions for pages.
 
+  **** ATTENTION ****
+  AS OF 2004-12-19, THIS IS NOT USED ANYMORE. PLEASE REVIEW THE FILE
+  "UPDATING" IN THE ROOT DIRECTORY OF THIS DISTRIBUTION OR CONTACT
+  THE AUTHOR OF 29o3 DIRECTLY!
+
+
 */
 
 

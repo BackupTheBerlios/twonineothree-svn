@@ -8,6 +8,11 @@
 
   The LayoutParser class is responsible for parsing layout definitions
   of pages.
+
+  **** ATTENTION ****
+  AS OF 2004-12-19, THIS IS NOT USED ANYMORE. PLEASE REVIEW THE FILE
+  "UPDATING" IN THE ROOT DIRECTORY OF THIS DISTRIBUTION OR CONTACT
+  THE AUTHOR OF 29o3 DIRECTLY!
  
 */
 
@@ -151,7 +156,7 @@ class LayoutParser {
 			}
 
 
-			// this point is *never* reached
+			// this point is *never* reached:
 			
 		}
 	}

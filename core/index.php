@@ -203,10 +203,10 @@ function bootstrap() {
 	
 			$pdo->getAvailableBoxes();
 	
-			$connector->executeQuery("SELECT * FROM " . mktablename("layout") . " WHERE name='" . $pageInfo['layout'] . "'");
+			$connector->executeQuery("SELECT * FROM " . mktablename("layouts") . " WHERE name='" . $pageInfo['layout'] . "'");
 			if($connector->getNumRows() != 0) {
 				$currentLayout = $connector->fetchArray();
-				$layoutManager->setLayout($currentLayout['content']);
+				$layoutManager->setLayoutFile($currentLayout['file']);
 				$layoutManager->parseLayout();
 			} else {
 				throw new GeneralException("No layout found. 29o3 cannot continue.");
