@@ -322,10 +322,10 @@ setStatus("Generating config.php");
 
 $cfgFile = generateConfig();
 
-$filename = "./config.php";
+$filename = "config.php";
 
 
-   if (!$handle = fopen($filename, 'a')) {
+   if (!$handle = fopen($filename, 'w')) {
 	setState(true);
 	echo "<strong>ERROR: Could not open config.php</strong>";
 	 exitConsole();
