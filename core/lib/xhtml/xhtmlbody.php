@@ -22,7 +22,7 @@ class XHTMLBody {
 
 	function printBuffer() {
 		$this->buffer .= "\n</body>\n";
-		printf($this->buffer);
+		echo $this->buffer;
 	}
 
 	function eyecandyConsole($consoleObject) {

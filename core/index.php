@@ -85,16 +85,16 @@ function bootstrap() {
 	$console = new SystemConsole();
 	
 	DEBUG($console, "Bootstrapping started...");
-		
-	$request = new PageRequest();
-	$request->parseRequest();
-
 	
 	$connector = new DatabaseConnector();
 	$connector->setupConnection($CONFIG['DatabaseHost'], $CONFIG['DatabaseUser'], $CONFIG['DatabasePassword'], $CONFIG['DatabaseName'], $CONFIG['DatabasePort']);
 
 	DEBUG($console, "Connected to database.");
+
 	
+	$request = new PageRequest($connector);
+	$request->parseRequest();
+
 	printf('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">%s', "\n");
 	printf('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">%s', "\n");
 
