@@ -324,7 +324,7 @@ $cfgFile = generateConfig();
 
 $filename = "./config.php";
 
-(is_writable($filename)) {
+if(is_writable($filename)) {
 
    if (!$handle = fopen($filename, 'a')) {
 	setState(true);
