@@ -118,7 +118,7 @@ INSERT INTO broend_users VALUES (100, 'root', 'root@localhost', '', 100, 'INVALI
 
 INSERT INTO broend_sites VALUES (500, 'default', '29o3 default site', 'InstallationSuccessful;401Forbidden;404NotFound', 100, 100, 771, '29o3default');
 
-INSERT INTO broend_layout VALUES (102, '29o3default', 0, 0, 100, 100, 770, false, 'header {
+INSERT INTO broend_layout VALUES (102, '29o3default', 0, 0, 100, 100, 771, false, 'header {
 	::29o3.mainStylesheet("29o3default", "internal");
 }
 
