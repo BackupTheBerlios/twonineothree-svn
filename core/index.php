@@ -17,6 +17,7 @@ require_once($CONFIG['LibDir'] . 'common.php');
 require_once($CONFIG['LibDir'] . 'sys/param.php');
 
 $output_started = false;
+$body_started = false;
 
 
 global $CONFIG;
@@ -73,7 +74,7 @@ function DEBUG($console, $message) {
 */
 function bootstrap() {
 
-	global $CONFIG, $SYSTEM_INFO, $output_started;
+	global $CONFIG, $SYSTEM_INFO, $output_started, $body_started;
 
 	header("Content-type: application/xhtml+xml\r");
 
@@ -194,6 +195,7 @@ function bootstrap() {
 	// we simply set $header to NULL.
 	$pdo->destroyHeaderObject();
 
+	$body_started = true;
 	DEBUG($console, $connector->getExecutedQueries() . " queries executed.");
 
 	if($CONFIG['DeveloperDebug'] == true ) {

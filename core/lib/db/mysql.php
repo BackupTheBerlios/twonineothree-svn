@@ -15,7 +15,7 @@
 
 
 
-class DatabaseDriver {
+class DatabaseConnector {
 
 	private $DRIVER_INFO = array(
 		"DatabaseType"			=>	"mysqll",
@@ -74,10 +74,13 @@ class DatabaseDriver {
 		mysql_close($this->link);
 	}
 
-	function query($sql_commands) {
+	function executeQuery($sql_commands) {
 
+		if($sql_commands{strlen($sql_commands} == ";") {
+			$sql_commands = substr($sql_commands, 0, strlen($sql_commands)-1);
+		}
 		$this->res = mysql_query ($sql_commands, $this->link)
-			or n_error("Database Panic", "A database panic occured:\n" . mysql_errno() . " (" . mysql_error() . ")");
+			or err("Database Panic", "A database panic occured:\n" . mysql_errno() . " (" . mysql_error() . ")");
 
 	}
 
@@ -114,11 +117,11 @@ class DatabaseDriver {
 		}
 	}
 
-	function numRows() {
+	function getNumRows() {
 		return mysql_num_rows($this->res);
 	}
 
-	function numFields() {
+	function getNumFields() {
 		return mysql_num_fields($this->res);
 	}
 
