@@ -105,7 +105,7 @@ function bootstrap() {
 	$header = new XHTMLHeader();
 	$body = new XHTMLBody();
 
-	$pdo = new pageDescriptionObject($header, $body, $connector);
+	$pdo = new pageDescriptionObject($header, $body, $connector, $request->getWantAdmin());
 
 	$connector->executeQuery("SELECT * FROM " . mktablename("pages") . " WHERE name='" . $request->getRequestedPage() . "'");
 

@@ -19,7 +19,7 @@ require_once($CONFIG['LibDir'] . 'content/boxFuncs.php');
 
 class BoxParser {
 
-	private $boxBuffer;
+	private $boxBuffer = "";
 	private $pdo; // page description object
 	private $boxFuncsObject;
 	
@@ -39,33 +39,26 @@ class BoxParser {
 	// with '//' and processes ::29o3.someFunction() commands.
 	function parseBox($boxBuffer) {
 
+		$buffer = "";
 		$buffer = explode("\n", $boxBuffer);
 
-		for($i = 0; $i <= count($buffer); $i++) {
+		for($i = 0; $i < count($buffer); $i++) {
 			$line = $buffer[$i];
 			
-			//if(!$in_header && $in_design) {
-				// do a copy of $line to operate on
-				$line_copy = $line;
-				if(($commandPosition = strpos($line_copy, "::29o3.")) !== false) {
-					$line_copy = substr($line, $commandPosition+7, strlen($line_copy) - ($commandPosition+2));
+			$line_copy = $line;
+			if(($commandPosition = strpos($line_copy, "::29o3.")) !== false) {
+				$line_copy = substr($line, $commandPosition+7, strlen($line_copy) - ($commandPosition+2));
 
-					$function = $this->parseFunction($line_copy);
+				$function = $this->parseFunction($line_copy);
 
-					$output = $this->boxFuncsObject->grabRightFunction($function["name"], $function["parameters"]);
-					$line = str_replace($function["fullname"], $output, $line);
+				$output = $this->boxFuncsObject->grabRightFunction($function["name"], $function["parameters"]);
+				$line = str_replace($function["fullname"], $output, $line);
 
-				}
-//			}
-
-//			if(!$in_header && $in_design) {
-			$this->boxBuffer .= $line;
-//			}
-
-			// this point is *never* reached
+			}
+			$this->boxBuffer .= "|" . $line;
 			
 		}
-		return $this->boxBuffer;
+		return $boxBuffer; //this->boxBuffer;
 	}
 
 	/*	parseFunction produces the following array:

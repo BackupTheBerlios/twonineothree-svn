@@ -89,8 +89,9 @@ class pageDescriptionObject {
 	public $databaseConnector;
 
 	private $doBrand = true;
+	private $wantAdmin = false;
 
-	function __construct(XHTMLHeader &$xhtmlHeaderObject, XHTMLBody &$xhtmlBodyObject, DatabaseConnector &$connector) {
+	function __construct(XHTMLHeader &$xhtmlHeaderObject, XHTMLBody &$xhtmlBodyObject, DatabaseConnector &$connector, $wantAdmin = false) {
 
 		// initialize references to XHTML* Objects
 		$this->headerObject =& $xhtmlHeaderObject;
@@ -98,6 +99,8 @@ class pageDescriptionObject {
 		$this->databaseConnector = $connector;
 
 		$this->boxParser = new BoxParser($this);
+
+		$this->wantAdmin = $wantAdmin;
 
 	}
 
@@ -125,6 +128,10 @@ class pageDescriptionObject {
 
 	function getSiteName() {
 		return $this->site;
+	}
+
+	function getPageName() {
+		return $this->name;
 	}
 
 	function getBox($box_name, $index) {
@@ -231,6 +238,10 @@ class pageDescriptionObject {
 
 	function getBrandingState() {
 		return $this->doBrand;
+	}
+
+	function getWantAdmin() {
+		return $this->wantAdmin;
 	}
 }
 

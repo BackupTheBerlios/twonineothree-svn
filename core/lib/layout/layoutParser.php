@@ -44,7 +44,7 @@ class LayoutParser {
 
 		$multilineComment = false;
 		
-		for($i = 0; $i <= count($buffer); $i++) {
+		for($i = 0; $i < count($buffer); $i++) {
 			$line = $buffer[$i];
 			// check if we have a comment ('//') inside the current line
 			// comments will be skipped from the '//' to the end of the line
@@ -131,12 +131,16 @@ class LayoutParser {
 					$function = $this->parseFunction($line_copy);
 
 					$output = $this->designFuncsObject->grabRightFunction($function["name"], $function["parameters"]);
-//					echo $output;
+					if($this->pdo->getWantAdmin() == true && $function["name"] == "getBoxContent") {
+						$numberLines = substr_count($output, "\r");
+						$output = str_replace("<", "&lt;", $output);
+						$output = str_replace(">", "&gt;", $output);
+						$tmp = "<textarea name=\"" . $this->pdo->getPageName() . "_" . $function["parameters"][0] . "\" class=\"adminTextarea\" rows=\"" . $numberLines . "\">" . $output . "</textarea>";
+						$output = $tmp;
+					}
 					$line = str_replace($function["fullname"], $output, $line);
 
-//					$this->pdo->insertIntoBodyBuffer($line);
 				}
-//				continue;
 			}
 
 			if(!$in_header && $in_design) {

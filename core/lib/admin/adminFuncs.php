@@ -38,7 +38,7 @@ class adminFuncs {
 	}
 
 	function getAdminMenu() {
-		$adminMenu =  "<a href=\"?2mc;generalSetup\">general setup</a> | <a href=\"?2mc;pageWizard\">page wizard</a> | ";
+		$adminMenu =  "<a href=\"?2mc;overview\">overview</a> | <a href=\"?2mc;generalSetup\">general setup</a> | <a href=\"?2mc;pageWizard\">page wizard</a> | ";
 		$adminMenu .= "<a href=\"?2mc;editPages\">edit pages</a> | <a href=\"?2mc;editLayouts\">edit layouts</a> | <a href=\"?2mc;editBoxes\">edit boxes</a> | ";
 		$adminMenu .= "<a href=\"?2mc;help\">help</a>";
 

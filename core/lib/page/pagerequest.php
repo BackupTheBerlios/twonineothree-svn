@@ -46,8 +46,8 @@ class PageRequest {
 		if($requestString[0] == "2mc") {
 			$this->wantAdmin = true;
 			// removes the key containing "2mc" from the array
-			// so that it cn me used furthermore.
-			$tmpString = $requestString[1];
+			// so that it can me used furthermore.
+			$tmpString = $requestString[2];
 		} else {
 			$tmpString = $requestString[0];
 		}
