@@ -62,7 +62,7 @@ class cacheObject {
 			if($files !== false) {
 				foreach($files as $oldfile) {
 					unlink($oldfile);
-					DEBUG("CACHE: I unlinked outdated cache file $oldfile");
+					DEBUG("CACHE: I unlinked outdated/invalid cache file $oldfile");
 				}
 			} else {
 				DEBUG("CACHE: No files to delete.");

@@ -10,7 +10,7 @@
 
 $CONFIG = array(
 	/*** DATABASE CONFIGURATION ***/
-	"DatabaseType" 		=>	"DATABASE_TYPE",		// Type of database, currently possible: postgresql
+	"DatabaseType" 		=>	"DATABASE_TYPE",		// Type of database, currently possible: postgresql, mysql
 	"DatabaseHost"		=>	"DATABASE_HOST",			// Host name/IP address of the database server
 	"DatabaseUser" 		=>	"DATABASE_USER",			// username for database access
 	"DatabasePassword"	=>	"DATABASE_PASSWORD",			// password for database access
@@ -22,6 +22,7 @@ $CONFIG = array(
 	/* A trailing slash at the end of both of these entries is important */
 	"LibDir"		=>	"DIR_LIBDIR",	// path to 29o3 libraries, has to be edited!
 	"MediaDir"		=>	"DIR_MEDIADIR", // path to 29o3 media (images, etc.), has to be edited!
+	"CacheDir"		=>	"DIR_CACHEDIR",	// path where 29o3 caches its content
 	
 	/*** 29o3 COMMON CONFIGURATION ***/
 	"SiteAuthor"		=>	"SITE_AUTHOR",			// author/owner of the website
@@ -37,7 +38,7 @@ $CONFIG = array(
 	/*** WARNING: DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING!!! ***/
 	/***	      29o3 WILL WORK PERFECTLY WITH NO ADJUSTMENT TO      ***/
 	/***	      THESE OPTIONS.					  ***/
-	"Developer_Debug"	=>	false,
+	"Developer_Debug"	=>	true,
 	"Developer_Features"	=>	true,
 	"DebugLevel"		=>	5
 );

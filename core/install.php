@@ -23,6 +23,7 @@ function generateConfig() {
 	$string = str_replace("DATABASE_PREFIX", $_POST['db_prefix'], $string);
 	$string = str_replace("DIR_LIBDIR", $_POST['absolute_path'] . "/lib/", $string);
 	$string = str_replace("DIR_MEDIADIR", $_POST['absolute_path']. "/media/", $string);
+	$string = str_replace("DIR_CACHEDIR", $_POST['absolute_path'] . "/cache/", $string);
 	$string = str_replace("SITE_AUTHOR", $_POST['admin_name'], $string);
 	$string = str_replace("SITE_ADDRESS", $_POST['site_address'], $string);
 	if($_POST['activate_cen'] == "1") {

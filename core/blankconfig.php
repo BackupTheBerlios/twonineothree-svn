@@ -10,7 +10,7 @@
 
 $CONFIG = array(
 	/*** DATABASE CONFIGURATION ***/
-	"DatabaseType" 		=>	"postgresql",		// Type of database, currently possible: postgresql
+	"DatabaseType" 		=>	"postgresql",		// Type of database, currently possible: postgresql, mysql
 	"DatabaseHost"		=>	"",			// Host name/IP address of the database server
 	"DatabaseUser" 		=>	"",			// username for database access
 	"DatabasePassword"	=>	"",			// password for database access
@@ -22,6 +22,7 @@ $CONFIG = array(
 	/* A trailing slash at the end of both of these entries is important */
 	"LibDir"		=>	"/var/www/29o3/lib/",	// path to 29o3 libraries, has to be edited!
 	"MediaDir"		=>	"/var/www/29o3/media/", // path to 29o3 media (images, etc.), has to be edited!
+	"CacheDir"		=>	"/var/www/29o3/cache/",	// path where 29o3 should cache its content
 	
 	/*** 29o3 COMMON CONFIGURATION ***/
 	"SiteAuthor"		=>	"",			// author/owner of the website

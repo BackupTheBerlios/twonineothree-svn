@@ -67,20 +67,21 @@
 }
 
 .eyecandyConsole {
-	font-family: sans-serif, helvetica;
-	font-size: 10px;
+	font-family: sans-serif, arial, helvetica;
+	font-size: 11px;
 	color: black;
 	border: 1px solid black;
 	border-bottom: 0px;
-	line-height: 130%;
+	line-height: 140%;
 	background-image: url(lib/images/consbg.png);
 	position: fixed;
 	bottom: 0px;
 	left: 100px; 
 	right: 100px;
-	height: 14px;
+	height: 18px;
 	text-align: left;
 	padding-left: 10px;
+	padding-top: 6px;
 	z-index: 100;
 	overflow: hidden;
 }
@@ -88,6 +89,9 @@
 .eyecandyConsole:before {
 	content: " 29o3 system console";
 	font-weight: bold;
+	font-family: sans-serif, helvetica;
+	font-size: 11px;
+	color: #d95230;
 }
 
 .eyecandyConsole:hover {
