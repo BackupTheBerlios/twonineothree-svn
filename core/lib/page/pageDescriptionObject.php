@@ -37,7 +37,7 @@ class pageDescriptionObject {
 	private $stylesheet;
 	private $layout;
 
-	private $boxes = array();
+	public $boxes = array();
 
 	private $headerObject;
 	private $bodyObject;
@@ -111,6 +111,10 @@ class pageDescriptionObject {
 		}
 	}
 
+	function getBox($box_name, $index) {
+		return $this->boxes[$box_name][$index];
+	}
+
 	function scheduleInsertion_Stylesheet($content) {
 		array_push($this->scheduledStylesheets, $content);
 		$this->scheduledStylesheet_Count++;
@@ -153,12 +157,26 @@ class pageDescriptionObject {
 
 	}
 
+	function getAvailableBoxes() {
+		$this->databaseConnector->executeQuery("SELECT * FROM " . mktablename("boxes") . " WHERE owning_page='" . $this->name . "'");
+		if($this->databaseConnector->getNumRows() != 0) {
+			while(($arr = $this->databaseConnector->fetchArray())) {
+				$tempArray = array($arr["name"] => $arr);
+				$this->boxes = array_merge($tempArray, $this->boxes);
+			}
+		}
+	}
+
 	function printHeaderBuffer() {
 		$this->headerObject->printBuffer();
 	}
 
 	function destroyHeaderObject() {
 		$this->headerObject = NULL;
+	}
+
+	function insertIntoBodyBuffer($string) {
+		$this->bodyObject->insert($string);
 	}
 }
 

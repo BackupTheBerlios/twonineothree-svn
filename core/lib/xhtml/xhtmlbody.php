@@ -35,11 +35,11 @@ class XHTMLBody {
 		$this->buffer .= '<center><div class="eyecandyConsole">' . $consoleObject->getBuffer() . '</div></center>';
 	}
 
-	function insertDiv($styleClass, $content, $title = "") {
+	function insertDiv($styleClass, $content, $title = "", $additionals = "") {
 		if($title == "") {
-			printf('<div class="%s" title="%s">%s</div>', $styleClass, $title, $content);
+			printf('<div class="%s" title="%s"%s>%s</div>', $styleClass, $title, $additionals, $content);
 		} else {
-			printf('<div class="%s"></div>', $styleClass, $title, $content);
+			printf('<div class="%s"%s>%s</div>', $styleClass, $additionals, $content);
 		}
 	}
 
@@ -49,6 +49,10 @@ class XHTMLBody {
 
 	function insertSpan() {
 
+	}
+
+	function insert($string) {
+		$this->buffer .= $string;
 	}
 }
 

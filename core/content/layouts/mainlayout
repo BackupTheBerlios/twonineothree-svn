@@ -1,15 +1,21 @@
+/* multiline
+comment
+over
+some lines */
 // Layout example for 29o3
 // lines starting with '//' will be skipped during processing
 // anything starting with '::29o3.' will be evaluated as command for the
 // layout processor
 // blocks are in this format [blockname] { [content] }
-// allowed blocks are header and layout
+// allowed blocks are header and design 
 
 header {
-::29o3.mainStylesheet("GreenStripeLayout");
+::29o3.mainStylesheet("GreenStripeLayout", "internal");
+::29o3.auxiliaryStylesheet("testing_01");
+::29o3.testFunc("test", "1");
 }
 
-layout {
+design {
 <div class="stripediv">
 	<div class="greenstripe">
 	&nbsp;

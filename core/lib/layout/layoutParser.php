@@ -14,17 +14,20 @@
 
 require_once($CONFIG['LibDir'] . 'page/pageDescriptionObject.php');
 require_once($CONFIG['LibDir'] . 'layout/layoutHeaderFuncs.php');
+require_once($CONFIG['LibDir'] . 'layout/layoutDesignFuncs.php');
 
 class LayoutParser {
 
 	private $pageBuffer;
 	private $pdo; // page description object
 	private $headerFuncsObject;
+	private $designFuncsObject;
 	
 	function __construct(pageDescriptionObject &$pdo) {
 		$this->pageBuffer = "";
 		$this->pdo =& $pdo;
 		$this->headerFuncsObject = new LayoutHeaderFuncs($this->pdo);
+		$this->designFuncsObject = new LayoutDesignFuncs($this->pdo);
 	}
 
 	function __destruct() {
@@ -77,27 +80,28 @@ class LayoutParser {
 			
 			// can anyone tell me if this regex is okay for this job?
 			// i hate regex... cause i don't understand them
-			preg_match("/(header|layout)(\\r|\\s|\\n)+\{/", $line, $block_matches);
+			preg_match("/(header|design)(\\r|\\s|\\n)+\{/", $line, $block_matches);
 			if($block_matches[1] == "header") {
 				$in_header = true;
-				$in_layout = false;
+				$in_design = false;
+				continue;
 			}
 
-			if($block_matches[1] == "layout") {
-				$in_layout = true;
+			if($block_matches[1] == "design") {
+				$in_design = true;
 				$in_header = false;
+				continue;
 			}
 
 			// if operating on the header, $line is directly used because the
 			// header data is of no importance for the content of the page
-			if($in_header && !$in_layout) {
+			if($in_header && !$in_design) {
 				if(($commandPosition = strpos($line, "::29o3.")) !== false) {
 					$line = substr($line, $commandPosition+7, strlen($line) - ($commandPosition+2));
 
 					$function = $this->parseFunction($line);
 
 					$this->headerFuncsObject->grabRightFunction($function["name"], $function["parameters"]);
-
 				}
 				continue;
 			}
@@ -105,18 +109,25 @@ class LayoutParser {
 			// for the layout block, we use a copy of line to operate on since
 			// the things in the layout block are of utmost importance for the
 			// correct display of the page
-			if(!$in_header && $in_layout) {
+			if(!$in_header && $in_design) {
 				// do a copy of $line to operate on
 				$line_copy = $line;
 				if(($commandPosition = strpos($line_copy, "::29o3.")) !== false) {
 					$line_copy = substr($line, $commandPosition+7, strlen($line_copy) - ($commandPosition+2));
 
-					$function_parameters = $this->parseFunction($line_copy);
+					$function = $this->parseFunction($line_copy);
 
-					// do something with the header funcs
+					$output = $this->designFuncsObject->grabRightFunction($function["name"], $function["parameters"]);
+//					echo $output;
+					$line = str_replace($function["fullname"], $output, $line);
 
+//					$this->pdo->insertIntoBodyBuffer($line);
 				}
-				continue;
+//				continue;
+			}
+
+			if(!$in_header && $in_design) {
+				$this->pdo->insertIntoBodyBuffer($line);
 			}
 
 			// this point is *never* reached
@@ -138,6 +149,8 @@ class LayoutParser {
 	*/
 	private function parseFunction($line) {
 		
+		$fullname = "::29o3.";
+	
 		// get the name of the function
 		$functionName = substr($line, 0, ($openBracketPos=strpos($line, "(")));
 
@@ -146,12 +159,16 @@ class LayoutParser {
 		} else {
 			$resultsArray[0] = $functionName;
 		}
+
+		$fullname .= $resultsArray[0];
 	
 		// should be the last ')'
 		$closeBracketPos = strrpos($line, ")");
 
 		// get the string with the arguments
 		$functionArguments = substr($line, $openBracketPos+1, $closeBracketPos-$openBracketPos-1);
+
+		$fullname .= "(" . $functionArguments . ");";
 
 		if(strlen($functionArguments) >= 2) {
 			
@@ -168,9 +185,11 @@ class LayoutParser {
 		}
 
 		$params = array_slice($resultsArray, 1);
+		
 		$retArray = array(
 			"name" 		=> $resultsArray[0],
-			"parameters" 	=> $params
+			"parameters" 	=> $params,
+			"fullname"	=> $fullname
 		);
 
 		return $retArray;

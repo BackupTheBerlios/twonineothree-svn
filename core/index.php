@@ -169,6 +169,11 @@ function bootstrap() {
 		$pdo->scheduleInsertion_Stylesheet($localStylesheets['content']);
 	}
 
+	$pdo->getAvailableBoxes();
+/*	echo "<pre>";
+	print_r($pdo->boxes);
+	echo "</pre>";
+*/
 	$layoutManager = new LayoutManager($pdo);
 
 	$connector->executeQuery("SELECT * FROM " . mktablename("layout") . " WHERE name='" . $pageInfo['layout'] . "'");
@@ -195,6 +200,8 @@ function bootstrap() {
 	} else {
 		$console->printBuffer();
 	}
+
+	$body->insertDiv("poweredBy", "Powered by <a href=\"http://twonineothree.berlios.de\" target=\"_blank\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "Powered by 29o3");	
 
 	$body->printBuffer();
 

@@ -66,9 +66,26 @@ class LayoutHeaderFuncs {
 				// TODO: Add exception, e.g. NotFoundException
 			}
 		}
+		if($params[1] == "external") {
+			$this->pdo->scheduleInsertion_ExternalStylesheet($params[0]);
+		}
+		else {
+			// not internal, not external
+			// TODO: throw exception
+		}
 	}
 
 	private function auxiliaryStylesheet($params) {
+		
+		$this->pdo->databaseConnector->executeQuery("SELECT * FROM " . mktablename("stylesheets") . " WHERE name='" . $params[0] . "'");
+		if($this->pdo->databaseConnector->getNumRows() != 0) {
+			$stylesheetArray = $this->pdo->databaseConnector->fetchArray();
+			$this->pdo->scheduleInsertion_Stylesheet($stylesheetArray['content']);
+			return 0; // no error
+		} else {
+			return 16; // not found
+			// TODO: Add exception, e.g. NotFoundException
+		}
 
 	}
 

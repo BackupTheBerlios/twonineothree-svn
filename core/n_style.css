@@ -78,6 +78,29 @@
 	background-color: #F1F1F1;
 }
 
+.poweredBy {
+	font-family: sans-serif, helvetica;
+	font-size: 11px;
+	color: black;
+	width: 100%;
+	text-align: center;
+	line-height: 230%;
+	position: absolute;
+	bottom: 5px;
+}
+
+.poweredBy a:link,
+.poweredBy a:visited,
+.poweredBy a:active {
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.poweredBy a:hover {
+	text-decoration: underline;
+}
+
 .bugform {
 	font-family: verdana, arial, helvetica, sans-serif;
 	font-size: 11px;

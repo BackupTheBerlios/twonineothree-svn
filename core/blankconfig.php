@@ -50,7 +50,7 @@ $CONFIG = array(
 
 $SYSTEM_INFO = array(
 	"SystemVersion"		=>	"0.1prebeta",
-	"SystemCodename"	=>	"broend",
+	"SystemCodename"	=>	"Broend",
 	"SystemFeatures"	=>	"postgres",
 	"MinPhpVersion"		=>	"5.0.0"
 );
