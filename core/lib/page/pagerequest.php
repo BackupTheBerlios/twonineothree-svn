@@ -11,6 +11,7 @@
  
 */
 
+require_once($CONFIG['LibDir'] . 'common.php');
 
 class PageRequest {
 
@@ -29,8 +30,10 @@ class PageRequest {
 
 		$this->timestamp = 0;
 
-		if($_GET['page'] != "") {
-			$this->requestedPage = $_GET['page'];
+		$tmpPage = $_GET['s'];
+		if($tmpPage != "") {
+			$tmpPage = killScriptKiddies($tmpPage);
+			$this->requestedPage = $tmpPage;
 		}
 	}
 

@@ -134,4 +134,23 @@ function mktablename($name) {
 }
 
 
+// killScriptKiddies()
+// simple countermeasures for prevention
+// of sql injection attacks
+function killScriptKiddies($string) {
+
+	$string = preg_replace("/\\\\/", "", $string);
+	$string = ereg_replace("\'", "", $string);
+	$string = ereg_replace("\"", "", $string);
+//	$string = ereg_replace("\\", "", $string);
+	$string = str_replace("../", "", $string);
+
+	if(strpos("/", $string) === 0) {
+		$string = substr($string, 1, strlen($string)-1);
+	}
+
+	return $string;
+
+}
+
 ?>
