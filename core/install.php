@@ -414,10 +414,10 @@ it will notify you.
 <br/><br/>&nbsp;
 </div>
 </form>
+</div>
+</div>
 <?php
 } }
 ?>
-	</div>
-</div>
 </body>
 </html>
