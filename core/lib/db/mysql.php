@@ -79,7 +79,6 @@ class DatabaseConnector {
 		if(strpos(";", $sql_commands)+1 == strlen($sql_commands)) {
 			$sql_commands = substr($sql_commands, 0, strlen($sql_commands)-1);
 		}
-		echo $sql_commands;
 		$this->res = mysql_query ($sql_commands, $this->link)
 			or err("Database Panic", "A database panic occured:\n" . mysql_errno() . " (" . mysql_error() . ")");
 
