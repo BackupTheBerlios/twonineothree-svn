@@ -183,8 +183,18 @@ class pageDescriptionObject {
 		$this->bodyObject->insert($string);
 	}
 
-	function insertBodyDiv($styleClass, $content, $title = "", $additionals = "") {
-		$this->bodyObject->insertDiv($styleClass, $content, $title, $additionals);
+	function insertBodyDiv($content, $styleClass = "", $id = "", $title = "", $additionals = "") {
+		$this->bodyObject->insertTag("div", $content, $styleClass, $id, $title, $additionals);
+	}
+
+	function insertBodySpan($content, $styleClass = "", $id = "",  $title = "", $additionals = "") {
+
+		$this->bodyObject->insertTag("span", $content, $styleClass, $id, $title, $additionals);
+
+	}
+
+	function insertParagraph($content, $styleClass = "", $id = "", $title = "", $additionals = "") {
+		$this->bodyObject->insertTag("p", $content, $styleClass, $id, $title, $additionals);
 	}
 }
 

@@ -51,6 +51,38 @@ class XHTMLBody {
 
 	}
 
+	function insertTag($tagName, $elemContent, $elemStyleClass, $elemId, $elemTitle = "", $elemAdditionals = "") {
+
+		$tagBuf = "";
+
+		$tagBuf .= "<$tagName";
+
+		if($elemStyleClass != "") {
+			$tagBuf .= " class=\"$elemStyleClass\"";
+		}
+
+		if($elemId != "") {
+			$tagBuf .= " id=\"$elemId\"";
+		}
+
+		if($elemTitle != "") {
+			$tagBuf .= " title=\"$elemTitle\"";
+		}
+
+		if($elemAdditionals != "") {
+			$tagBuf .= " $elemAdditionals";
+		}
+
+		if($elemContent != "") {
+			$tagBuf .= ">$elemContent</$tagName>\n";
+		} else {
+			$tagBuf .= "></$tagName>\n";
+		}
+
+		$this->buffer .= $tagBuf;
+
+	}
+
 	function insert($string) {
 		$this->buffer .= $string;
 	}

@@ -173,7 +173,7 @@ function bootstrap() {
 
 	$pdo->getAvailableBoxes();
 
-	$pdo->insertBodyDiv("poweredBy", "Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "Powered by 29o3");
+	$pdo->insertBodyDiv("Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "poweredBy", "poweredBy_Banner", "Powered by 29o3");
 
 	$layoutManager = new LayoutManager($pdo);
 
