@@ -17,7 +17,7 @@ function generateConfig() {
 	$string = str_replace("DATABASE_TYPE", $_POST['db_type'], $string);
 	$string = str_replace("DATABASE_HOST", $_POST['db_host'], $string);
 	$string = str_replace("DATABASE_USER", $_POST['db_user'], $string);
-	$string = str_replace("DATABSE_PASSWORD", $_POST['db_pw'], $string);
+	$string = str_replace("DATABASE_PASSWORD", $_POST['db_pw'], $string);
 	$string = str_replace("DATABASE_PORT", $_POST['db_port'], $string);
 	$string = str_replace("DATABASE_NAME", $_POST['db_dbname'], $string);
 	$string = str_replace("DATABASE_PREFIX", $_POST['db_prefix'], $string);
