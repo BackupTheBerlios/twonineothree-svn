@@ -21,15 +21,15 @@ define("UI_MENU",	0x00000032);
 
 class uiElement {
 
-	private $name;
-	private $content;
-	private $type = UI_TEXT;
+	protected $name;
+	protected $content;
+	protected $type = UI_TEXT;
 
-	private $htmlContent;
+	protected $htmlContent;
 
-	private $className = "uiElement";
+	protected $className = "uiElement";
 
-	private $childElements = array();
+	protected $childElements = array();
 
 	function __construct($name, $content, $type = UI_TEXT) {
 		$this->name = $name;
@@ -42,7 +42,7 @@ class uiElement {
 	}
 
 	function attach(uiElement $element) {
-		array_push(&$element, $this->childElements);
+		array_push($this->childElements, &$element);
 	}
 
 	function detach($name) {
@@ -63,12 +63,12 @@ class uiElement {
 		}
 	}
 
-	function getHtmlContent() {
+	function __toString() {
 		
 		$this->htmlContent .= $this->content;
 		// iterate through child elements
 		foreach($this->childElements as $key => $childElement) {
-			$this->htmlContent .= $childElement->getHtmlContent() . "\n";
+			$this->htmlContent .= $childElement . "\n";
 		}
 		return $this->htmlContent;
 	}

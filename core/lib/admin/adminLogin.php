@@ -52,20 +52,23 @@ class AdminLogin {
 	function doBodyJobs() {
 		if($this->stage == 1) {
 			$this->pdo->setOmitBranding(true);
-			$this->pdo->insertIntoBodyBuffer("<br/><br/><br/><br/><br/><br/><br/><br/><form method=\"post\" name=\"loginform\" action=\"" . $_SERVER['PHP_SELF'] . "?" . $_SERVER["QUERY_STRING"] .  "\">");
+			$this->pdo->insertIntoBodyBuffer('<span id="bg" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; text-align: center; vertical-align: middle;">' . "\n");
+			$this->pdo->insertIntoBodyBuffer("<form method=\"post\" name=\"loginform\" id=\"loginform\" action=\"" . $_SERVER['PHP_SELF'] . "?" . $_SERVER["QUERY_STRING"] .  "\">\n");
+//			$this->pdo->insertintobodybuffer('<div style="width: 100%; height: 100%; text-align: center; vertical-align: middle;">');
 			$this->pdo->insertBodyDiv("&nbsp;", "mgmtLoginBox", "", "", "", false);
-			$this->pdo->insertIntoBodyBuffer('<div class="mgmtLoginTitle">29o3 management console login</div>');
+			$this->pdo->insertIntoBodyBuffer('<div class="mgmtLoginTitle">29o3 management console login</div>' . "\n");
 			$this->pdo->insertIntoBodyBuffer('<span class="mgmtLoginPrompt">Please log in below with the credentials<br/>you have been provided with.<br/><br/><strong>Login name: <br/>
 			<input type="text" name="username" class="mgmtLoginInputBox" /><br/><br/>
 			Password:<br/>
 			<input type="password" name="password" class="mgmtLoginInputBox" />
 			<input type="hidden" name="loginstage" value="1" />
-			</strong></span>');
-			$this->pdo->insertIntoBodyBuffer('<span style="position: absolute; top: 325px; right: 130px;"> 
+			</strong></span>' . "\n");
+			$this->pdo->insertIntoBodyBuffer('<br/><br/><br/><br/><br/><br/><br/><br/>
 			<button type="submit" class="mgmtButton">Login</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<button type="reset" class="mgmtButton">Clear</button></span>');
+			<button type="reset" class="mgmtButton">Clear</button>' . "\n");
 			$this->pdo->insertBodyCloseDiv();
-			$this->pdo->insertIntoBodyBuffer("</form>");
+			$this->pdo->insertIntoBodyBuffer("</form>\n");
+			$this->pdo->insertIntoBodyBuffer("</span>\n");
 		} else {
 
 			// check if user & pw were okay

@@ -121,12 +121,11 @@
 }
 
 .mgmtLoginBox {
-
-	z-index: 100;
-	position: absolute;
-	top: 150px; 
-	left: 20%;
-	right: 20%;
+	position: relative;
+	margin-left: 10%;
+	margin-top: 10%;
+	width: 350px;
+	text-align: center;
 	height: 350px;
 	border: 1px dotted silver;
 	background-image: url(lib/images/adminlogin.jpg);
@@ -157,9 +156,8 @@
 }
 
 .mgmtLoginPrompt {
-	position: absolute;
+	position: relative;
 	top: 70px;
-	left: 395px;
 	color: white;
 	font-family: sans-serif, helvetica;
 	font-size: 12px;
@@ -193,3 +191,73 @@
 	text-decoration: underline;
 	cursor: hand;
 }
+
+.mgmtBigMenuItem {
+
+	width: 250px;
+	height: 50px;
+	border-right: 2px dotted #E1E1E1;
+	font-family: sans-serif, helvetica;
+	font-size: 11px;
+	line-height: 130%;
+	display: block;
+	padding: 6px;
+
+}
+
+.mgmtBigMenuItem strong {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.mgmtBigMenuItem a {
+	text-decoration: none;
+	color: #666666;
+	display: block;
+}
+
+.mgmtBigMenuItem a:hover {
+	text-decoration: underline;
+/*	background-image: url(lib/images/uiMgmtMenuBgHover.png); */
+	display: block;
+}
+
+.enclosure {
+	width: 600px;
+	background-color: white;
+/*	padding: 5px 5px 5px 5px; */
+	color: black;
+	border-bottom: 1px dotted #0079af;
+}
+
+.headline {
+	font-family: sans-serif, helvetica;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: right;
+	border-bottom: 1px dotted #0079af; 
+	width: 600px;
+	color: #666666;
+}
+
+.table {
+	display: table;
+}
+
+.row {
+	display: table-row;
+}
+
+.cell {
+	display: table-cell;
+}
+
+body {
+	background-color: white;
+	color: #666666;
+	font-family: sans-serif, helvetica;
+	font-size: 11px;
+	line-height: 130%;
+	margin: 5px 5px 5px 5px;
+}
+

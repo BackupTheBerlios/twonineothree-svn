@@ -15,31 +15,57 @@ require_once($CONFIG['LibDir'] . 'ui/uiElement.php');
 
 class uiMgmtBigMenu extends uiElement {
 
-	private $styleClass;
-	private $type = UI_MENU;
+	protected $style;
+	protected $name;
+	protected $content;
+	protected $type = UI_MENU;
+	protected $maxCellCount;
 
-	private $className = "uiMgmtBigMenu";
+	protected $className = "uiMgmtBigMenu";
 
-	function construct($name, $content, $style = "mgmtBigMenu") {
+	function __construct($name, $content, $maxCellCount = 2, $style = "mgmtBigMenu") {
 		$this->name = $name;
 		$this->content = $content;
-		$this->styleClass = $style;
+		$this->style = $style;
+		$this->maxCellCount = $maxCellCount;
 	}
 
 	function attach(uiElement &$element) {
 		// only uiMgmtBigMenuItems can be attached to uiMgmtBigMenus
 		if($element->getClassName() == "uiMgmtBigMenuItem") {
-			parent::attach($element);
+			parent::attach(&$element);
 		}
 	}
 
-	function getHtmlContent() {
+	function __toString() {
 		
-		$this->htmlContent .= '<div class="' . $this->styleClass . '" id="' . $this->name . '">' . $this->content . "\n";
+		$this->htmlContent .= '<div class="' . $this->style . '" id="' . $this->name . '">'/* . $this->content*/ . "\n<div class=\"table\">";
+		$counter = 0;
+		$openrow = false;
+		$opencell = false;
 		foreach($this->childElements as $key => $childElement) {
-			$this->htmlContent .= $childElement->getHtmlContent() . "\n";
+			if($counter == 0) {
+				$this->htmlContent .= '<div class="row">' . "\n\t";
+			}
+
+			$this->htmlContent .= '<div class="cell">' . "\n\t";
+			$opencell = true;
+
+			$this->htmlContent .= $childElement->__toString() . "\n";
+			if($opencell) {
+				$this->htmlContent .= '</div>' . "\n";
+			}
+			$counter++;
+			if($counter == $this->maxCellCount) {
+				$counter = 0;
+				$this->htmlContent .= "</div>\n";
+			}
 		}
-		$this->htmlContent .= '</div>' . "\n";
+
+		if($counter != 0) {
+			$this->htmlContent .= "</div>\n";
+		}
+		$this->htmlContent .= '</div></div>' . "\n";
 		return $this->htmlContent;
 	}
 

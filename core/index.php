@@ -210,7 +210,7 @@ function bootstrap() {
 				$af = new adminFuncs($pdo, $request);
 		
 				$pdo->scheduleInsertion_Stylesheet($af->getAdminStylesheet());
-				$pdo->insertBodyDiv("<img src=\"lib/images/adminlogotop.png\" style=\"vertical-align: top; text-align: left; border: 0; padding: 0; margin: 0;\" /><span class=\"adminMenu\" style=\"width: 100%;\">" . $af->getAdminMenu() . "</span>", "adminStripe", "2mc_menu", "29o3 management console");	
+//				$pdo->insertBodyDiv("<img src=\"lib/images/adminlogotop.png\" style=\"vertical-align: top; text-align: left; border: 0; padding: 0; margin: 0;\" /><span class=\"adminMenu\" style=\"width: 100%;\">" . $af->getAdminMenu() . "</span>", "adminStripe", "2mc_menu", "29o3 management console");	
 			}
 	
 			
@@ -277,7 +277,7 @@ function bootstrap() {
 			$af = new adminFuncs($pdo, $request);
 		
 			$pdo->scheduleInsertion_Stylesheet($af->getAdminStylesheet());
-			$pdo->insertBodyDiv("<img src=\"lib/images/adminlogotop.png\" style=\"vertical-align: top; text-align: left; border: 0; padding: 0; margin: 0;\" /><span class=\"adminMenu\" style=\"width: 100%;\">" . $af->getAdminMenu() . "</span>", "adminStripe", "2mc_menu", "29o3 management console");	
+//			$pdo->insertBodyDiv("<img src=\"lib/images/adminlogotop.png\" style=\"vertical-align: top; text-align: left; border: 0; padding: 0; margin: 0;\" /><span class=\"adminMenu\" style=\"width: 100%;\">" . $af->getAdminMenu() . "</span>", "adminStripe", "2mc_menu", "29o3 management console");	
 
 		
 			// this part is for the admin scripts which require

@@ -51,7 +51,11 @@ class PageRequest {
 			// removes the key containing "2mc" from the array
 			// so that it can me used furthermore.
 			DEBUG("PR: Admin wanted.");
-			$tmpString = @$requestString[2];
+			if(isset($requestString[2])) {
+				$tmpString = @$requestString[2];
+			} else {
+				$tmpString = "";
+			}
 			//if(@$requestString[1] == ("Overview" || "PageWizard" ||"GeneralSetup" || "Help")) {
 				$this->wantAdmin++;
 				$this->wantedAdminFunc = $requestString[1];

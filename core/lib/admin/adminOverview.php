@@ -12,6 +12,9 @@
 require_once($CONFIG['LibDir'] . 'db/' . $CONFIG['DatabaseType'] . '.php');
 require_once($CONFIG['LibDir'] . 'user/user.php');
 
+require_once($CONFIG['LibDir'] . 'ui/uiMgmtBigMenu.php');
+require_once($CONFIG['LibDir'] . 'ui/uiMgmtBigMenuItem.php');
+
 class AdminOverview {
 	
 	private $db;
@@ -30,44 +33,37 @@ class AdminOverview {
 	}
 
 	function doBodyJobs() {
-		$this->pdo->insertBodyDiv("&nbsp;");
-		$this->pdo->insertIntoBodyBuffer('<div class="adminFuncPage">');
-		$this->pdo->insertBodyDiv("System Overview", "adminFuncTitle");
+		$menu = new uiMgmtBigMenu("Admin Menu", "none", 1);
+		$item_general = new uiMgmtBigMenuItem("gensetup", "General Setup", "Here you will be able to do some generic setup for 29o3.", "/29o3/?mgmt;GeneralSetup;");
+		$item_sites = new uiMgmtBigMenuItem("sitessetup", "Sites", "To gain maximum publishing freedom, you are able to define multiple sites here.", "/29o3/?mgmt;Sites;");
+		$item_pages = new uiMgmtBigMenuItem("pagessetup", "Pages", "Click here to define pages for your configured sites.", "/29o3/?mgmt;Pages;");
+		$item_media = new uiMgmtBigMenuItem("mediamanager", "Manage Media", "With the media manager you can add media (video, images,...) to 29o3.", "/29o3/?mgmt;MediaManager;");
+		$item_files = new uiMgmtBigMenuItem("filemanager", "Files", "Upload files to make them available to visitors of your site.", "/29o3/?mgmt;Files;");
+		$item_appearance = new uiMgmtBigMenuItem("appearmanager", "Appearance Settings", "Change the layouts of your pages and sites.", "/29o3/?mgmt;AppearanceManager;");
+		$menu->attach($item_general);
+		$menu->attach($item_appearance);
+		$menu->attach($item_sites);
+		$menu->attach($item_pages);
+		$menu->attach($item_media);
+		$menu->attach($item_files);
 
-		$this->pdo->insertBodyDiv(
-			"<strong>Server software:</strong> " . $_SERVER["SERVER_SOFTWARE"] . " with PHP " . phpversion() . " running on " . PHP_OS . "<br/>\n" .
-			"<strong>Server time:</strong> " . strftime("%Y-%m-%d, %T", time()) . "<br/>\n" .
-			"<strong>Server uptime/load:</strong> " . `uptime` . "<br/>\n"
-			, "adminPreformatted");
 
-		$this->pdo->insertBodyDiv("Running Sites", "adminFuncTitle");
+		$this->pdo->insertIntoBodyBuffer('<br/><br/><br/>');
+		$this->pdo->insertIntoBodyBuffer('<div align="center">');
+		$this->pdo->insertIntoBodyBuffer('<div class="enclosure" align="center">');
+		$this->pdo->insertIntoBodyBuffer('<div class="headline">29o3 management console</div>');
+		$this->pdo->insertIntoBodyBuffer('<div style="text-align: left; width: 600px; font-size: 12px;">');
+		$this->pdo->insertIntoBodyBuffer(':: Home :: Help :: About ::');
+		$this->pdo->insertIntoBodyBuffer('</div><br/>');
 
-		$this->db->executeQuery("SELECT * FROM " . mktablename("sites") . " ORDER BY name ASC");
-		$this->pdo->insertIntoBodyBuffer('<table>');
-		$this->pdo->insertIntoBodyBuffer("<tr id=\"header\"><td>Name</td><td>Desc.</td><td>Owner</td><td>Status</td></tr>");
-		$subdb = clone $this->db;
-		while(($arr = $this->db->fetchArray())) {
-			if($arr["active"] != "t") {
-				$this->pdo->insertIntoBodyBuffer("<tr id=\"lightattention\">\n\t");
-			} else {
-				$this->pdo->insertIntoBodyBuffer("<tr>\n\t");
-			}
+		$this->pdo->insertIntoBodyBuffer($menu->__toString());
 
-			$usr = new User($subdb, "", $arr["owner"]);
-		
-			$tmp = split(";", $arr["members"]);
-		
-			$this->pdo->insertIntoBodyBuffer("<td><a href=\"?2mc;EditSite;" . $arr["name"] . "\">" . $arr["name"] . "</a> [<a href=\"?" . $arr["name"] . "/" .  $tmp[0] . "\" title=\"Visit site '" . $arr["name"] .  "'\">&raquo;</a>]</td>\n\t<td>" . $arr["title"] . 
-				"</td>\n\t<td>" . $usr->getNickName() . "</td><td");
-			if($arr["active"] == "t") {
-				$this->pdo->insertIntoBodyBuffer(" id=\"okay\">active</td>\n</tr>\n");
-			} else {
-				$this->pdo->insertIntoBodyBuffer(" id=\"attention\">*INACTIVE*</td>\n</tr>\n");
-			}
-		}
-		$this->pdo->insertIntoBodyBuffer("</table>\n");
-
+		// content here
+		$this->pdo->insertIntoBodyBuffer('&nbsp;');
 		$this->pdo->insertIntoBodyBuffer('</div>');
+		$this->pdo->insertIntoBodyBuffer('</div>');
+
+
 	}
 }
 

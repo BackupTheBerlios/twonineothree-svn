@@ -12,24 +12,26 @@
 
 require_once($CONFIG['LibDir'] . 'ui/uiElement.php');
 
-class uiBigMenuItem extends uiElement {
+class uiMgmtBigMenuItem extends uiElement {
 
-	private $name;
-	private $content;
-	private $link;
-	private $styleClass;
-	private $type = UI_MENUITEM;
+	protected $name;
+	protected $content;
+	protected $link;
+	protected $styleClass;
+	protected $title;
+	protected $type = UI_MENUITEM;
 
-	private $className = "uiBigMenuItem";
+	protected $className = "uiBigMenuItem";
 
-	private $htmlContent;
+	protected $htmlContent = "";
 
-	function __construct($name, $content, $link, $style = "mgmtBigMenuItem") {
+	function __construct($name, $title, $content, $link, $style = "mgmtBigMenuItem") {
 		$this->name = $name;
+		$this->title = $title;
 		$this->content = $content;
 		$this->link = $link;
 		$this->styleClass = $style;
-		$this->type = $type;
+		$this->type = UI_MENUITEM;
 	}
 
 	function __destruct() {
@@ -42,12 +44,16 @@ class uiBigMenuItem extends uiElement {
 //		array_push(&$element, $this->childElements);
 	}
 
-	function getHtmlContent() {
+	function __toString() {
 		
-		$this->htmlContent .= '<span class="' . $this->styleClass . '">' . $this->content . '</span>';
+		$this->htmlContent .= '<div class="' . $this->styleClass . '"><a href="' . $this->link .'"><strong>' . $this->title . "</strong></a>\n" . $this->content . '</div>';
 		// we do not iterate through menu items here since a menuitem 
 		// cannot have subitems.
 		return $this->htmlContent;
+	}
+
+	function getClassName() {
+		return "uiMgmtBigMenuItem";
 	}
 
 }
