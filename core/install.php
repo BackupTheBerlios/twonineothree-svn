@@ -64,7 +64,7 @@ body {
 	text-align: center;
 	width: 100%;
 	height: 97px;
-	background-color: #7392a6;
+	background-color: rgb(1,6,6);
 }
 
 .textunderstripe {
@@ -147,7 +147,9 @@ if(file_exists("./config.php") && $_CONFIGCHECK) {
 29o3 <acronym title="[B]esch&auml;mend [E]infaches [I]nstallations [S]kript">BEIS</acronym> <?=$_VERSION ?>
 </span><br/><br/>
 <span style="font-size: 14px; font-weight: bold;">Houston... we've had a problem</span><br/><br/>
-The 29o3 configuration file <em>config.php</em> was found. The installer cannot continue.
+The 29o3 configuration file <em>config.php</em> was found. The installer cannot continue as this is a sure
+sign for a already-running installation of 29o3. For updating 29o3, please use the appropriate option in the
+management console.
 </div></div>
 <?php
 }

@@ -106,6 +106,14 @@ function bootstrap() {
 
 	$connector->executeQuery("SELECT * FROM " . mktablename("pages") . " WHERE name='" . $request->getRequestedPage() . "'");
 
+/* lets see what the admin wants */
+	if($request->getWantAdmin()) {
+		
+		if($request->getRequestedPage() == "overview") {
+			
+		}
+	}
+
 	$pageInfo = $connector->fetchArray();
 	$pdo->setPageDescriptionA($pageInfo, $request->getRequestedSite());
 

@@ -113,7 +113,7 @@ class DatabaseConnector {
 	function fetchArray() {
 
 		$array = pg_fetch_array($this->res);
-		if($array) {
+		if($array !== false) {
 			return $array;
 		}
 
@@ -124,7 +124,7 @@ class DatabaseConnector {
 
 	function fetchRow() {
 
-		if(($array = pg_fetch_row($this->res)) != false) {
+		if(($array = pg_fetch_row($this->res)) !== false) {
 			return $array;
 		}
 

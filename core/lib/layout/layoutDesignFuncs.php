@@ -52,7 +52,11 @@ class LayoutDesignFuncs {
 
 		$boxArray = $this->pdo->boxes;
 		$name = $this->pdo->getContent("name") . "_" . $params[0];
-		$retval =  $boxArray[$name]["content"];
+		if(isset($boxArray[$name]["content"])) {
+			$retval =  $boxArray[$name]["content"];
+		} else {
+			$retval = "Box Not Found";
+		}
 		return $retval;
 	}
 

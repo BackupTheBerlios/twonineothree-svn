@@ -32,6 +32,8 @@ class PageRequest {
 	}
 
 	function parseRequest() {
+		
+		global $CONFIG;
 
 		$this->userAgent = $_SERVER['HTTP_USER_AGENT'];
 
@@ -41,6 +43,7 @@ class PageRequest {
 		$requestString = explode(";", getenv("QUERY_STRING"));
 		if($requestString[0] == "2mc") {
 			$this->wantAdmin = true;
+			$CONFIG["Developer_Debug"] = false;
 			// removes the key containing "2mc" from the array
 			// so that it can me used furthermore.
 			DEBUG("PR: Admin wanted.");
@@ -60,7 +63,6 @@ class PageRequest {
 				$this->requestedPage = $tmpString[1];
 				$this->requestedSite = $tmpString[0];
 			}
-			
 			$this->connector->executeQuery("SELECT * FROM " . mktablename("sites") . " WHERE name='" . $this->requestedSite . "';");
 			$siteArr = $this->connector->fetchArray();
 			if($siteArr !== false) {
@@ -70,6 +72,7 @@ class PageRequest {
 					header("HTTP/1.1 404 Not Found");
 					$this->requestedPage = "404NotFound";
 					DEBUG("PR: Given page not found in database.");
+					return;
 				}
 				
 				$this->connector->executeQuery("SELECT * FROM " . mktablename("pages") . " WHERE name='" . $this->requestedPage . "'");
@@ -79,7 +82,16 @@ class PageRequest {
 					header("HTTP/1.1 401 Forbidden");
 					$this->requestedPage = "401Forbidden";
 					DEBUG("PR: Current user has insufficient rights to view this page.");
+					return;
 				}
+			} else {
+				header("HTTP/1.1 404 Not Found");
+				$or_site = $this->requestedSite;
+				$or_page = $this->requestedPage;
+				$this->requestedPage = "404NotFound";
+				$this->requestedSite = "default";
+				DEBUG("PR: Given site does not exist, falling back to " . $this->requestedSite . "/" . $this->requestedPage . ". Requested site/page was: " . $or_site . "/" . $or_page);
+				return;
 			}
 		} else {
 			$this->connector->executeQuery("SELECT name FROM " . mktablename("pages"));
