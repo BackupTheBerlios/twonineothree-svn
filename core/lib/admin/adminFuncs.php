@@ -13,6 +13,8 @@
 
 require_once($CONFIG['LibDir'] . 'db/' . $CONFIG['DatabaseType'] . '.php');
 require_once($CONFIG['LibDir'] . 'page/pageDescriptionObject.php');
+require_once($CONFIG['LibDir'] . 'ui/uiMgmtBigMenu.php');
+require_once($CONFIG['LibDir'] . 'ui/uiMgmtBigMenuItem.php');
 
 
 class adminFuncs {
@@ -29,8 +31,8 @@ class adminFuncs {
 		$this->pdo =& $pdo;
 		$this->pageRequest =& $pageRequest;
 
-		$this->adminStylesheet = file_get_contents($CONFIG['LibDir'] . 'admin/adminStylesheet.css');
 
+		$this->adminStylesheet = "content/stylesheets/adminStylesheet.css";
 	}
 
 	function getAdminStylesheet() {
@@ -38,12 +40,25 @@ class adminFuncs {
 	}
 
 	function getAdminMenu() {
-/*		$adminMenu =  "<a href=\"?2mc;Overview;\">overview</a> &middot; <a href=\"?2mc;GeneralSetup;\">general setup</a> &middot; <a href=\"?2mc;PageWizard;\">page wizard</a> &middot; ";
-		$adminMenu .= "<a href=\"?2mc;EditPages;\">edit pages</a> &middot; <a href=\"?2mc;EditLayouts;\">edit layouts</a> &middot; <a href=\"?2mc;EditBoxes;\">edit boxes</a> &middot; ";
-		$adminMenu .= "<a href=\"?2mc;help\">Help</a>";
-*/
-		$adminMenu = "";
-		return $adminMenu;
+		
+		$menu = new uiMgmtBigMenu("Admin Menu", "none", 1);
+		$item_general = new uiMgmtBigMenuItem("gensetup", "General Setup ::", "Here you will be able to do some generic setup for 29o3.", mksyslink("?mgmt;GeneralSetup;"));
+		$item_sites = new uiMgmtBigMenuItem("structure", "Structure ::", "Create different sites to fit all your needs.", mksyslink("?mgmt;Structure;"));
+		$item_pages = new uiMgmtBigMenuItem("contentsetup", "Content ::", "Click here to define pages which fill your sites with content.", mksyslink("?mgmt;Content;"));
+		$item_media = new uiMgmtBigMenuItem("mediamanager", "Media ::", "With the media manager you can add media (video, images,...) to 29o3.", "/29o3/?mgmt;MediaManager;");
+		$item_files = new uiMgmtBigMenuItem("filemanager", "Files ::", "Upload files to make them available to visitors of your site.", mksyslink("?mgmt;Files;"));
+		$item_appearance = new uiMgmtBigMenuItem("appearance", "Appearance ::", "Create and modify layouts for usage in pages and sites.", mksyslink("?mgmt;Appearance;"));
+		$menu->attach($item_general);
+		$menu->attach($item_appearance);
+		$menu->attach($item_sites);
+		$menu->attach($item_pages);
+		$menu->attach($item_media);
+		$menu->attach($item_files);
+
+		$string = $menu->__toString() . "\n" . 
+			'<div class="adminstripe">&nbsp;</div>';
+
+		return $string;
 	}
 
 	static function getAdminDesignStart($name) {

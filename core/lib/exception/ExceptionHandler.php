@@ -35,7 +35,7 @@ function ExceptionHandler($exception) {
 	echo '<div class="error_box">29o3: Exception occured<div class="error_text">' . /*stripSpecialChars(*/$exception->__toString()/*)*/ . '<br/><br/>';
 	if($CONFIG['Developer_Debug']) {
 		echo '<strong>Traceback:</strong><br/><textarea name="traceback" style="width: 90%; height: 100px; border: 1px solid #666666; font-family: courier; font-size: 11px;" readonly="readonly">';
-		echo $exception->getTraceAsString();
+		echo htmlspecialchars($exception->getTraceAsString());
 		echo '</textarea>';
 	}
 	echo '<a href="https://developer.berlios.de/bugs/?func=addbug&amp;group_id=1891" title="Click here to report a bug. Additional information is needed.">Report a bug</a> | <a href="calladmin.php?packed=' . rawurlencode(getenv("QUERY_STRING")) . '" title="Click here to contact the administrator of this website.">Contact administrator</a></div></div>' . "\n";

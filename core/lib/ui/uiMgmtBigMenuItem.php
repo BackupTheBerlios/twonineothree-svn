@@ -25,6 +25,8 @@ class uiMgmtBigMenuItem extends uiElement {
 
 	protected $htmlContent = "";
 
+	private static $count = 0;
+
 	function __construct($name, $title, $content, $link, $style = "mgmtBigMenuItem") {
 		$this->name = $name;
 		$this->title = $title;
@@ -45,10 +47,13 @@ class uiMgmtBigMenuItem extends uiElement {
 	}
 
 	function __toString() {
-		
-		$this->htmlContent .= '<div class="' . $this->styleClass . '"><a href="' . $this->link .'"><strong>' . $this->title . "</strong></a>\n" . $this->content . '</div>';
+	 	static $count = 1;	
+//		$this->htmlContent .= '<div class="' . $this->styleClass . '"><a id="link' . $count . '" onMouseOver="onLink(\'' . $count . '\')" href="' . $this->link .'"><strong>' . $this->title . "</strong></a>\n" . $this->content . '</div>';
+		$this->htmlContent .= '<a id="link' . $count . '" onMouseOver="onLink(\'' . $count . '\')" href="' . $this->link .'"><strong>' . $this->title . '</strong></a>';
+
 		// we do not iterate through menu items here since a menuitem 
 		// cannot have subitems.
+		$count++;
 		return $this->htmlContent;
 	}
 

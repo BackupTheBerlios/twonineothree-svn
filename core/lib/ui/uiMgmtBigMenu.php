@@ -23,7 +23,7 @@ class uiMgmtBigMenu extends uiElement {
 
 	protected $className = "uiMgmtBigMenu";
 
-	function __construct($name, $content, $maxCellCount = 2, $style = "mgmtBigMenu") {
+	function __construct($name, $content, $maxCellCount = 2, $style = "newmenu") {
 		$this->name = $name;
 		$this->content = $content;
 		$this->style = $style;
@@ -39,33 +39,34 @@ class uiMgmtBigMenu extends uiElement {
 
 	function __toString() {
 		
-		$this->htmlContent .= '<div class="' . $this->style . '" id="' . $this->name . '">'/* . $this->content*/ . "\n<div class=\"table\">";
+//		$this->htmlContent .= '<script type="text/javascript" src="content/scripts/experimentmenu.js"></script>'. "\n";
+		$this->htmlContent .= '<div class="' . $this->style . '" id="' . $this->name . '">' . "\n";
 		$counter = 0;
 		$openrow = false;
 		$opencell = false;
 		foreach($this->childElements as $key => $childElement) {
-			if($counter == 0) {
+			/*if($counter == 0) {
 				$this->htmlContent .= '<div class="row">' . "\n\t";
 			}
 
 			$this->htmlContent .= '<div class="cell">' . "\n\t";
 			$opencell = true;
-
-			$this->htmlContent .= $childElement->__toString() . "\n";
-			if($opencell) {
+			*/
+			$this->htmlContent .= $childElement->__toString() . "<br/>\n";
+			/*if($opencell) {
 				$this->htmlContent .= '</div>' . "\n";
 			}
 			$counter++;
 			if($counter == $this->maxCellCount) {
 				$counter = 0;
 				$this->htmlContent .= "</div>\n";
-			}
+			}*/
 		}
 
-		if($counter != 0) {
+		/*if($counter != 0) {
 			$this->htmlContent .= "</div>\n";
-		}
-		$this->htmlContent .= '</div></div>' . "\n";
+		}*/
+		$this->htmlContent .= '</div>' . "\n";
 		return $this->htmlContent;
 	}
 
