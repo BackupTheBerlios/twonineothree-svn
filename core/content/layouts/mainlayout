@@ -1,18 +1,97 @@
-/* multiline
-comment
-over
-some lines */
 // Layout example for 29o3
 // lines starting with '//' will be skipped during processing
 // anything starting with '::29o3.' will be evaluated as command for the
 // layout processor
 // blocks are in this format [blockname] { [content] }
 // allowed blocks are header and design 
+/* 
+this is the stylesheet needed for this design to work
+put it in the table broend_stylesheets, giving it the
+name GreenStripeLayout.
+
+additionally, you need to add two broend_boxes with the names
+home_Content and home_Title and the owning_page home respectively.
+
+You'll also need to add one page with the name home.
+You'll also need to add a group with gid 100 and name wheel.
+You'll need to add a user with the uid 100 and the gid 100 (use any name).
+You'll need to set the owner of the page home to this uid (100).
+
+-- copy from here --
+body {
+	background-color: white;
+	font-family: sans-serif, arial, helvetica;
+	font-size: 11px;
+	color: black;
+	margin: 0px;
+	padding: 0px;
+}
+
+.stripediv {
+	position: absolute;
+	top: 30%;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	font-family: sans-serif, arial, helvetica;
+	line-height: 130%;
+	text-align: center;
+}
+
+.greenstripe {
+	text-align: center;
+	background: url(http://00t.org/images/00tlogo.jpg) center top no-repeat;
+	width: 100%;
+	height: 90px;
+	background-color: #c9ff25;
+}
+
+.textunderstripe {
+	text-align: left;
+	background-color: white;
+	color: #666666;
+	position: relative;
+	top: 10px;
+	left: 33%;
+	width: 33%;
+	line-height: 150%;
+	font-family: sans-serif, arial, helvetica;
+	font-size: 11px;
+}
+
+.textunderstripe a:link, .textunderstripe a:active, .textunderstripe a:visited {
+	color: #666666;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.textunderstripe a:hover {
+	text-decoration: none;
+	font-weight: bold;
+	border-bottom: 1px dotted #666666;
+}
+
+-- copy end --
+*/
+/*
+	currently working functions in header are:
+	
+	mainStylesheet(filename|"content", "external"|"internal");
+	auxiliaryStylesheet("content");
+
+	--
+
+	currently working functions in design are:
+	
+	getBoxContent("boxname");
+	getProperty("author_nickname"|"author_realname");
+	
+	getStaticBox is declared but currently without any function.
+*/
+// not there is the real layout definition:
 
 header {
 ::29o3.mainStylesheet("GreenStripeLayout", "internal");
-::29o3.auxiliaryStylesheet("testing_01");
-::29o3.testFunc("test", "1");
 }
 
 design {
@@ -21,11 +100,10 @@ design {
 	&nbsp;
 	</div>
 	<div class="textunderstripe">
-	<strong>::29o3.getBox("Title");</strong><br/>
-	::29o3.getBox("Content");
-	<div style="text-align: right; font-style: italic;">::29o3.getProperty("Author");</div>
+	<strong>::29o3.getBoxContent("Title");</strong><br/>
+	::29o3.getBoxContent("Content");
+	<div style="text-align: right; font-style: italic;">::29o3.getProperty("author_nickname");</div>
 	<br/>
-	<div class="menu">::29o3.getStaticBox("Menu001");</div>
 	<div style="font-size: 9px; color: #CCCCCC; text-align: center;">
 	<a href="http://validator.w3.org/check/referer">valid xhtml</a> &middot; 
 	<a href="http://jigsaw.w3.org/css-validator/check/referer">valid css</a>

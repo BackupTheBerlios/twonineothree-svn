@@ -57,7 +57,7 @@ class LayoutParser {
 				if(($commentClosePosition + 2) < strlen($line)) {
 					$line = substr($line, $commentClosePosition+2, strlen($line));
 				} else {
-					continue 2;
+					continue;
 				}
 			}
 			
