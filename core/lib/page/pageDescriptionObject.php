@@ -16,6 +16,8 @@ require_once($CONFIG['LibDir'] . 'db/' . $CONFIG['DatabaseType'] . '.php');
 
 require_once($CONFIG['LibDir'] . 'xhtml/xhtmlheader.php');
 require_once($CONFIG['LibDir'] . 'xhtml/xhtmlbody.php');
+require_once($CONFIG['LibDir'] . 'content/boxParser.php');
+require_once($CONFIG['LibDir'] . 'user/rightsManager.php');
 
 class pageDescriptionObject {
 
@@ -37,10 +39,14 @@ class pageDescriptionObject {
 	private $stylesheet;
 	private $layout;
 
+	private $site;
+
 	public $boxes = array();
 
 	private $headerObject;
 	private $bodyObject;
+
+	private $boxParser;
 
 	// this array contains the database column names
 	// which are the same as our private vars above
@@ -91,9 +97,11 @@ class pageDescriptionObject {
 		$this->bodyObject =& $xhtmlBodyObject;
 		$this->databaseConnector = $connector;
 
+		$this->boxParser = new BoxParser($this);
+
 	}
 
-	function setPageDescriptionA(&$infoArray) {
+	function setPageDescriptionA(&$infoArray, $siteName) {
 
 		// since we know the names of the database columns, we can use them as indexes
 		// see the array definition of nameDescriptor above
@@ -101,6 +109,8 @@ class pageDescriptionObject {
 			$str = $this->nameDescriptor[$i];
 			$this->{$str} = $infoArray[$str];
 		}
+
+		$this->site = $siteName;
 	}
 
 	function getNameDescriptor() {
@@ -111,6 +121,10 @@ class pageDescriptionObject {
 		if(array_search($name, $this->nameDescriptor) !== false) {
 			return $this->{$name};
 		}
+	}
+
+	function getSiteName() {
+		return $this->site;
 	}
 
 	function getBox($box_name, $index) {
@@ -163,6 +177,14 @@ class pageDescriptionObject {
 		$this->databaseConnector->executeQuery("SELECT * FROM " . mktablename("boxes") . " WHERE owning_page='" . $this->name . "'");
 		if($this->databaseConnector->getNumRows() != 0) {
 			while(($arr = $this->databaseConnector->fetchArray())) {
+				$rm = new rightsManager($arr);
+				if($rm->hasUserViewingRights() == false) {
+					$arr["content"] = "<em>You do not have access to this box.</em>";
+				} else {
+					$arr["content"] = $this->boxParser->parseBox($arr["content"]);
+				}
+				
+				
 				$tempArray = array($arr["name"] => $arr);
 				$this->boxes = array_merge($tempArray, $this->boxes);
 			}

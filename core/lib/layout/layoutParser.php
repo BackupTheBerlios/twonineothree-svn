@@ -83,14 +83,27 @@ class LayoutParser {
 			preg_match("/(header|design)(\\r|\\s|\\n)+\{/", $line, $block_matches);
 			if($block_matches[1] == "header") {
 				$in_header = true;
-				$in_design = false;
+//				$in_design = false;
 				continue;
 			}
 
 			if($block_matches[1] == "design") {
 				$in_design = true;
-				$in_header = false;
+//				$in_header = false;
 				continue;
+			}
+
+			if($in_header) {
+				if(strpos($line, "}") === 0) {
+					$in_header = false;
+					continue;
+				}
+			}
+			if($in_design) {
+				if(strpos($line, "}") === 0) {
+					$in_design = false;
+					continue;
+				}
 			}
 
 			// if operating on the header, $line is directly used because the
@@ -129,6 +142,7 @@ class LayoutParser {
 			if(!$in_header && $in_design) {
 				$this->pdo->insertIntoBodyBuffer($line);
 			}
+
 
 			// this point is *never* reached
 			

@@ -109,7 +109,7 @@ function bootstrap() {
 	$connector->executeQuery("SELECT * FROM " . mktablename("pages") . " WHERE name='" . $request->getRequestedPage() . "'");
 
 	$pageInfo = $connector->fetchArray();
-	$pdo->setPageDescriptionA($pageInfo);
+	$pdo->setPageDescriptionA($pageInfo, $request->getRequestedSite());
 
 	$header->setTitle($pdo->getContent("title"));
 

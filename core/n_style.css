@@ -82,12 +82,10 @@
 	font-family: sans-serif, helvetica;
 	font-size: 11px;
 	color: black;
-	width: 300px;
 	text-align: center;
 	line-height: 230%;
 	background-color: white;
-	position: fixed;
-	bottom: 0px;
+	position: relative;
 }
 
 .poweredBy a:link,

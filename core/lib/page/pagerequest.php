@@ -96,6 +96,10 @@ class PageRequest {
 		return $this->requestedPage;
 	}
 
+	function getRequestedSite() {
+		return $this->requestedSite;
+	}
+
 }
 
 ?>

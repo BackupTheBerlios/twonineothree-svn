@@ -116,27 +116,9 @@ td {
 		To install and use 29o3 you have to agree with the license agreement. If you do not agree, you will have to cancel the setup
 		at this point. By clicking "Next" you show that you agree to the terms and conditions of the license agreement.
 		<hr>
-		<span style="font-family: courier; font-size: 10px;">
-		Copyright (c) 2003-2004 Ulrik Guenther<br><br>
-
-		Permission is hereby granted, free of charge, to any person obtaining a
-		copy of this software and associated documentation files (the "Software"),
-		to deal in the Software without restriction, including without limitation
-		the rights to use, copy, modify, merge, publish, distribute, sublicense,
-		and/or sell copies of the Software, and to permit persons to whom the
-		Software is furnished to do so, subject to the following conditions:<br><br>
-
-		The above copyright notice and this permission notice shall be included in
-		all copies or substantial portions of the Software.<br><br>
-
-		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-		IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-		FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-		THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-		LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-		FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-		DEALINGS IN THE SOFTWARE.
-		</span>
+		<pre style="font-family:courier; font-size: 10px;">
+<?php include("LICENSE") ?>
+		</pre>
 		</span>
 		<?php
 		}
@@ -226,6 +208,24 @@ td {
 			</td>
 			<td>
 			<select name="servertype">
+<?php
+
+unset($DATABASE_TEST_FUNCTION);
+
+// TODO: find directory automatically *DONE*
+//$driverfile = dir();
+$cwd = dirname(__FILE__) . "/lib/db";
+
+$dir = dir($cwd);
+
+while($file = $dir->read()) {
+	if(strpos($file, ".php") !== false && strpos($file, ".") != 0) {
+		include("lib/db/" . $file);
+	}
+}
+
+?>
+
 				<option value="sybase">MS SQL Server</option>
 				<option selected value="mysql">MySQL</option>
 				<option value="odbc">ODBC</option>

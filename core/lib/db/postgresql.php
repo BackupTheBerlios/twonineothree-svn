@@ -15,6 +15,9 @@
  
 */
 
+$DATABASECONNECTOR_TEST_FUNCTION = "pgsql_connect";
+$DATABASECONNECTOR_DRIVER_NAME = "PostgresSQL";
+
 class DatabaseConnector {
 
 	private $DRIVER_INFO = array(
