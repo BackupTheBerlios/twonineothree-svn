@@ -23,6 +23,11 @@ require_once('./config.php');
 require_once($CONFIG['LibDir'] . 'common.php');
 require_once($CONFIG['LibDir'] . 'sys/param.php');
 
+if(version_compare(phpversion(), $SYSTEM_INFO['MinPhpVersion']) < 0) {
+		err("Newer version of PHP required", "A newer version of of PHP is required in order to run this version of 29o3.<br>You have: " . phpversion() . ". PHP " . $SYSTEM_INFO['MinPhpVersion'] . " is the minimal requirement.", 10);
+}
+
+
 $output_started = false;
 $body_started = false;
 
@@ -84,10 +89,6 @@ function bootstrap() {
 	global $CONFIG, $SYSTEM_INFO, $output_started, $body_started;
 
 	header("Content-type: application/xhtml+xml\r");
-
-	if(version_compare(phpversion(), $SYSTEM_INFO['MinPhpVersion']) < 0) {
-		err("Newer version of PHP required", "A newer version of of PHP is required in order to run this version of 29o3.<br>You have: " . phpversion() . ". PHP " . $SYSTEM_INFO['MinPhpVersion'] . " is the minimal requirement.", 10);
-	}
 
 	$console = new SystemConsole();
 	

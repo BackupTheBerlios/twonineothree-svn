@@ -66,8 +66,8 @@ function err($title, $text, $fatality) {
 	if(!$output_started) {
 		printf("<html>\n<head>\n<title>29o3</title>\n<link rel=\"stylesheet\" href=\"n_style.css\" />\n</head>\n<body>\n");
 	}
-	if(!$body_started) {
-		printf('<head><link rel="stylesheet" href="n_style.css" /></head><body>\n');
+	if(!$body_started && $output_started) {
+		printf('<head><link rel="stylesheet" href="n_style.css" /></head><body>');
 	}
 	echo '<div class="error_box">' . $title . '<div class="error_text">' . $text . '<br/><br/><br/><a href="http://twonineothree.berlios.de/bugreport.php?id=' . $id . '" title="Click here to report a bug. Additional information is needed.">Report a bug</a> | <a href="calladmin.php?id=' . $id . '" title="Click here to contact the administrator of this website.">Contact administrator</a></div></div>' . "\n";
 		

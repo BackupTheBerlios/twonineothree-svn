@@ -20,7 +20,7 @@ $SYSTEM_INFO = array(
 	"SystemVersion"		=>	"0.1 beta",
 	"SystemCodename"	=>	"Broend",
 	"SystemFeatures"	=>	"postgres",
-	"MinPhpVersion"		=>	"5.0.0"
+	"MinPhpVersion"		=>	"5.0.10"
 );
 
 ?>
