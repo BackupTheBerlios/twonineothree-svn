@@ -1,10 +1,16 @@
 <?php
-/* 29o3 content management system
- * (c) 2003-2004 by Ulrik Guenther <kpanic@mg2.org>
- * This software is licensed under the terms of the BSD license.
- *
- * XHTML body output class creation class
- */ 
+/*
+  29o3 content management system
+  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  This software subjects to the license described in the
+  file LICENSE you should have received with this distribution.
+ 
+
+  The XHTMLBody class allows output and formatting of body elements
+  like <p>, <div>,...
+ 
+*/
+
 
 class XHTMLBody {
 

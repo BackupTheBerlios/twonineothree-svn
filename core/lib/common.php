@@ -1,8 +1,18 @@
 <?php
-/* 29o3 content management system
- * (c) 2003-2004 by Ulrik Guenther <kpanic@mg2.org>
- * This software is licensed under the terms of the BSD license.
- */ 
+/*
+  29o3 content management system
+  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  This software subjects to the license described in the
+  file LICENSE you should have received with this distribution.
+ 
+ 
+  The file "common.php" holds functions which are frequently needed
+  by different parts of 29o3. This includes for example the mktablename
+  function which creates a table name (hah!) combined with the database
+  prefix defined in the configuration for better readability of the code.
+
+*/
+
 
 $nachars_search = array ("'<script[^>]*?>.*?</script>'si",
                 "'<[\/\!]*?[^<>]*?>'si",

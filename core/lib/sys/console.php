@@ -1,10 +1,16 @@
 <?php
-/* 29o3 content management system
- * (c) 2003-2004 by Ulrik Guenther <kpanic@mg2.org>
- * This software is licensed under the terms of the BSD license.
- *
- * Class for doing some debugging output
- */ 
+/*
+  29o3 content management system
+  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  This software subjects to the license described in the
+  file LICENSE you should have received with this distribution.
+ 
+
+  The SystemConsole class is for the creation of some debug output.
+  When debugging is disabled, this class will never be instanciated.
+ 
+*/
+
 
 class SystemConsole {
 

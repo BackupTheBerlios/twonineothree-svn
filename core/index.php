@@ -1,9 +1,17 @@
 <?php
-/* 29o3 content management system
- * (c) 2003-2004 by Ulrik Guenther <kpanic@mg2.org>
- * This software is licensed under the terms of the BSD license.
- */ 
+/*
+  29o3 content management system
+  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  This software subjects to the license described in the
+  file LICENSE you should have received with this distribution.
  
+
+  This file manages the creation of an evil empire and the
+  therewith associated pwnage of the world by 29o3. HAHA!
+ 
+*/
+
+
 require_once('./config.php');
 require_once($CONFIG['LibDir'] . 'common.php');
 

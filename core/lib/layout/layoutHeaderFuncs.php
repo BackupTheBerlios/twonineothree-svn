@@ -1,10 +1,16 @@
 <?php
-/* 29o3 content management system
- * (c) 2003-2004 by Ulrik Guenther <kpanic@mg2.org>
- * This software is licensed under the terms of the BSD license.
- *
- * Class with functions for the layout header
- */ 
+/*
+  29o3 content management system
+  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  This software subjects to the license described in the
+  file LICENSE you should have received with this distribution.
+ 
+ 
+  LayoutHeaderFuncs class: this class holds the functions which
+  are callable in the header block of layout definitions for pages.
+
+*/
+
 
 require_once($CONFIG['LibDir'] . 'common.php');
 require_once($CONFIG['LibDir'] . 'page/pageDescriptionObject.php');

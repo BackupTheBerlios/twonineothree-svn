@@ -1,11 +1,17 @@
 <?php
-/* 29o3 content management system
- * (c) 2003-2004 by Ulrik Guenther <kpanic@mg2.org>
- * This software is licensed under the terms of the MIT license.
- *
- * MySQL Database Connection Layer for 29o3.
- * *STUUUUUUUUUUUUUUUUUUUUUUUUB*
- */ 
+/*
+  29o3 content management system
+  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  This software subjects to the license described in the
+  file LICENSE you should have received with this distribution.
+ 
+ 
+  MySQL Database Connector for 29o3
+ 
+  *** THIS DATABASE CONNECTOR IS CURRENTLY NOT USABLE ***
+*/
+
+
 
 class DatabaseDriver {
 

@@ -1,8 +1,10 @@
 <?php
 /*
   29o3 content management system
-  (c) 2003-2004 by Ulrik Guenther <kpanic@mg2.org>
-  This software is licensed under the terms of the BSD license.
+  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  This software subjects to the license described in the
+  file LICENSE you should have received with this distribution.
+ 
  
   PostgreSQL Database Connector for 29o3
  
@@ -10,8 +12,7 @@
   somewhen Aug 2004	Initial version
   2004/09/04		Changed pg_query to pg_send_query. Tricky, tricky!
  
-*/ 
-
+*/
 
 class DatabaseConnector {
 
@@ -27,6 +28,7 @@ class DatabaseConnector {
 	private $port;
 	private $user;
 	private $password;
+	private $database;
 
 	private $res;
 	private $link;
@@ -64,10 +66,12 @@ class DatabaseConnector {
 		$this->port =	$prt;
 		$this->user = $usr;
 		$this->password = $pw;
+		$this->database = $database;
 		
 
 
-		$this->link = pg_connect("host=" . $srv . " port=" . $prt . " dbname=" . $database . " user=" . $usr . " password=" . $pw);
+		$connString = "host=" . $this->server . " port=" . $this->port . " dbname=" . $this->database . " user=" . $this->user . " password=" . $this->password;
+		$this->link = pg_connect($connString);
 		if($this->link == NULL) {
 			die("Database connection failed! [" . __FILE__ . " line " . __LINE__);
 		}

@@ -1,10 +1,16 @@
 <?php
-/* 29o3 content management system
- * (c) 2003-2004 by Ulrik Guenther <kpanic@mg2.org>
- * This software is licensed under the terms of the BSD license.
- *
- * Layout parsing class
- */
+/*
+  29o3 content management system
+  (c) 2003-2004 by Ulrik Guenther <kpanic@00t.org>
+  This software subjects to the license described in the
+  file LICENSE you should have received with this distribution.
+ 
+ 
+  Class for the Page Description Object which holds all
+  information about a particular page.
+  
+*/
+
 
 require_once($CONFIG['LibDir'] . 'db/' . $CONFIG['DatabaseType'] . '.php');
 

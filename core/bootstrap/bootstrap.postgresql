@@ -3,7 +3,8 @@
 
 	(c) 2004 by Ulrik Guenther <kpanic@00t.org>
 
-	Licensed under the terms of the BSD license.
+	This software subjects to the terms of the file LICENSE
+	you should have received with this distribution.
 	
 	These SQL statements generate the data structures needed
 	for 29o3 to operate and fills some of them with initial values.
