@@ -171,12 +171,20 @@ class pageDescriptionObject {
 		$this->headerObject->printBuffer();
 	}
 
+	function printBodyBuffer() {
+		$this->bodyObject->printBuffer();
+	}
+
 	function destroyHeaderObject() {
 		$this->headerObject = NULL;
 	}
 
 	function insertIntoBodyBuffer($string) {
 		$this->bodyObject->insert($string);
+	}
+
+	function insertBodyDiv($styleClass, $content, $title = "", $additionals = "") {
+		$this->bodyObject->insertDiv($styleClass, $content, $title, $additionals);
 	}
 }
 

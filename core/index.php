@@ -102,7 +102,7 @@ function bootstrap() {
 
 	// construct header and body objects
 	$header = new XHTMLHeader();
-	$body = new XHTMLBody;
+	$body = new XHTMLBody();
 
 	$pdo = new pageDescriptionObject($header, $body, $connector);
 
@@ -165,17 +165,16 @@ function bootstrap() {
 	$pdo->scheduleInsertion_ExternalStylesheet("n_style.css");
 
 	// now, get the page's stylesheet; it might be empty, but we'll add it if not :)
-	$connector->executeQuery("SELECT * FROM " . mktablename("stylesheets") . " WHERE " . mktablename("stylesheets") . ".name=" . mktablename("pages") . ".name AND " . mktablename("stylesheets") . ".name='" . $request->getRequestedPage() . "'" );
+	$connector->executeQuery("SELECT * FROM " . mktablename("stylesheets") . " WHERE " . mktablename("stylesheets") . ".name='" . $request->getRequestedPage() . "'" );
 	if($connector->getNumRows() != 0) {
 		$localStylesheets = $connector->fetchArray();
 		$pdo->scheduleInsertion_Stylesheet($localStylesheets['content']);
 	}
 
 	$pdo->getAvailableBoxes();
-/*	echo "<pre>";
-	print_r($pdo->boxes);
-	echo "</pre>";
-*/
+
+	$pdo->insertBodyDiv("poweredBy", "Powered by <a href=\"http://twonineothree.berlios.de\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "Powered by 29o3");
+
 	$layoutManager = new LayoutManager($pdo);
 
 	$connector->executeQuery("SELECT * FROM " . mktablename("layout") . " WHERE name='" . $pageInfo['layout'] . "'");
@@ -206,9 +205,8 @@ function bootstrap() {
 		}
 	}
 
-	$body->insertDiv("poweredBy", "Powered by <a href=\"http://twonineothree.berlios.de\" target=\"_blank\">29o3</a> " . $SYSTEM_INFO["SystemVersion"] . " Codename " . $SYSTEM_INFO["SystemCodename"], "Powered by 29o3");	
 
-	$body->printBuffer();
+	$pdo->printBodyBuffer();
 
 	printf('</html>');
 

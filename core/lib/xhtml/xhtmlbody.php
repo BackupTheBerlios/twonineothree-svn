@@ -14,10 +14,10 @@
 
 class XHTMLBody {
 
-	private $buffer;
+	private $buffer = "";
 
 	function __construct($params = "") {
-		$this->buffer .= "<body" . $params . ">\n";
+		$this->buffer = "<body" . $params . ">\n";
 	}
 
 	function printBuffer() {
