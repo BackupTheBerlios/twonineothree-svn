@@ -33,7 +33,7 @@ class AdminOverview {
 	}
 
 	function doBodyJobs() {
-		$menu = new uiMgmtBigMenu("Admin Menu", "none", 1);
+		$menu = new uiMgmtBigMenu("Admin Menu", "none", 2);
 		$item_general = new uiMgmtBigMenuItem("gensetup", "General Setup", "Here you will be able to do some generic setup for 29o3.", "/29o3/?mgmt;GeneralSetup;");
 		$item_sites = new uiMgmtBigMenuItem("sitessetup", "Sites", "To gain maximum publishing freedom, you are able to define multiple sites here.", "/29o3/?mgmt;Sites;");
 		$item_pages = new uiMgmtBigMenuItem("pagessetup", "Pages", "Click here to define pages for your configured sites.", "/29o3/?mgmt;Pages;");
