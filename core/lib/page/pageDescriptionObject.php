@@ -221,7 +221,7 @@ class pageDescriptionObject {
 	}
 
 	function insertIntoBodyBuffer($string) {
-		$this->bodyObject->insert($string);
+		$this->bodyObject->rawInsert($string);
 	}
 
 	function insertBodyDiv($content, $styleClass = "", $id = "", $title = "", $additionals = "") {
@@ -252,6 +252,11 @@ class pageDescriptionObject {
 
 	function getWantAdmin() {
 		return $this->wantAdmin;
+	}
+
+	function getBuffers() {
+		$tmp = $this->headerObject->getBuffer() . "\n" . $this->bodyObject->getBuffer();
+		return $tmp;
 	}
 }
 

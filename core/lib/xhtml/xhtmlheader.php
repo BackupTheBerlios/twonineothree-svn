@@ -156,6 +156,10 @@ class XHTMLHeader {
 		echo $this->buffer;
 	}
 
+	function getBuffer() {
+		return $this->buffer . "</head>";
+	}
+
 }
 
 

@@ -87,8 +87,12 @@ class XHTMLBody {
 
 	}
 
-	function insert($string) {
+	function rawInsert($string) {
 		$this->buffer .= $string;
+	}
+
+	function getBuffer() {
+		return $this->buffer;
 	}
 }
 
