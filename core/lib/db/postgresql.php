@@ -77,8 +77,9 @@ class DatabaseConnector {
 		$connString = "host=" . $this->server . " port=" . $this->port . " dbname=" . $this->database . " user=" . $this->user . " password=" . $this->password;
 		$this->link = pg_connect($connString);
 		if($this->link == NULL) {
-			die("Database connection failed! [" . __FILE__ . " line " . __LINE__);
+			return false;
 		}
+		return true;
 
 	}
 
@@ -88,11 +89,14 @@ class DatabaseConnector {
 
 	function executeQuery($sql_commands) {
 
-		pg_send_query ($this->link, $sql_commands)
-			or n_error("Database Panic", "A database panic occured:\n" . pg_result_error($this->res));
+		if(!pg_send_query ($this->link, $sql_commands)) {
+			return false;
+		}
 		
 		$this->res = pg_get_result($this->link);
 		$this->executedQueries++;
+
+		return true;
 
 	}
 
@@ -139,7 +143,7 @@ class DatabaseConnector {
 	}
 
 	function getLastError() {
-		return $this->lasterr;
+		return pg_last_error($this->link);
 	}
 
 	function checkPhpSupport() {
