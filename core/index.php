@@ -11,6 +11,13 @@
  
 */
 
+// check if the configuration file exists
+if(!file_exists('./config.php')) {
+	echo "The file config.php, of essential meaning for the correct function of 29o3, does not exist<br/>";
+	echo "If you just extracted your 29o3 archive, edit the file blankconfig.php then rename it to config.php<br/>";
+	echo "If 29o3's coder was not too lazy, you can also use the included installer by simply calling<br/><a href=\"installer.php\">install.php</a> with a web browser.";
+	exit;
+}
 
 require_once('./config.php');
 require_once($CONFIG['LibDir'] . 'common.php');
