@@ -136,6 +136,10 @@ class sessionManager {
 			if($CONFIG["PwHashAlgorithm"] == "MD5") {
 				$password = md5($password);
 			}
+
+			if($CONFIG["PwHashAlgorithm"] == "SHA1") {
+				$password = sha1($password);
+			}
 			
 			$this->db->executeQuery("SELECT * FROM " . mktablename("users") ." WHERE username='" . $username . "' and password='" . $password . "'");
 			$arr = $this->db->fetchArray();
